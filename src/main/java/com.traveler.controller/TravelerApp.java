@@ -2,7 +2,9 @@ package com.traveler.controller;
 
 import com.traveler.view.Prompter;
 import com.traveler.view.Intro;
+import com.traveler.view.SplashScreens;
 
+import java.awt.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -12,7 +14,7 @@ import java.util.Scanner;
 class TravelerApp {
     private boolean gameOver = false;
     Prompter prompter = new Prompter(new Scanner(System.in));
-    SplashScreen screen = new SplashScreen();
+    SplashScreens screen = new SplashScreens();
     Intro intro = new Intro();
     String help = "List of available commands: \nlook <item/room>\ngo <direction>\nget <item>\n";
 
