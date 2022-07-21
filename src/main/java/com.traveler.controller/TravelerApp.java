@@ -12,7 +12,7 @@ import java.util.Scanner;
 class TravelerApp {
     private boolean gameOver = false;
     Prompter prompter = new Prompter(new Scanner(System.in));
-//    SplashScreen screen = new SplashScreen();
+    SplashScreen screen = new SplashScreen();
     Intro intro = new Intro();
     String help = "List of available commands: \nlook <item/room>\ngo <direction>\nget <item>\n";
 
@@ -21,6 +21,7 @@ class TravelerApp {
     public void initialize(){
         welcome();
         promptForNewGame(); // sets gameOver
+        intro.introduction();
     }
 
     // start called from promptForNewGame(), main part of game
@@ -56,8 +57,7 @@ class TravelerApp {
     }
 
     private void welcome() {
-//        screen.splashScreen();
-        intro.introduction();
+        screen.splashScreen();
         System.out.println("WELCOME");
     }
 
