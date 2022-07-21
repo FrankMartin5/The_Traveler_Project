@@ -16,24 +16,38 @@ class TravelerApp {
     Prompter prompter = new Prompter(new Scanner(System.in));
     SplashScreens screen = new SplashScreens();
     Intro intro = new Intro();
+    String help = "List of available commands: \nlook <item/room>\ngo <direction>\nget <item>\n";
 
 
 //    initialize calls methods
     public void initialize(){
         welcome();
         promptForNewGame(); // sets gameOver
+        intro.introduction();
     }
 
     // start called from promptForNewGame(), main part of game
     public void start() {
         while (!gameOver) {
             String command = prompter.prompt("What would you like to do?");
-            if (command !=null) {
-                switch (command){
-                    case "quit game":
-                        end();
+            if (command.equals("quit game")) {
+                end();
+            }
+            else if (command !=null) {
+                switch (verbParse(command)){
+                    case "go":
+                        System.out.println("go command");
+                        System.out.println(nounParse(command));
+                        break;
+                    default:
+                        System.out.println("You can't do that");
+                        System.out.println(help);
                         break;
                 }
+            }
+            else {
+                System.out.println("else");
+                end();
             }
         }
     }
@@ -42,12 +56,10 @@ class TravelerApp {
     public void end() {
         setGameOver(true);
         System.out.println("GAME OVER");
-
     }
 
     private void welcome() {
-//        screen.splashScreen();
-        intro.introduction();
+        screen.splashScreen();
         System.out.println("WELCOME");
     }
 
@@ -74,11 +86,15 @@ class TravelerApp {
 
     // TODO: create verb Parser
     private String verbParse(String input) {
-
-        return input;
+        String[] command = input.split(" ");
+        return command[0];
     }
 
     //TODO: create noun parser
+    private String nounParse(String input) {
+        String[] command = input.split(" ");
+        return command[1];
+    }
 
     //Getter and setter
 
