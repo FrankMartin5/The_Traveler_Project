@@ -2,7 +2,7 @@ package com.traveler.model;
 
 import java.util.*;
 
-class Items {
+public class Items {
     private HashMap<String, String> item = new HashMap<>();
 
     public static List<HashMap<String, String>> allItems = new ArrayList<HashMap<String, String>>();
@@ -14,9 +14,13 @@ class Items {
 
     Map test = new Hashtable<String, String>();
 
+    public Items(){
+        this.populateItem();
+    }
+
     public static void getAllItems(){
         for (HashMap<String, String> item : allItems
-             ) {
+        ) {
             System.out.println(item.keySet());
         }
     }
@@ -36,4 +40,15 @@ class Items {
             }
         }
     }
+
+    private void populateItem() {
+        this.setItem("key", "opens door");
+        this.setItem("shield", "blocks");
+    }
+
+//      TODO: delete this main method
+//    public static void main(String[] args) {
+//        Items i = new Items();
+//        Items.cmdLook("key");
+//    }
 }
