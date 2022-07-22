@@ -38,7 +38,7 @@ class TravelerApp {
     // start called from promptForNewGame(), main part of game
     public void start() {
         while (!gameOver) {
-            // command is the main promt that dictates flow of game
+            // command is the main prompt that dictates flow of game
             String command = prompter.prompt("\nWhat would you like to do?");
             if (textParse(command).equals("quit game")) {
                 end();
@@ -56,7 +56,7 @@ class TravelerApp {
                 switch (verb){
                     // go verb calls the cmdGo in Rooms class
                     case "go":
-//                        room.cmdGo(noun);
+                        // room.cmdGo(noun);
                         System.out.println("recognized verb go, this should call room.cmdGo(noun)");
                         break;
                     // look verb can be Items or Rooms, calls items if not 'north, west, south, east'
@@ -65,7 +65,7 @@ class TravelerApp {
                         if (dir.contains(noun)) {
                             System.out.println("recognized verb look, this should call room.cmdLook(noun)");
                         }
-//                        else call item.cmdLook(noun)
+                        //else call item.cmdLook(noun)
                         else {
                             Items.cmdLook(noun);
                             System.out.println("recognized verb look, this should call item.cmdLook(noun)");
