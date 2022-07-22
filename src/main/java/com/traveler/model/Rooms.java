@@ -1,65 +1,84 @@
 package com.traveler.model;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.Map;
+import java.util.List;
+
 public class Rooms {
 
-    static class Room {
-        String name;
-        String desc;
-        String north;
-        String south;
-        String east;
-        String west;
-        Room currentRoom;
+    String name;
+    String desc;
+    String item;
+    String north;
+    String south;
+    String east;
+    String west;
+    Rooms currentRoom;
 
-        //constructor
-        public Room(String name, String desc, String north, String south, String east, String west) {
-            this.name = name;
-            this.desc = desc;
-            this.north = north;
-            this.south = south;
-            this.east = east;
-            this.west = west;
-        }
+    public String getName() {
+        return name;
+    }
 
-        public String getName() {
-            return name;
-        }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-        public String getDesc() {
-            return desc;
-        }
+    public String getDesc() {
+        return desc;
+    }
 
-        public void cmdLook(String noun){
-            System.out.println(currentRoom.south);
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
 
-        }
+    public String getItem() {
+        return item;
+    }
 
-        public void createRoom(){
+    public void setItem(String item) {
+        this.item = item;
+    }
 
-        Room room1 = new Room("great_hall","main room, starting point of game" , "dining chamber",
-                    "warlocks chamber", "torture chamber", "crypt");
+    public String getNorth() {
+        return north;
+    }
 
-        Room room2 = new Room("dining_chamber","north of great_hall. be careful soldier. " +
-                "danger lurks ahead. be at alert for keys" , null,
-                "great_hall", "ancient study", null);
+    public void setNorth(String north) {
+        this.north = north;
+    }
 
-        Room room3 = new Room("warlocks_quarters","main room" , null,
-                null, null , "crypt");
+    public String getSouth() {
+        return south;
+    }
 
-        Room room4 = new Room("crypt","main room" , "dining chamber",
-                "warlocks chamber", "torture chamber", "crypt");
+    public void setSouth(String south) {
+        this.south = south;
+    }
 
-        Room room5 = new Room("torture_chamber","main room" , "dining chamber",
-                "warlocks chamber", "torture chamber", "crypt");
+    public String getEast() {
+        return east;
+    }
 
-        }
+    public void setEast(String east) {
+        this.east = east;
+    }
 
-        public static void main(String[] args) {
+    public String getWest() {
+        return west;
+    }
 
-        }
+    public void setWest(String west) {
+        this.west = west;
+    }
 
-
-
+    static String roomsArray =
+                    "[{\"name\" : \"great_hall\",\"desc\" : \"(Starting point of game. )You are standing in the great hall of Racumens Castle. there is a random troll in the east corner of the room. (suggest to talk to him) \" ,\"item\" : \"lantern\",\"south\" : \"warlocks chamber\" ,\"east\" : \"torture chamber\",\"north\" : \"dining chamber\",\"west\" : \"crypt\"}, " +
+                    "{\"name\" : \"dining_chamber\" ,\"desc\" : \"you are north of great_hall. be careful soldier. An orc charges at you. (Here we battle for an item)\",\"item\" :\"key (locked) \" ,\"south\" : \" great hall\",\"east\" : \" ancient study\"}," +
+                    "{\"name\" : \"crypt\" ,\"desc\" : \"Locked room. You need a key to get in. Perhaps you collected one in your deadly defeat of the orc in the dining chamber. Beware of traps.\" ,\"item\" : \"confusion potion , shield potion\" ,\"east\" : \"great hall\"}," +
+                    "{\"name\" : \"torture_chamber\" ,\"desc\" : \"you are in the torture chamber. be careful soldier,danger lurks ahead \" ,\"south\" : \"torture chamber\" ,\"east\" : \" crypt\"}," +
+                    "{\"name\" : \"warlocks_chamber\" ,\"desc\" : \"Boss room. Racumen lurks nearby\" ,\"north\" : \"great hall\" }," +
+                    "{\"name\" : \"Ancient_study\" ,\"desc\" : \"Ancient study. Library of all the great books in the world \",\"west\" :\"dining chamber\"}]";
 
     }
-}
