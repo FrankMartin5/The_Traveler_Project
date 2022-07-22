@@ -20,7 +20,7 @@ class TravelerApp {
     SplashScreens screen = new SplashScreens();
     Intro intro = new Intro();
 //    Rooms room = new Rooms();
-    Items item = new Items();
+//    Items item = new Items();
 
     String help = "List of available commands: \nlook <item/room>: get information\ngo <direction>: enter room in that direction" +
             "\nget <item>: adds item to inventory\nquit game: exit the game without saving";
@@ -67,7 +67,7 @@ class TravelerApp {
                         }
 //                        else call item.cmdLook(noun)
                         else {
-                            item.cmdLook(noun);
+                            Items.cmdLook(noun);
                             System.out.println("recognized verb look, this should call item.cmdLook(noun)");
                         }
                         break;
