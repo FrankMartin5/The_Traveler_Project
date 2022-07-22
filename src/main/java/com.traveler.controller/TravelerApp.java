@@ -1,5 +1,6 @@
 package com.traveler.controller;
 
+import com.traveler.model.Items;
 import com.traveler.model.Rooms;
 import com.traveler.view.Prompter;
 import com.traveler.view.Intro;
@@ -17,10 +18,7 @@ import java.util.Scanner;
 class TravelerApp {
     private boolean gameOver = false;
     Prompter prompter = new Prompter(new Scanner(System.in));
-    SplashScreens screen = new SplashScreens();
-    Intro intro = new Intro();
 //    Rooms room = new Rooms();
-    Items item = new Items();
 
     String help = "List of available commands: \nlook <item/room>: get information\ngo <direction>: enter room in that direction" +
             "\nget <item>: adds item to inventory\nquit game: exit the game without saving";
@@ -40,7 +38,7 @@ class TravelerApp {
     // start called from promptForNewGame(), main part of game
     public void start() {
         while (!gameOver) {
-            // TODO: figure out how to except single words
+            // command is the main promt that dictates flow of game
             String command = prompter.prompt("\nWhat would you like to do?");
             if (textParse(command).equals("quit game")) {
                 end();
@@ -56,10 +54,12 @@ class TravelerApp {
                 String verb = verbParse(command);
                 String noun = nounParse(command);
                 switch (verb){
+                    // go verb calls the cmdGo in Rooms class
                     case "go":
 //                        room.cmdGo(noun);
                         System.out.println("recognized verb go, this should call room.cmdGo(noun)");
                         break;
+                    // look verb can be Items or Rooms, calls items if not 'north, west, south, east'
                     case "look":
                         //if noun is in dir arraylist
                         if (dir.contains(noun)) {
@@ -67,7 +67,7 @@ class TravelerApp {
                         }
 //                        else call item.cmdLook(noun)
                         else {
-                            item.cmdLook(noun);
+                            Items.cmdLook(noun);
                             System.out.println("recognized verb look, this should call item.cmdLook(noun)");
                         }
                         break;
@@ -93,7 +93,7 @@ class TravelerApp {
     }
 
     private void welcome() {
-        screen.art();
+        SplashScreens.art();
         System.out.println("Welcome");
     }
 
@@ -102,7 +102,7 @@ class TravelerApp {
         String start = prompter.prompt("Would you like to start a new game or continue from save? [N]ew game or [S]saved game: ");
         if (textParse(start).equals("n")) {
             System.out.println("STARTING NEW GAME");
-            intro.introduction();
+            Intro.introduction();
             start();
         } else if (textParse(start).equals("s")) {
             System.out.println("STARTING SAVED GAME");
