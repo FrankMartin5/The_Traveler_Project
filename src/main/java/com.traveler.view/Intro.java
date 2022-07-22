@@ -7,7 +7,7 @@ public class Intro {
             "your family for generations. It is the week of your 35th birthday and you and your hologram companion, Reanu Keeves must now travel back to the past to stop Racumen\n" +
             "from placing a curse on your family.";
 
-    public void introduction() {
+    public static void introduction() {
         System.out.println(introduction);
     }
 
