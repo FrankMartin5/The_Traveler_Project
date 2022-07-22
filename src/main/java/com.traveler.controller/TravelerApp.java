@@ -59,7 +59,7 @@ class TravelerApp {
     }
 
     private void welcome() {
-        screen.splashScreen();
+//        screen.splashScreens();
         System.out.println("WELCOME");
     }
 
