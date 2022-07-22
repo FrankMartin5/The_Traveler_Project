@@ -17,7 +17,7 @@ public class SplashScreens {
         Graphics2D graphics = (Graphics2D) g;
             graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
         RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-            graphics.drawString("THE TRAVELER...your adventure awaits!!!", 10, 20);
+            graphics.drawString("THE TRAVELER", 10, 20);
 
             for (int y = 0; y < height; y++) {
             StringBuilder sb = new StringBuilder();
@@ -33,4 +33,8 @@ public class SplashScreens {
         }
     }
 
+    //    TODO: remove before commit.  For test purpose only
+    public static void main(String[] args) {
+        SplashScreens.art();
+    }
 }
