@@ -3,44 +3,34 @@ package com.traveler.view;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 public class SplashScreens {
-    JFrame frame;
-    JLabel image=new JLabel(new ImageIcon("traveler.png"));
-    JLabel text=new JLabel("The Traveler.....");//display text
-    public SplashScreens()
-    {
-        createGUI();
-        addImage();
-    }
-    public void createGUI(){
 
-        var lab = new JLabel("MY LABEL HERE");
+    public static void art() {
+        int width = 300;
+        int height = 20;
+        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        Graphics g = image.getGraphics();
+            g.setFont(new Font("SansSerif", Font.BOLD, 14));
 
+        Graphics2D graphics = (Graphics2D) g;
+            graphics.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+        RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+            graphics.drawString("THE TRAVELER...your adventure awaits!!!", 10, 20);
 
-        frame=new JFrame();
-        frame.pack();
-        frame.getContentPane().setLayout(null);
-//        frame.setUndecorated(true);
-        frame.setSize(400,400);
-        frame.setLocationRelativeTo(null);
-        frame.getContentPane().setBackground(Color.gray);
-        frame.setVisible(true);
-        frame.setTitle("The Travel...your adventure awaits");
+            for (int y = 0; y < height; y++) {
+            StringBuilder sb = new StringBuilder();
+            for (int x = 0; x < width; x++) {
+                sb.append(image.getRGB(x, y) == -16777216 ? " " : "!");
+            }
+
+            if (sb.toString().trim().isEmpty()) {
+                continue;
+            }
+
+            System.out.println(sb);
+        }
     }
-    public void addImage(){
-        image.setSize(400,400);
-        frame.add(image);
-        image.setVisible(true);
-        image.setIcon(new ImageIcon("src/main/resources/mountainTraveler.jpg"));
-        image.setText("Background failed to load");
-        image.setBorder(new EmptyBorder(20,10,50,0));
-    }
-    public void addText()
-    {
-        text.setFont(new Font("arial",Font.BOLD,30));//font setting
-        text.setBounds(170,220,600,40);//Size and location
-        text.setForeground(Color.black);//Setting font color
-        frame.add(text);// text for the frame
-    }
+
 }

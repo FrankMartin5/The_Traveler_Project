@@ -16,17 +16,19 @@ class Items {
     public static void getAllItems(){
         for (HashMap<String, String> item : allItems
              ) {
-            System.out.println("PRINTING " + item);
+            System.out.println(item.keySet());
         }
     }
 
     public static void itemLookUp(String noun) {
         for (HashMap<String, String> itemNoun : allItems
         ) {
+            if(!itemNoun.containsKey(noun)){
+                System.out.println(noun+": not available.");
+                return;
+            }
             if( itemNoun.containsKey(noun)){
                 System.out.println(noun+": " + itemNoun.get(noun));
-            }else{
-                System.out.println(noun+": not available.");
             }
         }
     }
@@ -50,6 +52,7 @@ class Items {
         Items i3 = new Items();
         i3.setItem("shield", "as stated in the Iliad, is a device carried by Athena and Zeus, variously interpreted as an animal skin or a shield and sometimes featuring the head of a Gorgon. There may be a connection with a deity named Aex or Aix, a daughter of Helios and a nurse of Zeus or alternatively a mistress of Zeus");
 //        Items.getAllItems();
-        Items.itemLookUp("key");
+        Items.itemLookUp("skey");
+//        Items.getAllItems();
     }
 }
