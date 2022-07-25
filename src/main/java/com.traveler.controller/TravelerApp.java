@@ -1,5 +1,6 @@
 package com.traveler.controller;
 
+import com.traveler.model.Item;
 import com.traveler.model.Items;
 import com.traveler.model.Rooms;
 import com.traveler.view.Prompter;
@@ -15,11 +16,13 @@ import java.util.Collection;
 import java.util.Locale;
 import java.util.Scanner;
 
+import static com.traveler.model.Item.fromJsonToArray;
+
 class TravelerApp {
     private boolean gameOver = false;
     Prompter prompter = new Prompter(new Scanner(System.in));
 //    Rooms room = new Rooms();
-    Items item = new Items();
+    Item item = new Item();
 
 
     String help = "List of available commands: \nlook <item/room>: get information\ngo <direction>: enter room in that direction" +
@@ -28,11 +31,12 @@ class TravelerApp {
     ArrayList<String> dir= new ArrayList<String>();
 
 //    initialize calls methods
-    public void initialize(){
+    public void initialize() throws IOException {
         dir.add("north");
         dir.add("south");
         dir.add("west");
         dir.add("east");
+        fromJsonToArray();
         welcome();
         promptForNewGame(); // sets gameOver
     }
@@ -69,7 +73,7 @@ class TravelerApp {
                         }
                         //else call item.cmdLook(noun)
                         else {
-                            Items.cmdLook(noun);
+                            item.cmdLook(noun);
                             System.out.println("recognized verb look, this should call item.cmdLook(noun)");
                         }
                         break;
