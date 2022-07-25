@@ -1,12 +1,14 @@
 package com.traveler.model;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.Map;
+import java.util.Arrays;
 import java.util.List;
 
-public class Rooms {
+
+public class Room {
 
     String name;
     String desc;
@@ -15,62 +17,33 @@ public class Rooms {
     String south;
     String east;
     String west;
-    Rooms currentRoom;
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getDesc() {
         return desc;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
-
     public String getItem() {
         return item;
-    }
-
-    public void setItem(String item) {
-        this.item = item;
     }
 
     public String getNorth() {
         return north;
     }
 
-    public void setNorth(String north) {
-        this.north = north;
-    }
-
     public String getSouth() {
         return south;
-    }
-
-    public void setSouth(String south) {
-        this.south = south;
     }
 
     public String getEast() {
         return east;
     }
 
-    public void setEast(String east) {
-        this.east = east;
-    }
-
     public String getWest() {
         return west;
-    }
-
-    public void setWest(String west) {
-        this.west = west;
     }
 
     static String roomsArray =
@@ -81,4 +54,41 @@ public class Rooms {
                     "{\"name\" : \"warlocks_chamber\" ,\"desc\" : \"Boss room. Racumen lurks nearby\" ,\"north\" : \"great hall\" }," +
                     "{\"name\" : \"Ancient_study\" ,\"desc\" : \"Ancient study. Library of all the great books in the world \",\"west\" :\"dining chamber\"}]";
 
+
+    public void  getCurrentRoom() {
+        ObjectMapper mapper = new ObjectMapper();
+
+        try {
+            System.out.println("test");
+            Room[] room = mapper.readValue(roomsArray, Room[].class);
+
+            for (Room r : room) {
+                this.name = r.getName();
+                this.desc = r.getDesc();
+                this.item = r.getItem();
+                this.north = r.getNorth();
+                this.south = r.getSouth();
+                this.east = r.getEast();
+                this.west = r.getWest();
+            }
+            System.out.println(this.toString());
+
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
     }
+
+    @Override
+    public String toString() {
+        return "Rooms{" +
+                "name='" + name + '\'' +
+                ", desc='" + desc + '\'' +
+                ", item='" + item + '\'' +
+                ", north='" + north + '\'' +
+                ", south='" + south + '\'' +
+                ", east='" + east + '\'' +
+                ", west='" + west + '\'' +
+                '}';
+    }
+}

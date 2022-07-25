@@ -1,18 +1,11 @@
 package com.traveler.controller;
 
 import com.traveler.model.Items;
-import com.traveler.model.Rooms;
 import com.traveler.view.Prompter;
 import com.traveler.view.Intro;
 import com.traveler.view.SplashScreens;
 
-import java.awt.*;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Locale;
 import java.util.Scanner;
 
 class TravelerApp {
