@@ -7,10 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class Item{
     String name;
@@ -20,7 +17,7 @@ public class Item{
     public static List<Item> inventory;
 
     // method that reads from json file and loads inventory with Item objects
-    public static List<Item> fromJsonToArray() throws IOException {
+    public static List<Item> itemsFromJsonToArray() throws IOException {
         Gson gson = new Gson();
         Type itemListType = new TypeToken<List<Item>>() {}.getType();
         inventory = new Gson().fromJson(new FileReader("src/main/resources/items.json"), itemListType);
@@ -98,6 +95,7 @@ public class Item{
         * */
         return message;
     }
+
 //    TODO: remove after testing
 //    public static void main(String[] args) {
 //        Item item = new Item();
@@ -106,6 +104,7 @@ public class Item{
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
+
 //        var returnedItem = item.cmdGetItem("ksey");
 //        //this is not the anticipated flow of the game.
 //        //Only for testing
@@ -113,5 +112,8 @@ public class Item{
 //            var test = item.addItem(returnedItem.get());
 //            System.out.println("TEST " + test);
 //        }
+
+//        var returnedItem = item.cmdGetItem("key");
+
 //    }
 }
