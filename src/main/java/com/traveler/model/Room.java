@@ -1,10 +1,11 @@
 package com.traveler.model;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.util.Arrays;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.FileReader;
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.List;
 
 
@@ -12,83 +13,122 @@ public class Room {
 
     String name;
     String desc;
-    String item;
+    //    List<Item> items;
     String north;
     String south;
     String east;
     String west;
+    static Room currentRoom;
 
-    public String getName() {
-        return name;
+    public static List<Room> allRooms;
+
+    public static List<Room> roomsFromJsonToArray() throws IOException {
+        Gson gson = new Gson();
+        Type roomListType = new TypeToken<List<Room>>() {
+        }.getType();
+        allRooms = new Gson().fromJson(new FileReader("src/main/resources/rooms.json"), roomListType);
+        return allRooms;
     }
 
-    public String getDesc() {
-        return desc;
+    // a method that returns current room info, aka toString
+    public static void cmdRoomInfo() {
+        System.out.println(currentRoom.toString());
     }
 
-    public String getItem() {
-        return item;
-    }
-
-    public String getNorth() {
-        return north;
-    }
-
-    public String getSouth() {
-        return south;
-    }
-
-    public String getEast() {
-        return east;
-    }
-
-    public String getWest() {
-        return west;
-    }
-
-    static String roomsArray =
-                    "[{\"name\" : \"great_hall\",\"desc\" : \"(Starting point of game. )You are standing in the great hall of Racumens Castle. there is a random troll in the east corner of the room. (suggest to talk to him) \" ,\"item\" : \"lantern\",\"south\" : \"warlocks chamber\" ,\"east\" : \"torture chamber\",\"north\" : \"dining chamber\",\"west\" : \"crypt\"}, " +
-                    "{\"name\" : \"dining_chamber\" ,\"desc\" : \"you are north of great_hall. be careful soldier. An orc charges at you. (Here we battle for an item)\",\"item\" :\"key (locked) \" ,\"south\" : \" great hall\",\"east\" : \" ancient study\"}," +
-                    "{\"name\" : \"crypt\" ,\"desc\" : \"Locked room. You need a key to get in. Perhaps you collected one in your deadly defeat of the orc in the dining chamber. Beware of traps.\" ,\"item\" : \"confusion potion , shield potion\" ,\"east\" : \"great hall\"}," +
-                    "{\"name\" : \"torture_chamber\" ,\"desc\" : \"you are in the torture chamber. be careful soldier,danger lurks ahead \" ,\"south\" : \"torture chamber\" ,\"east\" : \" crypt\"}," +
-                    "{\"name\" : \"warlocks_chamber\" ,\"desc\" : \"Boss room. Racumen lurks nearby\" ,\"north\" : \"great hall\" }," +
-                    "{\"name\" : \"Ancient_study\" ,\"desc\" : \"Ancient study. Library of all the great books in the world \",\"west\" :\"dining chamber\"}]";
-
-
-    public void  getCurrentRoom() {
-        ObjectMapper mapper = new ObjectMapper();
-
-        try {
-            System.out.println("test");
-            Room[] room = mapper.readValue(roomsArray, Room[].class);
-
-            for (Room r : room) {
-                this.name = r.getName();
-                this.desc = r.getDesc();
-                this.item = r.getItem();
-                this.north = r.getNorth();
-                this.south = r.getSouth();
-                this.east = r.getEast();
-                this.west = r.getWest();
-            }
-            System.out.println(this.toString());
-
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
+    // method cmdGo that changes the currentRoom to a corresponding room
+    public void cmdGo(String noun) {
+        switch (noun) {
+            case "north":
+                System.out.println("Attempting to go north\n");
+                goNorth();
+                break;
+            case "south":
+                System.out.println("Attempting to go south\n");
+                goSouth();
+                break;
+            case "east":
+                System.out.println("Attempting to go east\n");
+                goEast();
+                break;
+            case "west":
+                System.out.println("Attempting to go west\n");
+                goWest();
+                break;
         }
-
     }
+
+    // TODO: a method that returns what they see in that direction
+    public void cmdLook(String noun) {
+        switch (noun) {
+            case "north":
+                System.out.println("Looking north, you see "+ currentRoom.north);
+                break;
+            case "south":
+                System.out.println("Looking south, you see "+ currentRoom.south);
+                break;
+            case "east":
+                System.out.println("Looking east, you see "+ currentRoom.east);
+                break;
+            case "west":
+                System.out.println("Looking west, you see "+ currentRoom.west);
+                break;
+        }
+    }
+
+    public void goNorth() {
+        for (Room room : allRooms) {
+            if (room.name.equals(currentRoom.north)) {
+                this.setCurrentRoom(room);
+                return;
+            }
+        }
+        System.out.println("Can't go North");
+    }
+
+    public void goSouth() {
+        for (Room room : allRooms) {
+            if (room.name.equals(currentRoom.south)) {
+                this.setCurrentRoom(room);
+                return;
+            }
+        }
+        System.out.println("Can't go South");
+    }
+
+    public void goEast() {
+        for (Room room : allRooms) {
+            if (room.name.equals(currentRoom.east)) {
+                this.setCurrentRoom(room);
+                return;
+            }
+        }
+        System.out.println("Can't go East");
+    }
+
+    public void goWest() {
+        for (Room room : allRooms) {
+            if (room.name.equals(currentRoom.west)) {
+                this.setCurrentRoom(room);
+                return;
+            }
+        }
+        System.out.println("Can't go West");
+    }
+
+    public void setCurrentRoom(Room room) {
+        this.currentRoom = room;
+        System.out.println(currentRoom.toString());
+    }
+
 
     @Override
     public String toString() {
-        return "Rooms{" +
-                "name='" + name + '\'' +
-                ", desc='" + desc + '\'' +
-                ", item='" + item + '\'' +
-                ", north='" + north + '\'' +
-                ", south='" + south + '\'' +
-                ", east='" + east + '\'' +
-                ", west='" + west + '\'' +
-                '}';
+        return "============================================\n" +
+                "You are in the " + name + "\n" +
+                desc + "\n" +
+                "To the north is " + north + "\n" +
+                "To the south is " + south + "\n" +
+                "To the east is " + east + "\n" +
+                "To the west is " + west + "\n";
     }
 }
