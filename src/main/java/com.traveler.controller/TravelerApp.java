@@ -2,19 +2,22 @@ package com.traveler.controller;
 
 import com.traveler.model.Item;
 import com.traveler.model.Items;
+import com.traveler.model.Room;
 import com.traveler.view.Prompter;
 import com.traveler.view.Intro;
 import com.traveler.view.SplashScreens;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import static com.traveler.model.Item.fromJsonToArray;
+import static com.traveler.model.Item.itemsFromJsonToArray;
+import static com.traveler.model.Room.*;
 
 class TravelerApp {
     private boolean gameOver = false;
     Prompter prompter = new Prompter(new Scanner(System.in));
-//    Rooms room = new Rooms();
+    Room room = new Room();
     Item item = new Item();
 
 
@@ -29,7 +32,8 @@ class TravelerApp {
         dir.add("south");
         dir.add("west");
         dir.add("east");
-        fromJsonToArray();
+        itemsFromJsonToArray();
+        roomsFromJsonToArray();
         welcome();
         promptForNewGame(); // sets gameOver
     }
@@ -41,6 +45,9 @@ class TravelerApp {
             String command = prompter.prompt("\nWhat would you like to do?");
             if (textParse(command).equals("quit game")) {
                 end();
+            }
+            else if (textParse(command).equals("room info")) {
+                cmdRoomInfo();
             }
             else if (textParse(command).equals("help")) {
                 System.out.println(help);
@@ -55,19 +62,20 @@ class TravelerApp {
                 switch (verb){
                     // go verb calls the cmdGo in Rooms class
                     case "go":
-                        // room.cmdGo(noun);
                         System.out.println("recognized verb go, this should call room.cmdGo(noun)");
+                        room.cmdGo(noun);
                         break;
                     // look verb can be Items or Rooms, calls items if not 'north, west, south, east'
                     case "look":
                         //if noun is in dir arraylist
                         if (dir.contains(noun)) {
                             System.out.println("recognized verb look, this should call room.cmdLook(noun)");
+                            room.cmdLook(noun);
                         }
                         //else call item.cmdLook(noun)
                         else {
-                            item.cmdLook(noun);
                             System.out.println("recognized verb look, this should call item.cmdLook(noun)");
+                            item.cmdLook(noun);
                         }
                         break;
                     case "help":
@@ -102,6 +110,7 @@ class TravelerApp {
         if (textParse(start).equals("n")) {
             System.out.println("STARTING NEW GAME");
             Intro.introduction();
+            room.setCurrentRoom(allRooms.get(0));
             start();
         } else if (textParse(start).equals("s")) {
             System.out.println("STARTING SAVED GAME");

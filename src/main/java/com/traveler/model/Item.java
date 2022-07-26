@@ -19,7 +19,7 @@ public class Item{
     public static List<Item> inventory;
 
     // method that reads from json file and loads inventory with Item objects
-    public static List<Item> fromJsonToArray() throws IOException {
+    public static List<Item> itemsFromJsonToArray() throws IOException {
         Gson gson = new Gson();
         Type itemListType = new TypeToken<List<Item>>() {}.getType();
         inventory = new Gson().fromJson(new FileReader("src/main/resources/items.json"), itemListType);
