@@ -6,6 +6,7 @@ import com.traveler.view.Prompter;
 import com.traveler.view.Intro;
 import com.traveler.view.SplashScreens;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
