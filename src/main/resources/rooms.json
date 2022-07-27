@@ -5,7 +5,13 @@
     "north":"dining chamber",
     "south":"warlock's chamber",
     "east":"torture chamber",
-    "west":"crypt"
+    "west":"crypt",
+    "items": [
+      {
+        "name":"TBD",
+        "desc":"TBD"
+      }
+    ]
   },
   {
     "name":"dining chamber",
@@ -13,7 +19,13 @@
     "south":"great hall",
     "east":"ancient study",
     "west": "nothing",
-    "north": "nothing"
+    "north": "nothing",
+    "items": [
+      {
+        "name": "TBD",
+        "desc": "TBD"
+      }
+    ]
   },
   {
     "name":"crypt",
@@ -21,7 +33,17 @@
     "east":"great hall",
     "west": "nothing",
     "north": "nothing",
-    "south": "nothing"
+    "south": "nothing",
+    "items": [
+  {
+    "name": "confusion potion",
+    "desc": "confuse"
+  },
+  {
+    "name": "shield potion",
+    "desc": "shield"
+  }
+  ]
   },
   {
     "name":"torture chamber",
@@ -29,7 +51,13 @@
     "south":"nothing",
     "east":"nothing",
     "west": "great hall",
-    "north": "nothing"
+    "north": "nothing",
+    "items": [
+      {
+        "name":"TBD",
+        "desc":"TBD"
+      }
+    ]
   },
   {
     "name":"warlock's chamber",
@@ -37,7 +65,13 @@
     "north":"great hall",
     "west": "nothing",
     "south": "nothing",
-    "east": "nothing"
+    "east": "nothing",
+    "items": [
+      {
+        "name":"TBD",
+        "desc":"TBD"
+      }
+    ]
   },
   {
     "name":"ancient study",
@@ -45,6 +79,11 @@
     "west":"dining chamber",
     "north": "nothing",
     "south": "nothing",
-    "east": "nothing"
+    "east": "nothing",
+    "items":[
+      {
+        "name":"TBD",
+        "desc":"TBD"
+      }]
   }
 ]

@@ -6,6 +6,7 @@ import com.google.gson.reflect.TypeToken;
 import java.io.FileReader;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -13,7 +14,7 @@ public class Room {
 
     String name;
     String desc;
-    //    List<Item> items;
+    List<Item> items;
     String north;
     String south;
     String east;
@@ -130,5 +131,22 @@ public class Room {
                 "To the south is " + south + "\n" +
                 "To the east is " + east + "\n" +
                 "To the west is " + west + "\n";
+    }
+
+    public static void main(String[] args) {
+        try {
+            var rooms = Room.roomsFromJsonToArray();
+            for (Room room : rooms
+                 ) {
+//                System.out.println(room.items);
+                for (Item rm : room.items
+                     ) {
+                    System.out.println(rm.name);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }
