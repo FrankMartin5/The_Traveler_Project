@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 
 public class Room {
@@ -121,6 +122,24 @@ public class Room {
         System.out.println(currentRoom.toString());
     }
 
+    public Optional<Item> cmdPickUpItem(String noun){
+        Optional<Item> requestedItem = Optional.empty();
+        if(noun != null && !noun.isEmpty() && items.contains(noun)){
+            requestedItem = Optional.ofNullable(items.remove(items.indexOf(noun)));
+            System.out.println("ofNullable" + requestedItem);
+        }
+        return requestedItem;
+    }
+
+//    public static void main(String[] args) {
+//        Room rm = new Room();
+//        try {
+//            Room.roomsFromJsonToArray();
+//            rm.cmdPickUpItem("confusion potion");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
     @Override
     public String toString() {
         return "============================================\n" +
