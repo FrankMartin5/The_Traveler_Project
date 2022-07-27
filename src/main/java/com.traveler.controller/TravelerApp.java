@@ -19,6 +19,7 @@ class TravelerApp {
     Prompter prompter = new Prompter(new Scanner(System.in));
     Room room = new Room();
     Item item = new Item();
+    NPC npc = new NPC();
 
 
     String help = "List of available commands: \nlook <item/room>: get information\ngo <direction>: enter room in that direction" +
@@ -34,6 +35,7 @@ class TravelerApp {
         dir.add("east");
         itemsFromJsonToArray();
         roomsFromJsonToArray();
+        NPCArray();
         welcome();
         promptForNewGame(); // sets gameOver
     }
@@ -62,6 +64,7 @@ class TravelerApp {
                 switch (verb){
                     // go verb calls the cmdGo in Rooms class
                     case "go":
+                        // TODO: if unrecognized noun, handle error
                         System.out.println("recognized verb go, this should call room.cmdGo(noun)");
                         room.cmdGo(noun);
                         break;
@@ -78,6 +81,9 @@ class TravelerApp {
                             item.cmdLook(noun);
                         }
                         break;
+                    case "talk":
+                        System.out.println("recognized verb talk, calls npc.cmdTalk(noun)");
+                        npc.cmdTalk(noun);
                     case "help":
                         System.out.println(help);
                     default:
@@ -127,13 +133,13 @@ class TravelerApp {
         return input.trim().toLowerCase();
     }
 
-    // TODO: create verb Parser
+    // verb parser to get just the verb
     private String verbParse(String input) {
         String[] command = textParse(input).split(" ");
         return command[0];
     }
 
-    //TODO: create noun parser
+    // a noun parser to get just the noun
     private String nounParse(String input) {
         String[] command = textParse(input).split(" ");
         return command[1];
