@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
 
-class NPC {
+public class NPC {
     String name;
     String talk;
 
@@ -24,7 +24,7 @@ class NPC {
     }
 
     // when command is "talk <npc>" returns talk
-    public static void cmdTalk(String noun) {
+    public void cmdTalk(String noun) {
         for(NPC i: npcList){
             if (i.name.equals(noun)) {
                 System.out.println(i.talk);
