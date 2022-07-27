@@ -1,0 +1,13 @@
+[
+  {
+    "name":"gnome",
+    "talk": "Hey Traveler, be careful of this place. Chaos is abound.",
+    "room": "great hall"
+  },
+  {
+    "name":"elon",
+    "talk": "insert witty tweet from elon musk",
+    "room": "ancient study"
+  }
+
+]
