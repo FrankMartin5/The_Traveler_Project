@@ -133,20 +133,5 @@ public class Room {
                 "To the west is " + west + "\n";
     }
 
-    public static void main(String[] args) {
-        try {
-            var rooms = Room.roomsFromJsonToArray();
-            for (Room room : rooms
-                 ) {
-//                System.out.println(room.items);
-                for (Item rm : room.items
-                     ) {
-                    System.out.println(rm.name);
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
-    }
 }
