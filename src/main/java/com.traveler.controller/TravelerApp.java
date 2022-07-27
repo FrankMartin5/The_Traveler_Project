@@ -2,6 +2,7 @@ package com.traveler.controller;
 
 import com.traveler.model.Item;
 import com.traveler.model.Items;
+import com.traveler.model.NPC;
 import com.traveler.model.Room;
 import com.traveler.view.Prompter;
 import com.traveler.view.Intro;
@@ -12,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import static com.traveler.model.Item.itemsFromJsonToArray;
+import static com.traveler.model.NPC.NPCArray;
 import static com.traveler.model.Room.*;
 
 class TravelerApp {
@@ -44,7 +46,7 @@ class TravelerApp {
     public void start() {
         while (!gameOver) {
             // command is the main prompt that dictates flow of game
-            String command = prompter.prompt("\nWhat would you like to do?");
+            String command = prompter.prompt("\nWhat would you like to do? ");
             if (textParse(command).equals("quit game")) {
                 end();
             }
@@ -84,6 +86,7 @@ class TravelerApp {
                     case "talk":
                         System.out.println("recognized verb talk, calls npc.cmdTalk(noun)");
                         npc.cmdTalk(noun);
+                        break;
                     case "help":
                         System.out.println(help);
                     default:
