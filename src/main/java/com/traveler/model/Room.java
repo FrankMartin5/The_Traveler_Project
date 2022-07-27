@@ -5,6 +5,8 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
@@ -25,9 +27,10 @@ public class Room {
 
     public static List<Room> roomsFromJsonToArray() throws IOException {
         Gson gson = new Gson();
-        Type roomListType = new TypeToken<List<Room>>() {
-        }.getType();
-        allRooms = new Gson().fromJson(new FileReader("src/main/resources/rooms.json"), roomListType);
+        Type roomListType = new TypeToken<List<Room>>() {}.getType();
+        Reader reader = new InputStreamReader(Room.class.getResourceAsStream("/rooms.json"));
+        allRooms = new Gson().fromJson(reader, roomListType);
+        reader.close();
         return allRooms;
     }
 

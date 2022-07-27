@@ -5,6 +5,8 @@ import com.google.gson.reflect.TypeToken;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.lang.reflect.Type;
 import java.util.List;
 
@@ -19,7 +21,9 @@ public class NPC {
     public static List<NPC> NPCArray() throws IOException {
         Gson gson = new Gson();
         Type itemListType = new TypeToken<List<NPC>>() {}.getType();
-        npcList = new Gson().fromJson(new FileReader("src/main/resources/npc.json"), itemListType);
+        Reader reader = new InputStreamReader(NPC.class.getResourceAsStream("/npc.json"));
+        npcList = new Gson().fromJson(reader, itemListType);
+        reader.close();
         return npcList;
     }
 
