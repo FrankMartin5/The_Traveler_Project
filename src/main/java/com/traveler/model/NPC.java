@@ -43,16 +43,16 @@ class NPC {
     }
 
 
-    public static void main(String[] args) {
-
-        NPC npc1 = new NPC();
-        try {
-            NPCArray();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        System.out.println(npcList);
-        NPC.cmdTalk("elon musk");
-
-    }
+//    public static void main(String[] args) {
+//
+//        NPC npc1 = new NPC();
+//        try {
+//            NPCArray();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        System.out.println(npcList);
+//        NPC.cmdTalk("elon musk");
+//
+//    }
 }
