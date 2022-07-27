@@ -3,9 +3,7 @@ package com.traveler.model;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.Type;
 import java.util.*;
 
@@ -20,7 +18,9 @@ public class Item{
     public static List<Item> itemsFromJsonToArray() throws IOException {
         Gson gson = new Gson();
         Type itemListType = new TypeToken<List<Item>>() {}.getType();
-        inventory = new Gson().fromJson(new FileReader("src/main/resources/items.json"), itemListType);
+        Reader reader = new InputStreamReader(Item.class.getResourceAsStream("/items.json"));
+        inventory = gson.fromJson(reader, itemListType);
+        reader.close();
         return inventory;
     }
 
