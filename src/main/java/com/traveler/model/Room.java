@@ -121,7 +121,6 @@ public class Room {
         System.out.println(currentRoom.toString());
     }
 
-
     @Override
     public String toString() {
         return "============================================\n" +
