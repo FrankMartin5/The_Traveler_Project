@@ -27,7 +27,8 @@ public class Room {
 
     public static List<Room> roomsFromJsonToArray() throws IOException {
         Gson gson = new Gson();
-        Type roomListType = new TypeToken<List<Room>>() {}.getType();
+        Type roomListType = new TypeToken<List<Room>>() {
+        }.getType();
         Reader reader = new InputStreamReader(Room.class.getResourceAsStream("/rooms.json"));
         allRooms = new Gson().fromJson(reader, roomListType);
         reader.close();
@@ -65,20 +66,21 @@ public class Room {
     public void cmdLook(String noun) {
         switch (noun) {
             case "north":
-                System.out.println("Looking north, you see "+ currentRoom.north);
+                System.out.println("Looking north, you see " + currentRoom.north);
                 break;
             case "south":
-                System.out.println("Looking south, you see "+ currentRoom.south);
+                System.out.println("Looking south, you see " + currentRoom.south);
                 break;
             case "east":
-                System.out.println("Looking east, you see "+ currentRoom.east);
+                System.out.println("Looking east, you see " + currentRoom.east);
                 break;
             case "west":
-                System.out.println("Looking west, you see "+ currentRoom.west);
+                System.out.println("Looking west, you see " + currentRoom.west);
                 break;
         }
     }
 
+    // TODO: rename room to destination room, attempt to combine methods, (direction var included, with four if statements)
     public void goNorth() {
         for (Room room : allRooms) {
             if (room.name.equals(currentRoom.north)) {

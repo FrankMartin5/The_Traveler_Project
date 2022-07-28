@@ -1,9 +1,6 @@
 package com.traveler.controller;
 
-import com.traveler.model.Item;
-import com.traveler.model.Items;
-import com.traveler.model.NPC;
-import com.traveler.model.Room;
+import com.traveler.model.*;
 import com.traveler.view.Prompter;
 import com.traveler.view.Intro;
 import com.traveler.view.SplashScreens;
@@ -15,6 +12,7 @@ import java.util.Scanner;
 import static com.traveler.model.Item.itemsFromJsonToArray;
 import static com.traveler.model.NPC.NPCArray;
 import static com.traveler.model.Room.*;
+import static com.traveler.view.Intro.introduction;
 
 class TravelerApp {
     private boolean gameOver = false;
@@ -22,14 +20,15 @@ class TravelerApp {
     Room room = new Room();
     Item item = new Item();
     NPC npc = new NPC();
+    Combat combat = new Combat();
 
 
     String help = "List of available commands: \nlook <item/room>: get information\ngo <direction>: enter room in that direction" +
             "\nget <item>: adds item to inventory\nquit game: exit the game without saving";
 
-    ArrayList<String> dir= new ArrayList<String>();
+    ArrayList<String> dir = new ArrayList<String>();
 
-//    initialize calls methods
+    //    initialize calls methods
     public void initialize() throws IOException {
         dir.add("north");
         dir.add("south");
@@ -46,24 +45,22 @@ class TravelerApp {
     public void start() {
         while (!gameOver) {
             // command is the main prompt that dictates flow of game
+            // TODO: no souts
             String command = prompter.prompt("\nWhat would you like to do? ");
+            // TODO: place else if statements inside switch case
             if (textParse(command).equals("quit game")) {
                 end();
-            }
-            else if (textParse(command).equals("room info")) {
+            } else if (textParse(command).equals("room info")) {
                 cmdRoomInfo();
-            }
-            else if (textParse(command).equals("help")) {
+            } else if (textParse(command).equals("help")) {
                 System.out.println(help);
-            }
-            else if (!textParse(command).contains(" ")) {
+            } else if (!textParse(command).contains(" ")) {
                 System.out.println("You can't do that");
                 System.out.println(help);
-            }
-            else if (command !=null) {
+            } else if (command != null) {
                 String verb = verbParse(command);
                 String noun = nounParse(command);
-                switch (verb){
+                switch (verb) {
                     // go verb calls the cmdGo in Rooms class
                     case "go":
                         // TODO: if unrecognized noun, handle error
@@ -87,15 +84,18 @@ class TravelerApp {
                         System.out.println("recognized verb talk, calls npc.cmdTalk(noun)");
                         npc.cmdTalk(noun);
                         break;
+                    case "fight":
+                        System.out.println("recognized verb fight, calls cmdFight(noun)");
+                        combat.cmdFight(noun);
                     case "help":
                         System.out.println(help);
+                        break;
                     default:
                         System.out.println("You can't do that");
                         System.out.println(help);
                         break;
                 }
-            }
-            else {
+            } else {
                 System.out.println("else");
                 end();
             }
@@ -114,11 +114,11 @@ class TravelerApp {
     }
 
     // prompts for new game or saved game
-    private void promptForNewGame(){
+    private void promptForNewGame() {
         String start = prompter.prompt("Would you like to start a new game or continue from save? [N]ew game or [S]saved game: ");
         if (textParse(start).equals("n")) {
             System.out.println("STARTING NEW GAME");
-            Intro.introduction();
+            introduction();
             room.setCurrentRoom(allRooms.get(0));
             start();
         } else if (textParse(start).equals("s")) {
@@ -132,7 +132,7 @@ class TravelerApp {
         }
     }
 
-    private String textParse(String input){
+    private String textParse(String input) {
         return input.trim().toLowerCase();
     }
 
