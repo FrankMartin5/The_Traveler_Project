@@ -15,13 +15,22 @@ public class Item {
     public static List<Item> inventory;
 
     // method that reads from json file and loads inventory with Item objects
-    public static List<Item> itemsFromJsonToArray() throws IOException {
+    public static void itemsFromJsonToArray() throws IOException {
         Gson gson = new Gson();
         Type itemListType = new TypeToken<List<Item>>() {}.getType();
-        Reader reader = new InputStreamReader(Item.class.getResourceAsStream("/items.json"));
+        Reader reader = new InputStreamReader(Item.class.getResourceAsStream("/inventory.json"));
         inventory = gson.fromJson(reader, itemListType);
         reader.close();
-        return inventory;
+    }
+
+    public String lookInventory(){
+        String res ="";
+        if(inventory.size()>0){
+            for(Item item:inventory){
+                res += item.name + ",";
+            }
+        }
+        return res;
     }
 
     // when command is "look <item>" returns desc

@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import static com.traveler.model.Item.inventory;
 import static com.traveler.model.Item.itemsFromJsonToArray;
 import static com.traveler.model.NPC.NPCArray;
 import static com.traveler.model.Room.*;
@@ -47,6 +48,8 @@ class TravelerApp {
             // TODO: place else if statements inside switch case
             if (textParse(command).equals("help")) {
                 System.out.println(text.help);
+            } else if (textParse(command).equals("inventory")) {
+                System.out.println(item.lookInventory());
             } else if (!textParse(command).contains(" ")) {
                 System.out.println("You can't do that");
                 System.out.println(text.help);
@@ -97,8 +100,13 @@ class TravelerApp {
                         }
                         break;
                     case "get":
-//                        item.cmdPickUpItem(noun); // print sout, item from corressponding allRoom, added to inventory
-//                        room.refreshCurrentRoom();
+                        item.cmdPickUpItem(noun);
+                        room.refreshCurrentRoom();
+                        break;
+                    case "drop":
+                        item.cmdDropItem(noun);
+                        room.refreshCurrentRoom();
+                        break;
                     default:
                         wrongCmd();
                         break;

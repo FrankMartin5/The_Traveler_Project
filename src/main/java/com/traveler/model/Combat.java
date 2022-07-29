@@ -9,7 +9,7 @@ public class Combat { // combat class that handles all aspects of combat
     ArrayList<String> friendly = new ArrayList<String>();
 
     public void initialize() {
-        friendly.add("elon");
+        friendly.add("gnome");
     }
 
     public String cmdFight(String enemy) { // method that passes an enemy noun to start combat

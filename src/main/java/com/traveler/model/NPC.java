@@ -14,19 +14,21 @@ import java.util.Random;
 public class NPC {
     String name;
     List<String> talk;
+    String item;
+    String win;
+    String defeat;
 
 
     // Creates npc which carries NPC objects
     public static List<NPC> npcList;
 
     // method that reads from json file and loads npc with NPC objects
-    public static List<NPC> NPCArray() throws IOException {
+    public static void NPCArray() throws IOException {
         Gson gson = new Gson();
         Type itemListType = new TypeToken<List<NPC>>() {}.getType();
         Reader reader = new InputStreamReader(NPC.class.getResourceAsStream("/npc.json"));
         npcList = new Gson().fromJson(reader, itemListType);
         reader.close();
-        return npcList;
     }
 
     // when command is "talk <npc>" returns talk

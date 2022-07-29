@@ -6,9 +6,5 @@
   {
     "name": "gun",
     "desc": "shoots"
-  },
-  {
-    "name": "mustard",
-    "desc": "smells funky"
   }
 ]

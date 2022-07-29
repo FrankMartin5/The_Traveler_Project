@@ -5,7 +5,10 @@
       "Hey Traveler, watch your steps. Chaos is abound.",
       "Argh, please don't hurt me. I am just a poor orphan gnome who cleans for copper",
       "Why are you here? be careful of the arrow that flies by day"
-    ]
+    ],
+    "item": "key",
+    "defeat": "gnome has been defeated, he disappears from the room",
+    "win": "gnome has won, you lose"
   },
   {
     "name": "elon",
@@ -13,6 +16,9 @@
       "I kinda love Etsy, but don't mind me, you need to kill a warlock",
       "If life is a video game, the graphics are great but the plot is confusing and the tutorial is way too long. This has nothing to do with your quest traveler, i just don't get guests often",
       "Tesla Blows! haha!"
-    ]
+    ],
+    "item": "key",
+    "defeat": "Elon has been defeated, he disappears from the room",
+    "win": "Elon has won, you lose"
   }
 ]
