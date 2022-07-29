@@ -1,13 +1,18 @@
 [
   {
-    "name":"gnome",
-    "talk": "Hey Traveler, be careful of this place. Chaos is abound.",
-    "room": "great hall"
+    "name": "gnome",
+    "talk": [
+      "Hey Traveler, watch your steps. Chaos is abound.",
+      "Argh, please don't hurt me. I am just a poor orphan gnome who cleans for copper",
+      "Why are you here? be careful of the arrow that flies by day"
+    ]
   },
   {
-    "name":"elon",
-    "talk": "insert witty tweet from elon musk",
-    "room": "ancient study"
+    "name": "elon",
+    "talk": [
+      "I kinda love Etsy, but don't mind me, you need to kill a warlock",
+      "If life is a video game, the graphics are great but the plot is confusing and the tutorial is way too long. This has nothing to do with your quest traveler, i just don't get guests often",
+      "Tesla Blows! haha!"
+    ]
   }
-
 ]
