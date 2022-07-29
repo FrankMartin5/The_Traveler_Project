@@ -36,6 +36,7 @@ public class Room {
         Reader reader = new InputStreamReader(Room.class.getResourceAsStream("/rooms.json"));
         allRooms = new Gson().fromJson(reader, roomListType);
         reader.close();
+        Room.currentRoom = allRooms.get(2);
         return allRooms;
     }
 
@@ -128,22 +129,6 @@ public class Room {
         this.currentRoom = room;
         System.out.println(currentRoom.toString());
     }
-
-    public Optional<Item> cmdPickUpItem(String noun) {
-        Optional<Item> requestedPickedUpItem = Optional.empty();
-        boolean foundItem = false;
-        if (noun != null && !noun.isEmpty()) {
-            for (int i = 0; i < currentRoom.items.size(); i++) {
-                if (currentRoom.items.get(i).name.equals(noun)) {
-                    System.out.println("You picked up " + currentRoom.items.get(i).name);
-                    requestedPickedUpItem = Optional.ofNullable((currentRoom.items.get(i)));
-                    break;
-                }
-            }
-        }
-        return requestedPickedUpItem;
-    }
-
 
     @Override
     public String toString() {

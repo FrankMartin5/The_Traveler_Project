@@ -38,36 +38,31 @@ public class Item {
     public Optional<Item> cmdGetItem(String noun) {
         Optional<Item> requestedItem = Optional.empty();
         if (noun != null && !noun.isEmpty()) {
-            for (Item item : inventory
-            ) {
-                System.out.println(item.name);
-                if (noun.equals(item.name)) {
-                    var takeItem = inventory.remove(inventory.indexOf(item));
-                    requestedItem = Optional.of(item);
-                } else {
-                    /*
-                     * will return Optional.empty if noun is not in inventory
-                     * */
-                    requestedItem = Optional.empty();
+            if(inventory.size() == 0) return Optional.empty();
+            for (int i = 0; i < inventory.size(); i++) {
+                if(inventory.get(i).name.equals(noun)){
+                   requestedItem = Optional.ofNullable(inventory.remove(i));
                 }
             }
         }
+        System.out.println("You now have " + requestedItem.get().name);
         return requestedItem;
     }
 
-    public Optional<String> cmdDropItem(Item droppedItem) {
-        Optional<String> requestedDropItem = Optional.empty();
+    //Does inventory belong to the one player????
+    public Optional<Item> cmdDropItem(String droppedItem) {
+        Optional<Item> requestedDropItem = Optional.empty();
         if (droppedItem != null) {
-//           TODO: check if item in player inventory
-//            addItem(Item addItem)
-//           TODO: replace removing from Item inventory with Player inventory
-            //code will be similar to cmdGetItem here
-            //get from player, goes to room inventory
-            //consider
-            //Room.item is a list
-            //current room
+            for (int i = 0; i < inventory.size(); i++) {
+                if(inventory.size()> 0 && inventory.get(i).name.equals(droppedItem)){
+                    requestedDropItem = Optional.ofNullable(inventory.remove(i));
+                    requestedDropItem.ifPresent(e -> {
+                        addItem(e);
+                    });
+                    break;
+                }
+            }
         }
-
         return requestedDropItem;
     }
 
@@ -76,9 +71,15 @@ public class Item {
      * when the item is dropped by the player,
      * it will be added to the current room's inventory
      * */
-    public String addItem(Item addItem) {
-        inventory.add(addItem);
-        return addItem.name + " was dropped";
+    public void addItem(Item addItem) {
+        try {
+            Room.roomsFromJsonToArray();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Room.currentRoom.items.add(addItem);
+
+        System.out.println(addItem.name + " was dropped.");
     }
 
     public String cmdUseItem(String noun) {
@@ -95,24 +96,22 @@ public class Item {
         return message;
     }
 
-//    TODO: remove after testing
-//    public static void main(String[] args) {
-//        Item item = new Item();
-//        try {
-//            Item.fromJsonToArray();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+    public Optional<Item> cmdPickUpItem(String noun) {
+        var currentRoomItems =  Room.currentRoom.items;
+        Optional<Item> requestedPickedUpItem = Optional.empty();
+        boolean foundItem = false;
+        if (noun != null && !noun.isEmpty()) {
+            if(currentRoomItems.size() == 0) return Optional.empty();
+            for (int i = 0; i < currentRoomItems.size(); i++) {
+                System.out.println(currentRoomItems.size());
+                if (currentRoomItems.get(i).name.equals(noun)) {
+                    requestedPickedUpItem = Optional.ofNullable((currentRoomItems.remove(i)));
+                    System.out.println("You picked up " + requestedPickedUpItem.get().name);
+                    break;
+                }
+            }
+        }
+        return requestedPickedUpItem;
+    }
 
-//        var returnedItem = item.cmdGetItem("ksey");
-//        //this is not the anticipated flow of the game.
-//        //Only for testing
-//        if(!returnedItem.isEmpty()){
-//            var test = item.addItem(returnedItem.get());
-//            System.out.println("TEST " + test);
-//        }
-
-//        var returnedItem = item.cmdGetItem("key");
-
-//    }
 }
