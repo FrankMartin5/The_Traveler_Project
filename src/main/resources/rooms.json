@@ -1,23 +1,23 @@
 [
   {
-    "name": "great hall",
-    "desc": "(Starting point of game) You are standing in the great hall of Racumens Castle. There is a random troll in the east corner of the room. (suggest to talk to him) ",
-    "north": "dining chamber",
-    "south": "warlock's chamber",
-    "east": "torture chamber",
-    "west": "crypt",
+    "name":"great hall",
+    "desc":"(Starting point of game) You are standing in the great hall of Racumens Castle. There is a random troll in the east corner of the room. (suggest to talk to him) ",
+    "north":"dining chamber",
+    "south":"warlock's chamber",
+    "east":"torture chamber",
+    "west":"crypt",
     "items": [
       {
-        "name": "TBD",
-        "desc": "TBD"
+        "name":"TBD",
+        "desc":"TBD"
       }
     ]
   },
   {
-    "name": "dining chamber",
-    "desc": "you are north of great_hall. be careful soldier. An orc charges at you. (Here we battle for an item)",
-    "south": "great hall",
-    "east": "ancient study",
+    "name":"dining chamber",
+    "desc":"you are north of great_hall. be careful soldier. An orc charges at you. (Here we battle for an item)",
+    "south":"great hall",
+    "east":"ancient study",
     "west": "nothing",
     "north": "nothing",
     "items": [
@@ -28,9 +28,9 @@
     ]
   },
   {
-    "name": "crypt",
-    "desc": "Locked room. You need a key to get in. Perhaps you collected one in your deadly defeat of the orc in the dining chamber. Beware of traps.",
-    "east": "great hall",
+    "name":"crypt",
+    "desc":"Locked room. You need a key to get in. Perhaps you collected one in your deadly defeat of the orc in the dining chamber. Beware of traps.",
+    "east":"great hall",
     "west": "nothing",
     "north": "nothing",
     "south": "nothing",
@@ -46,45 +46,44 @@
     ]
   },
   {
-    "name": "torture chamber",
-    "desc": "you are in the torture chamber. be careful soldier,danger lurks ahead ",
-    "south": "nothing",
-    "east": "nothing",
+    "name":"torture chamber",
+    "desc":"you are in the torture chamber. be careful soldier,danger lurks ahead ",
+    "south":"nothing",
+    "east":"nothing",
     "west": "great hall",
     "north": "nothing",
     "items": [
       {
-        "name": "TBD",
-        "desc": "TBD"
+        "name":"TBD",
+        "desc":"TBD"
       }
     ]
   },
   {
-    "name": "warlock's chamber",
-    "desc": "Boss room. Racumen lurks nearby",
-    "north": "great hall",
+    "name":"warlock's chamber",
+    "desc":"Boss room. Racumen lurks nearby",
+    "north":"great hall",
     "west": "nothing",
     "south": "nothing",
     "east": "nothing",
     "items": [
       {
-        "name": "TBD",
-        "desc": "TBD"
+        "name":"TBD",
+        "desc":"TBD"
       }
     ]
   },
   {
-    "name": "ancient study",
-    "desc": "Ancient study. Library of all the great books in the world ",
-    "west": "dining chamber",
+    "name":"ancient study",
+    "desc":"Ancient study. Library of all the great books in the world ",
+    "west":"dining chamber",
     "north": "nothing",
     "south": "nothing",
     "east": "nothing",
-    "items": [
+    "items":[
       {
-        "name": "TBD",
-        "desc": "TBD"
-      }
-    ]
+        "name":"TBD",
+        "desc":"TBD"
+      }]
   }
 ]
