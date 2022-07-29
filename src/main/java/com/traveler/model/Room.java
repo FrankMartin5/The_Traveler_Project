@@ -21,6 +21,7 @@ public class Room {
     String name;
     String desc;
     List<Item> items;
+    List<NPC> npc;
     String north;
     String south;
     String east;
@@ -29,15 +30,13 @@ public class Room {
 
     public static List<Room> allRooms;
 
-    public static List<Room> roomsFromJsonToArray() throws IOException {
+    public static void roomsFromJsonToArray() throws IOException {
         Gson gson = new Gson();
         Type roomListType = new TypeToken<List<Room>>() {
         }.getType();
         Reader reader = new InputStreamReader(Room.class.getResourceAsStream("/rooms.json"));
         allRooms = new Gson().fromJson(reader, roomListType);
         reader.close();
-        Room.currentRoom = allRooms.get(2);
-        return allRooms;
     }
 
     // a method that returns current room info, aka toString
@@ -85,6 +84,7 @@ public class Room {
         }
     }
 
+    // TODO: rename room to destination room, attempt to combine methods, (direction var included, with four if statements)
     public void goNorth() {
         for (Room room : allRooms) {
             if (room.name.equals(currentRoom.north)) {
@@ -125,21 +125,65 @@ public class Room {
         System.out.println("Can't go West");
     }
 
+    // removes NPC from allRooms, should update current room
+    public void removeNPC(String noun) {
+        for (Room targetRoom : allRooms) {
+            if (targetRoom.npc.size() > 0 && targetRoom.npc.get(0).name.equals(noun)) {
+                targetRoom.npc.remove(0);
+            }
+        }
+    }
+
     public void setCurrentRoom(Room room) {
-        this.currentRoom = room;
+        currentRoom = room;
         System.out.println(currentRoom.toString());
     }
 
+    // method that refreshes the current room after defeating an enemy
+    public void refreshCurrentRoom() {
+        for (Room sameRoom : allRooms) {
+            // you have to grab the name because currentRoom and allRoom
+            // are not equal with removing of npc
+            if (sameRoom.name.equals(currentRoom.name)) {
+                setCurrentRoom(sameRoom);
+            }
+        }
+    }
+
+    public String getItemsInCurrentRoom() {
+        String itemList = "";
+        if (currentRoom.items.size() > 0) {
+            for (Item item : currentRoom.items) {
+                itemList += (item.name + ", ");
+            }
+        } else {
+            itemList = "NONE";
+        }
+        return itemList;
+    }
+
+    // returns a string with the npc's name if npc is in the room
+    public String getNpcInCurrentRoom() {
+        String npcInRoom = "";
+        if (currentRoom.npc.size() > 0) {
+            npcInRoom = currentRoom.npc.get(0).name;
+        } else {
+            npcInRoom = "NONE";
+        }
+        return npcInRoom;
+    }
+
     @Override
-    public String toString() {
+    public String toString() { // desc should return items and npc in the room
         return "============================================\n" +
                 "You are in the " + name + "\n" +
                 desc + "\n" +
                 "To the north is " + north + "\n" +
                 "To the south is " + south + "\n" +
                 "To the east is " + east + "\n" +
-                "To the west is " + west + "\n";
+                "To the west is " + west + "\n" +
+                "Items in the room: " + getItemsInCurrentRoom() + "\n" +
+                "NPC in the room: " + getNpcInCurrentRoom() + "\n";
     }
-
 
 }
