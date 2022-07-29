@@ -2,14 +2,18 @@ package com.traveler.model;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import jdk.swing.interop.SwingInterOpUtils;
 
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.Type;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 public class Room {
@@ -27,10 +31,12 @@ public class Room {
 
     public static List<Room> roomsFromJsonToArray() throws IOException {
         Gson gson = new Gson();
-        Type roomListType = new TypeToken<List<Room>>() {}.getType();
+        Type roomListType = new TypeToken<List<Room>>() {
+        }.getType();
         Reader reader = new InputStreamReader(Room.class.getResourceAsStream("/rooms.json"));
         allRooms = new Gson().fromJson(reader, roomListType);
         reader.close();
+        Room.currentRoom = allRooms.get(2);
         return allRooms;
     }
 
@@ -65,16 +71,16 @@ public class Room {
     public void cmdLook(String noun) {
         switch (noun) {
             case "north":
-                System.out.println("Looking north, you see "+ currentRoom.north);
+                System.out.println("Looking north, you see " + currentRoom.north);
                 break;
             case "south":
-                System.out.println("Looking south, you see "+ currentRoom.south);
+                System.out.println("Looking south, you see " + currentRoom.south);
                 break;
             case "east":
-                System.out.println("Looking east, you see "+ currentRoom.east);
+                System.out.println("Looking east, you see " + currentRoom.east);
                 break;
             case "west":
-                System.out.println("Looking west, you see "+ currentRoom.west);
+                System.out.println("Looking west, you see " + currentRoom.west);
                 break;
         }
     }

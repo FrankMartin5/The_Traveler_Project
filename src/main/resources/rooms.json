@@ -1,23 +1,15 @@
 [
   {
     "name":"great hall",
-    "desc":"You are standing in the great hall of Racumens Castle. It is dimly lit with a single lantern on the wall and there is a quiet gnome in the corner of the room sweeping up some trash. You should talk to him. ",
+    "desc":"(Starting point of game) You are standing in the great hall of Racumens Castle. There is a random troll in the east corner of the room. (suggest to talk to him) ",
     "north":"dining chamber",
     "south":"warlock's chamber",
     "east":"torture chamber",
     "west":"crypt",
     "items": [
       {
-        "name":"lantern",
-        "desc":"You need the lantern to see your way around all the rooms"
-      }
-    ],
-    "npc": [
-      {
-        "name":"gnome",
-        "talk":["Hey Traveler, watch your steps. Chaos is abound.",
-        "Argh, please don't hurt me. I am just a poor orphan gnome who cleans for copper",
-        "Why are you here? be careful of the arrow that flies by day"]
+        "name":"TBD",
+        "desc":"TBD"
       }
     ]
   },
@@ -30,8 +22,8 @@
     "north": "nothing",
     "items": [
       {
-        "name": "key",
-        "desc": "You need this to open the crypt"
+        "name": "TBD",
+        "desc": "TBD"
       }
     ]
   },
@@ -43,15 +35,16 @@
     "north": "nothing",
     "south": "nothing",
     "items": [
-  {
-    "name": "confusion potion",
-    "desc": "to be Used to confuse Racumen"
+      {
+        "name": "confusion potion",
+        "desc": "confuse"
+      },
+      {
+        "name": "shield potion",
+        "desc": "shield"
+      }
+    ]
   },
-  {
-    "name": "shield potion",
-    "desc": "to be used to shield you from Racumens attack"
-  }
-  ]},
   {
     "name":"torture chamber",
     "desc":"you are in the torture chamber. be careful soldier,danger lurks ahead ",
@@ -61,19 +54,10 @@
     "north": "nothing",
     "items": [
       {
-        "name":"Thunderbolt",
-        "desc":"to be collected only when you beat the event "
+        "name":"TBD",
+        "desc":"TBD"
       }
-      ],
-    "npc": [
-      {
-        "name": "none",
-        "talk": [
-          "nothing",
-          "nothing",
-          "nothing"]
-        }
-      ]
+    ]
   },
   {
     "name":"warlock's chamber",
@@ -84,18 +68,10 @@
     "east": "nothing",
     "items": [
       {
-      "name": "nothing",
-      "desc": "nothing"
-      }],
-    "npc": [
-      {
-        "name": "none",
-        "talk": [
-          "nothing",
-          "nothing",
-          "nothing"]
+        "name":"TBD",
+        "desc":"TBD"
       }
-        ]
+    ]
   },
   {
     "name":"ancient study",
@@ -104,20 +80,10 @@
     "north": "nothing",
     "south": "nothing",
     "east": "nothing",
-    "items": [
+    "items":[
       {
-        "name": "nothing",
-        "desc": "nothing"
-      }],
-    "npc": [
-      {
-        "name": "elon",
-        "talk": [
-          "I kinda love Etsy, but don't mind me, you need to kill a warlock",
-          "If life is a video game, the graphics are great but the plot is confusing and the tutorial is way too long. This has nothing to do with your quest traveler, i just don't get guests often",
-          "Tesla Blows! haha!"]
-      }
-    ]
+        "name":"TBD",
+        "desc":"TBD"
+      }]
   }
 ]
-
