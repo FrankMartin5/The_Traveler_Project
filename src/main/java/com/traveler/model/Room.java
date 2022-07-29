@@ -2,13 +2,18 @@ package com.traveler.model;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import jdk.swing.interop.SwingInterOpUtils;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.lang.reflect.Type;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 public class Room {
@@ -28,7 +33,9 @@ public class Room {
         Gson gson = new Gson();
         Type roomListType = new TypeToken<List<Room>>() {
         }.getType();
-        allRooms = new Gson().fromJson(new FileReader("src/main/resources/rooms.json"), roomListType);
+        Reader reader = new InputStreamReader(Room.class.getResourceAsStream("/rooms.json"));
+        allRooms = new Gson().fromJson(reader, roomListType);
+        reader.close();
         return allRooms;
     }
 
@@ -63,16 +70,16 @@ public class Room {
     public void cmdLook(String noun) {
         switch (noun) {
             case "north":
-                System.out.println("Looking north, you see "+ currentRoom.north);
+                System.out.println("Looking north, you see " + currentRoom.north);
                 break;
             case "south":
-                System.out.println("Looking south, you see "+ currentRoom.south);
+                System.out.println("Looking south, you see " + currentRoom.south);
                 break;
             case "east":
-                System.out.println("Looking east, you see "+ currentRoom.east);
+                System.out.println("Looking east, you see " + currentRoom.east);
                 break;
             case "west":
-                System.out.println("Looking west, you see "+ currentRoom.west);
+                System.out.println("Looking west, you see " + currentRoom.west);
                 break;
         }
     }
@@ -122,24 +129,22 @@ public class Room {
         System.out.println(currentRoom.toString());
     }
 
-    public Optional<Item> cmdPickUpItem(String noun){
-        Optional<Item> requestedItem = Optional.empty();
-        if(noun != null && !noun.isEmpty() && items.contains(noun)){
-            requestedItem = Optional.ofNullable(items.remove(items.indexOf(noun)));
-            System.out.println("ofNullable" + requestedItem);
+    public Optional<Item> cmdPickUpItem(String noun) {
+        Optional<Item> requestedPickedUpItem = Optional.empty();
+        boolean foundItem = false;
+        if (noun != null && !noun.isEmpty()) {
+            for (int i = 0; i < currentRoom.items.size(); i++) {
+                if (currentRoom.items.get(i).name.equals(noun)) {
+                    System.out.println("You picked up " + currentRoom.items.get(i).name);
+                    requestedPickedUpItem = Optional.ofNullable((currentRoom.items.get(i)));
+                    break;
+                }
+            }
         }
-        return requestedItem;
+        return requestedPickedUpItem;
     }
 
-//    public static void main(String[] args) {
-//        Room rm = new Room();
-//        try {
-//            Room.roomsFromJsonToArray();
-//            rm.cmdPickUpItem("confusion potion");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
+
     @Override
     public String toString() {
         return "============================================\n" +
