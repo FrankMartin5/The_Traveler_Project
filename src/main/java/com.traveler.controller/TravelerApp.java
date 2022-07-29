@@ -2,8 +2,8 @@ package com.traveler.controller;
 
 import com.traveler.model.*;
 import com.traveler.view.Prompter;
-import com.traveler.view.Intro;
 import com.traveler.view.SplashScreens;
+import com.traveler.view.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,7 +12,6 @@ import java.util.Scanner;
 import static com.traveler.model.Item.itemsFromJsonToArray;
 import static com.traveler.model.NPC.NPCArray;
 import static com.traveler.model.Room.*;
-import static com.traveler.view.Intro.introduction;
 
 class TravelerApp {
     private boolean gameOver = false;
@@ -21,14 +20,12 @@ class TravelerApp {
     Item item = new Item();
     NPC npc = new NPC();
     Combat combat = new Combat();
+    Text text = new Text();
 
-
-    String help = "List of available commands: \nlook <item/room>: get information\ngo <direction>: enter room in that direction" +
-            "\nget <item>: adds item to inventory\nquit game: exit the game without saving";
-
+    // dir carries directions for parsing
     ArrayList<String> dir = new ArrayList<String>();
 
-    //    initialize calls methods
+    //    initialize calls methods that is needed before game starts
     public void initialize() throws IOException {
         dir.add("north");
         dir.add("south");
@@ -37,6 +34,7 @@ class TravelerApp {
         itemsFromJsonToArray();
         roomsFromJsonToArray();
         NPCArray();
+        combat.initialize();
         welcome();
         promptForNewGame(); // sets gameOver
     }
@@ -45,89 +43,102 @@ class TravelerApp {
     public void start() {
         while (!gameOver) {
             // command is the main prompt that dictates flow of game
-            // TODO: no souts
-            String command = prompter.prompt("\nWhat would you like to do? ");
+            String command = prompter.prompt(text.prompt);
             // TODO: place else if statements inside switch case
-            if (textParse(command).equals("quit game")) {
-                end();
-            } else if (textParse(command).equals("room info")) {
-                cmdRoomInfo();
-            } else if (textParse(command).equals("help")) {
-                System.out.println(help);
+            if (textParse(command).equals("help")) {
+                System.out.println(text.help);
             } else if (!textParse(command).contains(" ")) {
                 System.out.println("You can't do that");
-                System.out.println(help);
-            } else if (command != null) {
+                System.out.println(text.help);
+            } else {
                 String verb = verbParse(command);
                 String noun = nounParse(command);
+                // switch case to direct verb to the correct class
                 switch (verb) {
-                    // go verb calls the cmdGo in Rooms class
+                    case "quit":
+                        if (noun.equals("game")) {
+                            end();
+                        } else {
+                            wrongCmd();
+                        }
+                        break;
+                    case "room":
+                        if (noun.equals("info")) {
+                            cmdRoomInfo();
+
+                        } else {
+                            wrongCmd();
+                        }
+                        break;
                     case "go":
                         // TODO: if unrecognized noun, handle error
-                        System.out.println("recognized verb go, this should call room.cmdGo(noun)");
                         room.cmdGo(noun);
                         break;
                     // look verb can be Items or Rooms, calls items if not 'north, west, south, east'
                     case "look":
-                        //if noun is in dir arraylist
+                        //if noun is in dir arraylist, means it is a direction
                         if (dir.contains(noun)) {
-                            System.out.println("recognized verb look, this should call room.cmdLook(noun)");
                             room.cmdLook(noun);
-                        }
-                        //else call item.cmdLook(noun)
-                        else {
-                            System.out.println("recognized verb look, this should call item.cmdLook(noun)");
+                        } else { // else it is an item noun
                             item.cmdLook(noun);
                         }
                         break;
                     case "talk":
-                        System.out.println("recognized verb talk, calls npc.cmdTalk(noun)");
                         npc.cmdTalk(noun);
                         break;
                     case "fight":
                         System.out.println("recognized verb fight, calls cmdFight(noun)");
-                        combat.cmdFight(noun);
-                    case "help":
-                        System.out.println(help);
+                        String combatResult = combat.cmdFight(noun);
+                        if (combatResult.equals("win")) {
+                            room.removeNPC(noun);
+                            room.refreshCurrentRoom();
+                        } else if (combatResult.equals("loss")) {
+                            end();
+                        }
                         break;
+                    case "get":
+//                        item.cmdPickUpItem(noun); // print sout, item from corressponding allRoom, added to inventory
+//                        room.refreshCurrentRoom();
                     default:
-                        System.out.println("You can't do that");
-                        System.out.println(help);
+                        wrongCmd();
                         break;
                 }
-            } else {
-                System.out.println("else");
-                end();
             }
         }
+    }
+
+    public void wrongCmd() {
+        System.out.println("You can't do that");
+        System.out.println(text.help);
     }
 
     // game end method that handles end of game
     public void end() {
         setGameOver(true);
-        System.out.println("GAME OVER");
+        System.out.println(text.gameOver);
     }
 
     private void welcome() {
         SplashScreens.art();
-        System.out.println("Welcome");
     }
 
     // prompts for new game or saved game
     private void promptForNewGame() {
-        String start = prompter.prompt("Would you like to start a new game or continue from save? [N]ew game or [S]saved game: ");
+        String start = prompter.prompt(text.newGamePrompt);
+        // initialization for starting new game
         if (textParse(start).equals("n")) {
-            System.out.println("STARTING NEW GAME");
-            introduction();
+            System.out.println(text.newGame);
+            System.out.println(text.intro);
             room.setCurrentRoom(allRooms.get(0));
+            System.out.println(text.help);
             start();
         } else if (textParse(start).equals("s")) {
-            System.out.println("STARTING SAVED GAME");
+            System.out.println(text.newGame);
             start();
         }
         //error handling
         else {
-            System.out.println("Please enter valid response, n or s");
+            System.out.println(text.newGamePromptError);
             promptForNewGame();
         }
     }
