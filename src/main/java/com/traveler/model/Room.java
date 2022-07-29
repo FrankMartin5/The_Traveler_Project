@@ -85,6 +85,7 @@ public class Room {
         }
     }
 
+    // TODO: rename room to destination room, attempt to combine methods, (direction var included, with four if statements)
     public void goNorth() {
         for (Room room : allRooms) {
             if (room.name.equals(currentRoom.north)) {

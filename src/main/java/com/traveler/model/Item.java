@@ -17,9 +17,10 @@ public class Item {
     // method that reads from json file and loads inventory with Item objects
     public static List<Item> itemsFromJsonToArray() throws IOException {
         Gson gson = new Gson();
-        Type itemListType = new TypeToken<List<Item>>() {
-        }.getType();
-        inventory = new Gson().fromJson(new FileReader("src/main/resources/items.json"), itemListType);
+        Type itemListType = new TypeToken<List<Item>>() {}.getType();
+        Reader reader = new InputStreamReader(Item.class.getResourceAsStream("/items.json"));
+        inventory = gson.fromJson(reader, itemListType);
+        reader.close();
         return inventory;
     }
 
@@ -41,7 +42,7 @@ public class Item {
             if(inventory.size() == 0) return Optional.empty();
             for (int i = 0; i < inventory.size(); i++) {
                 if(inventory.get(i).name.equals(noun)){
-                   requestedItem = Optional.ofNullable(inventory.remove(i));
+                    requestedItem = Optional.ofNullable(inventory.remove(i));
                 }
             }
         }
