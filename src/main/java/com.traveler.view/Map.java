@@ -1,6 +1,6 @@
 package com.traveler.view;
 
-class Map {
+public class Map {
       public static void cmdMap(){
           System.out.println("*----------------------------------------------------------------------------*");
           System.out.println("*                          MAP OF RACUMEN'S LAIR                             *");

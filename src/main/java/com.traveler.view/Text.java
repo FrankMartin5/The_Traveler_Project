@@ -8,7 +8,8 @@ public class Text {
 
     public String help = "List of available commands: \nlook <item/direction>: get information\ngo <direction>: enter room in that direction" +
             "\nget <item>: adds item to inventory\nroom info: get information about the current room\n" +
-            "talk <npc>: talk to the npc\nfight <npc>: starts combat if possible with npc\nquit game: exit the game without saving";
+            "talk <npc>: talk to the npc\nfight <npc>: starts combat if possible with npc\n" +
+            "map: displays the game map\nquit game: exit the game without saving";
 
     public String newGame = "STARTING NEW GAME";
 

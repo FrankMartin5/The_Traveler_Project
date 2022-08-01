@@ -13,6 +13,7 @@ import static com.traveler.model.Item.inventory;
 import static com.traveler.model.Item.itemsFromJsonToArray;
 import static com.traveler.model.NPC.NPCArray;
 import static com.traveler.model.Room.*;
+import static com.traveler.view.Map.cmdMap;
 
 class TravelerApp {
     private boolean gameOver = false;
@@ -50,6 +51,8 @@ class TravelerApp {
                 System.out.println(text.help);
             } else if (textParse(command).equals("inventory")) {
                 System.out.println(item.lookInventory());
+            } else if (textParse(command).equals("map")) {
+                cmdMap();
             } else if (!textParse(command).contains(" ")) {
                 System.out.println("You can't do that");
                 System.out.println(text.help);
@@ -90,7 +93,6 @@ class TravelerApp {
                         npc.cmdTalk(noun);
                         break;
                     case "fight":
-                        System.out.println("recognized verb fight, calls cmdFight(noun)");
                         String combatResult = combat.cmdFight(noun);
                         if (combatResult.equals("win")) {
                             room.removeNPC(noun);

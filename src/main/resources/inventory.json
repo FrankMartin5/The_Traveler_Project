@@ -1,10 +1,10 @@
 [
   {
-    "name": "key",
-    "desc": "opens doors"
+    "name": "gun",
+    "desc": "shoots, only effective against certain enemies"
   },
   {
-    "name": "gun",
-    "desc": "shoots"
+    "name": "gum",
+    "desc": "you chew it, not much else"
   }
 ]
