@@ -9,7 +9,7 @@ public class Combat { // combat class that handles all aspects of combat
     ArrayList<String> friendly = new ArrayList<String>();
 
     public void initialize() {
-        friendly.add("gnome");
+        friendly.add("elon");
     }
 
     public String cmdFight(String enemy) { // method that passes an enemy noun to start combat
@@ -24,19 +24,23 @@ public class Combat { // combat class that handles all aspects of combat
                 //start of combat with said enemy
                 if (itemInInventory(enemyInRoom.item)) {
                     System.out.println(enemyInRoom.defeat);
-                    result = "win";
+                    if (enemyInRoom.name.equals("boss")) {
+                        result = "bosswin";
+                    } else {
+                        result = "win";
+                    }
                 } else {
                     System.out.println(enemyInRoom.win);
                     result = "loss";
                 }
             }
-        }else { // either no one in the room or enemy in the room does not match given name
+        } else { // either no one in the room or enemy in the room does not match given name
             System.out.println(enemy + " is not in the room");
         }
         return result;
     }
 
-    public boolean itemInInventory(String itemName) {
+    public static boolean itemInInventory(String itemName) {
         boolean res = false;
         for (Item item : inventory) {
             if (item.name.equals(itemName)) {

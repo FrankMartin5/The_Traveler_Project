@@ -97,6 +97,8 @@ class TravelerApp {
                             room.refreshCurrentRoom();
                         } else if (combatResult.equals("loss")) {
                             end();
+                        } else if(combatResult.equals("bosswin")){
+                            endWin();
                         }
                         break;
                     case "get":
@@ -124,6 +126,12 @@ class TravelerApp {
     public void end() {
         setGameOver(true);
         System.out.println(text.gameOver);
+    }
+
+    public void endWin() {
+        setGameOver(true);
+        SplashScreens.win();
+        System.out.println(text.gameWin);
     }
 
     private void welcome() {

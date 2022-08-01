@@ -21,4 +21,7 @@ public class Text {
     public String newGamePrompt = "Would you like to start a new game or continue from save? [N]ew game or [S]saved game: ";
 
     public String newGamePromptError = "Please enter valid response, n or s";
+
+    public String gameWin = "CONGRATS!!!!\n" +
+            "You have defeated the Boss, you are a true gamer. ";
 }

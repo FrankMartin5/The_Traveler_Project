@@ -11,6 +11,8 @@ import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Random;
 
+import static com.traveler.model.Room.currentRoom;
+
 public class NPC {
     String name;
     List<String> talk;
@@ -36,7 +38,7 @@ public class NPC {
         Random rn = new Random();
         int maxNum = 3;
         int rand = rn.nextInt(maxNum);
-        for (NPC i : npcList) {
+        for (NPC i : currentRoom.npc) {
             if (i.name.equals(noun)) {
                 System.out.println(i.talk.get(rand));
                 return;

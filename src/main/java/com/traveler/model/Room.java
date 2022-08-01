@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.traveler.model.Combat.itemInInventory;
+
 
 public class Room {
 
@@ -61,7 +63,11 @@ public class Room {
                 break;
             case "west":
                 System.out.println("Attempting to go west\n");
-                goWest();
+                if (currentRoom.name.equals("great hall")) {
+                    goCrypt();
+                } else {
+                    goWest();
+                }
                 break;
         }
     }
@@ -123,6 +129,14 @@ public class Room {
             }
         }
         System.out.println("Can't go West");
+    }
+
+    public void goCrypt() {
+        if (!itemInInventory("key")){
+            System.out.println("The door to the crypt is locked, you need a key");
+        } else {
+            goWest();
+        }
     }
 
     // removes NPC from allRooms, should update current room
