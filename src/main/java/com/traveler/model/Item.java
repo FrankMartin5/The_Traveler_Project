@@ -44,36 +44,45 @@ public class Item {
         System.out.println(noun + " not found");
     }
 
-    //Optional used to avoid returning null
+    //This should take items from the
     public Optional<Item> cmdGetItem(String noun) {
         Optional<Item> requestedItem = Optional.empty();
+        boolean itemNotAvailable = false;
         if (noun != null && !noun.isEmpty()) {
             if(inventory.size() == 0) return Optional.empty();
             for (int i = 0; i < inventory.size(); i++) {
                 if(inventory.get(i).name.equals(noun)){
                     requestedItem = Optional.ofNullable(inventory.remove(i));
+                    System.out.println("You now have " + requestedItem.get().name);
+                }else{
+                    itemNotAvailable = true;
                 }
             }
+            if(itemNotAvailable){
+                System.out.println(requestedItem.get().name + " is not available.");
+            }
         }
-        System.out.println("You now have " + requestedItem.get().name);
         return requestedItem;
     }
 
-    //Does inventory belong to the one player????
-    public Optional<Item> cmdDropItem(String droppedItem) {
+    //This should remove items from the Inventory and add to currentroom
+    public void cmdDropItem(String droppedItem) {
         Optional<Item> requestedDropItem = Optional.empty();
+        boolean playerDoesNotHaveItem = false;
         if (droppedItem != null) {
             for (int i = 0; i < inventory.size(); i++) {
-                if(inventory.size()> 0 && inventory.get(i).name.equals(droppedItem)){
+                if(inventory.get(i).name.equals(droppedItem)){
                     requestedDropItem = Optional.ofNullable(inventory.remove(i));
-                    requestedDropItem.ifPresent(e -> {
-                        addItem(e);
-                    });
+                    requestedDropItem.ifPresent(this::addItemToRoom);
                     break;
+                }else{
+                    playerDoesNotHaveItem = true;
                 }
             }
+                if(playerDoesNotHaveItem){
+                    System.out.println("You do not have " + droppedItem);
+                }
         }
-        return requestedDropItem;
     }
 
     /*
@@ -81,17 +90,13 @@ public class Item {
      * when the item is dropped by the player,
      * it will be added to the current room's inventory
      * */
-    public void addItem(Item addItem) {
-        try {
-            Room.roomsFromJsonToArray();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Room.currentRoom.items.add(addItem);
-
-        System.out.println(addItem.name + " was dropped.");
+    public void addItemToInventory(Item addItem) {
+        inventory.add(addItem);
     }
 
+    public void addItemToRoom(Item addItem){
+        Room.currentRoom.items.add(addItem);
+    }
     public String cmdUseItem(String noun) {
         String message = "";
 //        TODO: check if item is in Players inventory
@@ -106,23 +111,28 @@ public class Item {
         return message;
     }
 
+//    This should get items IN the room and add to inventory
     public Optional<Item> cmdPickUpItem(String noun) {
+        boolean itemNotPickedUp = false;
         var currentRoomItems =  Room.currentRoom.items;
         Optional<Item> requestedPickedUpItem = Optional.empty();
         boolean foundItem = false;
         if (noun != null && !noun.isEmpty()) {
             if(currentRoomItems.size() == 0) return Optional.empty();
             for (int i = 0; i < currentRoomItems.size(); i++) {
-
-                System.out.println(currentRoomItems.size());
                 if (currentRoomItems.get(i).name.equals(noun)) {
                     requestedPickedUpItem = Optional.ofNullable((currentRoomItems.remove(i)));
                     System.out.println("You picked up " + requestedPickedUpItem.get().name);
+                    requestedPickedUpItem.ifPresent(itemToAdd -> addItemToInventory(itemToAdd));
                     break;
+                }else{
+                    itemNotPickedUp = true;
                 }
+            }
+            if(itemNotPickedUp){
+                System.out.println(noun + " is not available.");
             }
         }
         return requestedPickedUpItem;
     }
-
 }
