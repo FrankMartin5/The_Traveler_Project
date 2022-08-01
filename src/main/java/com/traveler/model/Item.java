@@ -103,6 +103,7 @@ public class Item {
         if (noun != null && !noun.isEmpty()) {
             if(currentRoomItems.size() == 0) return Optional.empty();
             for (int i = 0; i < currentRoomItems.size(); i++) {
+
                 System.out.println(currentRoomItems.size());
                 if (currentRoomItems.get(i).name.equals(noun)) {
                     requestedPickedUpItem = Optional.ofNullable((currentRoomItems.remove(i)));
