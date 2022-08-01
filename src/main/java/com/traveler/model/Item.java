@@ -7,12 +7,23 @@ import java.io.*;
 import java.lang.reflect.Type;
 import java.util.*;
 
+import static com.traveler.model.Room.currentRoom;
+
 public class Item {
     String name;
     String desc;
 
+    public Item(String name, String desc) {
+        this.name = name;
+        this.desc = desc;
+    }
+
     // Creates inventory which carries Item objects
     public static List<Item> inventory;
+
+    public Item() {
+
+    }
 
     // method that reads from json file and loads inventory with Item objects
     public static void itemsFromJsonToArray() throws IOException {
@@ -41,7 +52,7 @@ public class Item {
                 return;
             }
         }
-        System.out.println(noun + " not found");
+        System.out.println(noun + " not found, you can only look at items in your inventory");
     }
 
     //This should take items from the
@@ -95,7 +106,7 @@ public class Item {
     }
 
     public void addItemToRoom(Item addItem){
-        Room.currentRoom.items.add(addItem);
+        currentRoom.items.add(addItem);
     }
     public String cmdUseItem(String noun) {
         String message = "";
@@ -114,7 +125,7 @@ public class Item {
 //    This should get items IN the room and add to inventory
     public Optional<Item> cmdPickUpItem(String noun) {
         boolean itemNotPickedUp = false;
-        var currentRoomItems =  Room.currentRoom.items;
+        var currentRoomItems =  currentRoom.items;
         Optional<Item> requestedPickedUpItem = Optional.empty();
         boolean foundItem = false;
         if (noun != null && !noun.isEmpty()) {

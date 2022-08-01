@@ -28,7 +28,7 @@
   },
   {
     "name": "dining chamber",
-    "desc": "you are north of great_hall. be careful soldier. An orc charges at you. (Here we battle for an item)",
+    "desc": "You are north of great_hall, be careful soldier. (Here we battle for an item)",
     "south": "great hall",
     "east": "ancient study",
     "west": "nothing",
@@ -36,13 +36,15 @@
     "items": [],
     "npc": [
       {
-        "name": "",
-        "talk": ["Die Intruder!",
+        "name": "orc",
+        "talk": [
+          "Die Intruder!",
           "I hope you have said your prayers because you meet with your ancestors today",
-          "Arrrrrgggghhhhhhhhhhhhhhhhh"],
+          "Arrrrrgggghhhhhhhhhhhhhhhhh"
+        ],
         "item": "gun",
-        "defeat": "You've been killed. The Orc now does a dance on your mutilated body. GAME OVER!!!",
-        "win": "You have defeated the Orc and a key has morphed into the room. You need this to get into the crypt"
+        "win": "You've been killed. The Orc now does a dance on your mutilated body. GAME OVER!!!",
+        "defeat": "You have defeated the Orc and a key has morphed into the room. You need this to get into the crypt"
       }
     ]
   },
@@ -56,21 +58,22 @@
     "items": [
       {
         "name": "confusion-potion",
-        "desc": "confuse"
+        "desc": "potion that confuses enemies"
       },
       {
         "name": "shield-potion",
-        "desc": "shield"
+        "desc": "potion that provides shield"
       }
     ],
     "npc": [
       {
-      "name": "Troll",
-      "talk": [],
-      "item": "gun",
-      "defeat": "You lost to the troll. Better luck next time Traveler. GAME OVER!!!",
-      "win": "Victory!!! The troll has been defeated. An anti shield appears in the room. This will assist in your battle with Racumen."
-    }]
+        "name": "troll",
+        "talk": [],
+        "item": "gun",
+        "win": "You lost to the troll. Better luck next time Traveler. GAME OVER!!!",
+        "defeat": "Victory!!! The troll has been defeated. An anti shield appears in the room. This will assist in your battle with Racumen."
+      }
+    ]
   },
   {
     "name": "torture chamber",
@@ -79,10 +82,12 @@
     "east": "nothing",
     "west": "great hall",
     "north": "nothing",
-    "items": [{
-      "name": "Thunderbolt",
-      "desc": "confuse"
-    }],
+    "items": [
+      {
+        "name": "Thunderbolt",
+        "desc": "confuse"
+      }
+    ],
     "npc": []
   },
   {
@@ -92,18 +97,16 @@
     "west": "nothing",
     "south": "nothing",
     "east": "nothing",
-    "items": [
+    "items": [],
+    "npc": [
       {
-        "name": "anti-shield potion",
-        "desc": "confuse"
-      }],
-    "npc": [{
-      "name": "Racumen",
-      "talk": [],
-      "item": "anti-shield potion",
-      "defeat": "You lost! Racumen killed you and you have failed to reverse the curse. GAME OVER!!!!!!",
-      "win": "YOU WIN!!! Racumen has been defeated and the curse reversed. Your generation thanks you Idryssa. GAME OVER!!!!!!"
-    }]
+        "name": "racumen",
+        "talk": ["You can not defeat me, I have an impregnable shield","You can not defeat me, I have an impregnable shield","You can not defeat me, I have an impregnable shield"],
+        "item": "anti-shield",
+        "win": "You lost! Racumen killed you and you have failed to reverse the curse. GAME OVER!!!!!!",
+        "defeat": "YOU WIN!!! Racumen has been defeated and the curse reversed. Your generation thanks you Idryssa. GAME OVER!!!!!!"
+      }
+    ]
   },
   {
     "name": "ancient study",
@@ -113,14 +116,18 @@
     "south": "nothing",
     "east": "nothing",
     "items": [],
-    "npc": [{
-      "name": "Elon",
-      "talk": ["I kinda love Etsy, but don't mind me, you need to kill a warlock",
-        "If life is a video game, the graphics are great but the plot is confusing and the tutorial is way too long. This has nothing to do with your quest traveler, i just don't get guests often",
-        "Tesla Blows! haha!"],
-      "item": "",
-      "defeat": "",
-      "win": ""
-    }]
+    "npc": [
+      {
+        "name": "Elon",
+        "talk": [
+          "I kinda love Etsy, but don't mind me, you need to kill a warlock",
+          "If life is a video game, the graphics are great but the plot is confusing and the tutorial is way too long. This has nothing to do with your quest traveler, i just don't get guests often",
+          "Tesla Blows! haha!"
+        ],
+        "item": "",
+        "defeat": "",
+        "win": ""
+      }
+    ]
   }
 ]

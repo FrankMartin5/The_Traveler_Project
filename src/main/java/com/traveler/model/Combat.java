@@ -7,9 +7,12 @@ import static com.traveler.model.Room.currentRoom;
 
 public class Combat { // combat class that handles all aspects of combat
     ArrayList<String> friendly = new ArrayList<String>();
+    Item key = new Item("key","opens the door to the crypt");
+    Item antiShield = new Item("anti-shield","it may remove a certain impregnable shield");
 
     public void initialize() {
         friendly.add("elon");
+        friendly.add("gnome");
     }
 
     public String cmdFight(String enemy) { // method that passes an enemy noun to start combat
@@ -24,8 +27,14 @@ public class Combat { // combat class that handles all aspects of combat
                 //start of combat with said enemy
                 if (itemInInventory(enemyInRoom.item)) {
                     System.out.println(enemyInRoom.defeat);
-                    if (enemyInRoom.name.equals("boss")) {
+                    if (enemyInRoom.name.equals("racumen")) {
                         result = "bosswin";
+                    } else if (enemyInRoom.name.equals("orc")){
+                        currentRoom.items.add(key);
+                        result = "win";
+                    } else if (enemyInRoom.name.equals("troll")) {
+                        currentRoom.items.add(antiShield);
+                        result = "win";
                     } else {
                         result = "win";
                     }
