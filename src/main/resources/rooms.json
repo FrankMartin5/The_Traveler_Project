@@ -1,7 +1,7 @@
 [
   {
     "name": "great hall",
-    "desc": "You are standing in the great hall of Racumens Lair. There is a random troll in the east corner of the room. Talk to him perhaps?",
+    "desc": "You are standing in the great hall of Racumens Lair. There is a random gnome in the east corner of the room. Talk to him perhaps?",
     "north": "dining chamber",
     "south": "warlock's chamber",
     "east": "torture chamber",
@@ -28,7 +28,7 @@
   },
   {
     "name": "dining chamber",
-    "desc": "You are north of great_hall, be careful soldier. (Here we battle for an item)",
+    "desc": "There are dirty plates everywhere, be careful soldier. (Here we battle for an item)",
     "south": "great hall",
     "east": "ancient study",
     "west": "nothing",
@@ -77,7 +77,7 @@
   },
   {
     "name": "torture chamber",
-    "desc": "you are in the torture chamber. be careful soldier,danger lurks ahead ",
+    "desc": "the torture chamber. be careful soldier,danger lurks ahead ",
     "south": "nothing",
     "east": "nothing",
     "west": "great hall",
@@ -110,7 +110,7 @@
   },
   {
     "name": "ancient study",
-    "desc": "Ancient study. Library of all the great books in the world ",
+    "desc": "Ancient study. Library of all the great books in the world, with a familiar character inside",
     "west": "dining chamber",
     "north": "nothing",
     "south": "nothing",
