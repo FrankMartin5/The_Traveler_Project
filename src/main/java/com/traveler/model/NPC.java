@@ -9,29 +9,38 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Random;
+
+import static com.traveler.model.Room.currentRoom;
 
 public class NPC {
     String name;
-    String talk;
+    List<String> talk;
+    String item;
+    String win;
+    String defeat;
+
 
     // Creates npc which carries NPC objects
     public static List<NPC> npcList;
 
     // method that reads from json file and loads npc with NPC objects
-    public static List<NPC> NPCArray() throws IOException {
+    public static void NPCArray() throws IOException {
         Gson gson = new Gson();
         Type itemListType = new TypeToken<List<NPC>>() {}.getType();
         Reader reader = new InputStreamReader(NPC.class.getResourceAsStream("/npc.json"));
         npcList = new Gson().fromJson(reader, itemListType);
         reader.close();
-        return npcList;
     }
 
     // when command is "talk <npc>" returns talk
     public void cmdTalk(String noun) {
-        for(NPC i: npcList){
+        Random rn = new Random();
+        int maxNum = 3;
+        int rand = rn.nextInt(maxNum);
+        for (NPC i : currentRoom.npc) {
             if (i.name.equals(noun)) {
-                System.out.println(i.talk);
+                System.out.println(i.talk.get(rand));
                 return;
             }
         }
@@ -45,18 +54,6 @@ public class NPC {
                 ", talk='" + talk + '\'' +
                 '}';
     }
-
-
-//    public static void main(String[] args) {
-//
-//        NPC npc1 = new NPC();
-//        try {
-//            NPCArray();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        System.out.println(npcList);
-//        NPC.cmdTalk("elon musk");
-//
-//    }
 }
+
+

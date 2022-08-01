@@ -1,10 +1,14 @@
 [
-    {
-        "name":"key",
-        "desc":"opens doors"
-    },
-    {
-        "name":"gun",
-        "desc":"shoots"
-    }
+  {
+    "name": "key",
+    "desc": "opens doors"
+  },
+  {
+    "name": "gun",
+    "desc": "shoots"
+  },
+  {
+    "name": "mustard",
+    "desc": "smells funky"
+  }
 ]

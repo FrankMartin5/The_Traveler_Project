@@ -7,113 +7,143 @@ import java.io.*;
 import java.lang.reflect.Type;
 import java.util.*;
 
-public class Item{
+import static com.traveler.model.Room.currentRoom;
+
+public class Item {
     String name;
     String desc;
+
+    public Item(String name, String desc) {
+        this.name = name;
+        this.desc = desc;
+    }
 
     // Creates inventory which carries Item objects
     public static List<Item> inventory;
 
+    public Item() {
+
+    }
+
     // method that reads from json file and loads inventory with Item objects
-    public static List<Item> itemsFromJsonToArray() throws IOException {
+    public static void itemsFromJsonToArray() throws IOException {
         Gson gson = new Gson();
         Type itemListType = new TypeToken<List<Item>>() {}.getType();
-        Reader reader = new InputStreamReader(Item.class.getResourceAsStream("/items.json"));
+        Reader reader = new InputStreamReader(Item.class.getResourceAsStream("/inventory.json"));
         inventory = gson.fromJson(reader, itemListType);
         reader.close();
-        return inventory;
+    }
+
+    public String lookInventory(){
+        String res ="";
+        if(inventory.size()>0){
+            for(Item item:inventory){
+                res += item.name + ",";
+            }
+        }
+        return res;
     }
 
     // when command is "look <item>" returns desc
     public void cmdLook(String noun) {
-        for(Item item:inventory){
+        for (Item item : inventory) {
             if (item.name.equals(noun)) {
                 System.out.println(item.desc);
                 return;
             }
         }
-        System.out.println(noun + " not found");
+        System.out.println(noun + " not found, you can only look at items in your inventory");
     }
 
-    //Optional used to avoid returning null
+    //This should take items from the
     public Optional<Item> cmdGetItem(String noun) {
         Optional<Item> requestedItem = Optional.empty();
-        if(noun != null && !noun.isEmpty()){
-            for (Item item: inventory
-            ) {
-                System.out.println(item.name);
-                if(noun.equals(item.name)){
-                    var takeItem = inventory.remove(inventory.indexOf(item));
-                    requestedItem = Optional.of(item);
-                } else {
-                    /*
-                     * will return Optional.empty if noun is not in inventory
-                     * */
-                    requestedItem = Optional.empty();
+        boolean itemNotAvailable = false;
+        if (noun != null && !noun.isEmpty()) {
+            if(inventory.size() == 0) return Optional.empty();
+            for (int i = 0; i < inventory.size(); i++) {
+                if(inventory.get(i).name.equals(noun)){
+                    requestedItem = Optional.ofNullable(inventory.remove(i));
+                    System.out.println("You now have " + requestedItem.get().name);
+                }else{
+                    itemNotAvailable = true;
                 }
+            }
+            if(itemNotAvailable){
+                System.out.println(requestedItem.get().name + " is not available.");
             }
         }
         return requestedItem;
     }
 
-    public Optional<String> cmdDropItem(Item droppedItem){
-        Optional<String> requestedDropItem = Optional.empty();
-        if(droppedItem != null){
-//           TODO: check if item in player inventory
-//            addItem(Item addItem)
-//           TODO: replace removing from Item inventory with Player inventory
-            //code will be similar to cmdGetItem here
-            //get from player, goes to room inventory
-            //consider
-            //Room.item is a list
-            //current room
+    //This should remove items from the Inventory and add to currentroom
+    public void cmdDropItem(String droppedItem) {
+        Optional<Item> requestedDropItem = Optional.empty();
+        boolean playerDoesNotHaveItem = false;
+        if (droppedItem != null) {
+            for (int i = 0; i < inventory.size(); i++) {
+                if(inventory.get(i).name.equals(droppedItem)){
+                    requestedDropItem = Optional.ofNullable(inventory.remove(i));
+                    requestedDropItem.ifPresent(this::addItemToRoom);
+                    break;
+                }else{
+                    playerDoesNotHaveItem = true;
+                }
+            }
+                if(playerDoesNotHaveItem){
+                    System.out.println("You do not have " + droppedItem);
+                }
         }
-
-        return requestedDropItem;
     }
 
     /*
-    * this is a helper method for now, called by cmdDropItem
-    * when the item is dropped by the player,
-    * it will be added to the current room's inventory
-    * */
-    public String addItem(Item addItem){
+     * this is a helper method for now, called by cmdDropItem
+     * when the item is dropped by the player,
+     * it will be added to the current room's inventory
+     * */
+    public void addItemToInventory(Item addItem) {
         inventory.add(addItem);
-        return addItem.name + " was dropped";
     }
 
-    public String cmdUseItem(String noun){
+    public void addItemToRoom(Item addItem){
+        currentRoom.items.add(addItem);
+    }
+    public String cmdUseItem(String noun) {
         String message = "";
 //        TODO: check if item is in Players inventory
 //        If item in players inventory and single use, remove item from players inventory
 //        and return a string message to user
 //        Else return message informing player item is not in players inventory
         /*
-        * Will/there will be single use and multi-use items
-        * If item is one time use, it will be removed from players inventory
-        * items will a field designating item as single or multi-use item
-        * */
+         * Will/there will be single use and multi-use items
+         * If item is one time use, it will be removed from players inventory
+         * items will a field designating item as single or multi-use item
+         * */
         return message;
     }
 
-//    TODO: remove after testing
-//    public static void main(String[] args) {
-//        Item item = new Item();
-//        try {
-//            Item.fromJsonToArray();
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-
-//        var returnedItem = item.cmdGetItem("ksey");
-//        //this is not the anticipated flow of the game.
-//        //Only for testing
-//        if(!returnedItem.isEmpty()){
-//            var test = item.addItem(returnedItem.get());
-//            System.out.println("TEST " + test);
-//        }
-
-//        var returnedItem = item.cmdGetItem("key");
-
-//    }
+//    This should get items IN the room and add to inventory
+    public Optional<Item> cmdPickUpItem(String noun) {
+        boolean itemNotPickedUp = false;
+        var currentRoomItems =  currentRoom.items;
+        Optional<Item> requestedPickedUpItem = Optional.empty();
+        boolean foundItem = false;
+        if (noun != null && !noun.isEmpty()) {
+            if(currentRoomItems.size() == 0) return Optional.empty();
+            for (int i = 0; i < currentRoomItems.size(); i++) {
+                if (currentRoomItems.get(i).name.equals(noun)) {
+                    requestedPickedUpItem = Optional.ofNullable((currentRoomItems.remove(i)));
+                    System.out.println("You picked up " + requestedPickedUpItem.get().name);
+                    requestedPickedUpItem.ifPresent(itemToAdd -> addItemToInventory(itemToAdd));
+                    break;
+                }else{
+                    itemNotPickedUp = true;
+                }
+            }
+            if(itemNotPickedUp){
+                System.out.println(noun + " is not available.");
+            }
+        }
+        return requestedPickedUpItem;
+    }
 }

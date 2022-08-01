@@ -1,0 +1,10 @@
+[
+  {
+    "name": "gun",
+    "desc": "shoots, only effective against certain enemies"
+  },
+  {
+    "name": "gum",
+    "desc": "you chew it, not much else"
+  }
+]
