@@ -1,15 +1,15 @@
 [
   {
     "name": "great hall",
-    "desc": "(Starting point of game) You are standing in the great hall of Racumens Castle. There is a random troll in the east corner of the room. (suggest to talk to him) ",
+    "desc": "You are standing in the great hall of Racumens Lair. There is a random troll in the east corner of the room. Talk to him perhaps?",
     "north": "dining chamber",
     "south": "warlock's chamber",
     "east": "torture chamber",
     "west": "crypt",
     "items": [
       {
-        "name": "mustard",
-        "desc": "smells funky"
+        "name": "lantern",
+        "desc": "illuminates your paths around the lair"
       }
     ],
     "npc": [
@@ -17,12 +17,12 @@
         "name": "gnome",
         "talk": [
           "Hey Traveler, watch your steps. Chaos is abound.",
-          "Argh, please don't hurt me. I am just a poor orphan gnome who cleans for copper",
-          "Why are you here? be careful of the arrow that flies by day"
+          "Argh, please don't hurt me. I am just a poor orphan gnome who cleans for copper.",
+          "Why are you here? I have nothing for you."
         ],
-        "item": "key",
-        "defeat": "gnome has been defeated, he disappears from the room",
-        "win": "gnome has won, you lose"
+        "item": "",
+        "defeat": "",
+        "win": ""
       }
     ]
   },
@@ -36,15 +36,13 @@
     "items": [],
     "npc": [
       {
-        "name": "elon",
-        "talk": [
-          "I kinda love Etsy, but don't mind me, you need to kill a warlock",
-          "If life is a video game, the graphics are great but the plot is confusing and the tutorial is way too long. This has nothing to do with your quest traveler, i just don't get guests often",
-          "Tesla Blows! haha!"
-        ],
-        "item": "key",
-        "defeat": "Elon has been defeated, he disappears from the room",
-        "win": "Elon has won, you lose"
+        "name": "",
+        "talk": ["Die Intruder!",
+          "I hope you have said your prayers because you meet with your ancestors today",
+          "Arrrrrgggghhhhhhhhhhhhhhhhh"],
+        "item": "gun",
+        "defeat": "You've been killed. The Orc now does a dance on your mutilated body. GAME OVER!!!",
+        "win": "You have defeated the Orc and a key has morphed into the room. You need this to get into the crypt"
       }
     ]
   },
@@ -57,15 +55,22 @@
     "south": "nothing",
     "items": [
       {
-        "name": "confusion potion",
+        "name": "confusion-potion",
         "desc": "confuse"
       },
       {
-        "name": "shield potion",
+        "name": "shield-potion",
         "desc": "shield"
       }
     ],
-    "npc": []
+    "npc": [
+      {
+      "name": "Troll",
+      "talk": [],
+      "item": "gun",
+      "defeat": "You lost to the troll. Better luck next time Traveler. GAME OVER!!!",
+      "win": "Victory!!! The troll has been defeated. An anti shield appears in the room. This will assist in your battle with Racumen."
+    }]
   },
   {
     "name": "torture chamber",
@@ -74,7 +79,10 @@
     "east": "nothing",
     "west": "great hall",
     "north": "nothing",
-    "items": [],
+    "items": [{
+      "name": "Thunderbolt",
+      "desc": "confuse"
+    }],
     "npc": []
   },
   {
@@ -84,8 +92,18 @@
     "west": "nothing",
     "south": "nothing",
     "east": "nothing",
-    "items": [],
-    "npc": []
+    "items": [
+      {
+        "name": "anti-shield potion",
+        "desc": "confuse"
+      }],
+    "npc": [{
+      "name": "Racumen",
+      "talk": [],
+      "item": "anti-shield potion",
+      "defeat": "You lost! Racumen killed you and you have failed to reverse the curse. GAME OVER!!!!!!",
+      "win": "YOU WIN!!! Racumen has been defeated and the curse reversed. Your generation thanks you Idryssa. GAME OVER!!!!!!"
+    }]
   },
   {
     "name": "ancient study",
@@ -95,6 +113,14 @@
     "south": "nothing",
     "east": "nothing",
     "items": [],
-    "npc": []
+    "npc": [{
+      "name": "Elon",
+      "talk": ["I kinda love Etsy, but don't mind me, you need to kill a warlock",
+        "If life is a video game, the graphics are great but the plot is confusing and the tutorial is way too long. This has nothing to do with your quest traveler, i just don't get guests often",
+        "Tesla Blows! haha!"],
+      "item": "",
+      "defeat": "",
+      "win": ""
+    }]
   }
 ]
