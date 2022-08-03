@@ -110,8 +110,8 @@ class TravelerApp {
                         break;
                     case "get":
                         item.cmdPickUpItem(noun);
-                        // add item to inventory to player inventory
-                        player.getInventory().add(item);
+                        // TODO: add item to inventory to player inventory
+                        
 
                         room.refreshCurrentRoom();
                         break;
