@@ -33,7 +33,6 @@ class TravelerApp {
     //    initialize calls methods that is needed before game starts
     public void initialize() throws IOException {
         generatePlayerFromJson();
-        System.out.println(player);
         dir.add("north");
         dir.add("south");
         dir.add("west");

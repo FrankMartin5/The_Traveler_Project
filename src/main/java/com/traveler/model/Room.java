@@ -49,15 +49,6 @@ public class Room {
         }
     }
 
-//    public static void roomsFromJsonToArray() throws IOException {
-//        Gson gson = new Gson();
-//        Type roomListType = new TypeToken<List<Room>>() {
-//        }.getType();
-//        Reader reader = new InputStreamReader(Objects.requireNonNull(Room.class.getResourceAsStream("/rooms.json")));
-//        allRooms = new Gson().fromJson(reader, roomListType);
-//        reader.close();
-//    }
-
     // a method that returns current room info, aka toString
     public static void cmdRoomInfo() {
         System.out.println(currentRoom.toString());
