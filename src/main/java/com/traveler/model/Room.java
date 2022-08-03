@@ -9,10 +9,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.lang.reflect.Type;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.traveler.model.Combat.itemInInventory;
@@ -36,7 +33,7 @@ public class Room {
         Gson gson = new Gson();
         Type roomListType = new TypeToken<List<Room>>() {
         }.getType();
-        Reader reader = new InputStreamReader(Room.class.getResourceAsStream("/rooms.json"));
+        Reader reader = new InputStreamReader(Objects.requireNonNull(Room.class.getResourceAsStream("/rooms.json")));
         allRooms = new Gson().fromJson(reader, roomListType);
         reader.close();
     }
@@ -165,15 +162,18 @@ public class Room {
     }
 
     public String getItemsInCurrentRoom() {
-        String itemList = "";
-        if (currentRoom.items.size() > 0) {
-            for (Item item : currentRoom.items) {
-                itemList += (item.name + ", ");
-            }
+        StringBuilder itemList = new StringBuilder();
+
+        if (currentRoom.items.size() == 0) {
+            itemList.append("-----There are no items in this room-----");
         } else {
-            itemList = "NONE";
+            for (int i = 0; i < currentRoom.items.size(); i++) {
+                itemList.append(i + 1).append(". ").append(currentRoom.items.get(i).name)
+                        .append(" --- ").append(currentRoom.items.get(i).desc).append("\n");
+            }
         }
-        return itemList;
+        return itemList.toString();
+
     }
 
     // returns a string with the npc's name if npc is in the room
@@ -192,11 +192,13 @@ public class Room {
         return "============================================\n" +
                 "You are in the " + name + "\n" +
                 desc + "\n" +
+                "--------------------------------------------\n" +
                 "To the north is " + north + "\n" +
                 "To the south is " + south + "\n" +
                 "To the east is " + east + "\n" +
                 "To the west is " + west + "\n" +
-                "Items in the room: " + getItemsInCurrentRoom() + "\n" +
+                "--------------------------------------------\n" +
+                "Items in the room: \n" + getItemsInCurrentRoom() + "\n" +
                 "NPC in the room: " + getNpcInCurrentRoom() + "\n";
     }
 

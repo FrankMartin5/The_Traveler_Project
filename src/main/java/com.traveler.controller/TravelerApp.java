@@ -50,10 +50,10 @@ class TravelerApp {
             // TODO: place else if statements inside switch case
             if (textParse(command).equals("help")) {
                 System.out.println(text.help);
-            } else if (textParse(command).equals("inventory")) {
-                System.out.println(item.lookInventory());
             } else if (textParse(command).equals("map")) {
                 cmdMap();
+            } else if (textParse(command).contains("status")) {
+                playerStat();
             } else if (!textParse(command).contains(" ")) {
                 System.out.println("You can't do that");
                 System.out.println(text.help);
@@ -95,29 +95,44 @@ class TravelerApp {
                         break;
                     case "fight":
                         String combatResult = combat.cmdFight(noun);
-                        if (combatResult.equals("win")) {
-                            room.removeNPC(noun);
-                            room.refreshCurrentRoom();
-                        } else if (combatResult.equals("loss")) {
-                            end();
-                        } else if(combatResult.equals("bosswin")){
-                            endWin();
+                        switch (combatResult) {
+                            case "win":
+                                room.removeNPC(noun);
+                                room.refreshCurrentRoom();
+                                break;
+                            case "loss":
+                                end();
+                                break;
+                            case "bosswin":
+                                endWin();
+                                break;
                         }
                         break;
                     case "get":
                         item.cmdPickUpItem(noun);
+                        // add item to inventory to player inventory
+                        player.getInventory().add(item);
+
                         room.refreshCurrentRoom();
                         break;
                     case "drop":
                         item.cmdDropItem(noun);
                         room.refreshCurrentRoom();
                         break;
+
                     default:
                         wrongCmd();
                         break;
                 }
             }
         }
+    }
+
+    private void playerStat() {
+
+        System.out.println("Name: " + player.getName());
+        System.out.println("Health: " + player.getHealth());
+        System.out.println("Inventory: " + player.getInventory());
     }
 
     public void wrongCmd() {
