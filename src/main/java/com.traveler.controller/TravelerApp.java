@@ -14,6 +14,7 @@ import static com.traveler.model.Item.itemsFromJsonToArray;
 import static com.traveler.model.NPC.NPCArray;
 import static com.traveler.model.Room.*;
 import static com.traveler.view.Map.cmdMap;
+import static com.traveler.model.Player.generatePlayerFromJson;
 
 class TravelerApp {
     private boolean gameOver = false;
@@ -30,6 +31,7 @@ class TravelerApp {
 
     //    initialize calls methods that is needed before game starts
     public void initialize() throws IOException {
+        generatePlayerFromJson(player);
         dir.add("north");
         dir.add("south");
         dir.add("west");

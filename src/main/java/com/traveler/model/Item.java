@@ -1,6 +1,8 @@
 package com.traveler.model;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.*;
@@ -26,12 +28,20 @@ public class Item {
     }
 
     // method that reads from json file and loads inventory with Item objects
-    public static void itemsFromJsonToArray() throws IOException {
-        Gson gson = new Gson();
-        Type itemListType = new TypeToken<List<Item>>() {}.getType();
-        Reader reader = new InputStreamReader(Item.class.getResourceAsStream("/inventory.json"));
-        inventory = gson.fromJson(reader, itemListType);
-        reader.close();
+    public static void itemsFromJsonToArray() {
+        try {
+            Gson gson = new Gson();
+            Type itemListType = new TypeToken<List<Item>>() {}.getType();
+            Reader reader = new InputStreamReader(Item.class.getResourceAsStream("/inventory.json"));
+            inventory = gson.fromJson(reader, itemListType);
+            reader.close();
+        } catch (JsonIOException e) {
+            e.printStackTrace();
+        } catch (JsonSyntaxException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public String lookInventory(){

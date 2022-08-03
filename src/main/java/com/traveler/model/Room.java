@@ -1,6 +1,8 @@
 package com.traveler.model;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import jdk.swing.interop.SwingInterOpUtils;
 
@@ -32,13 +34,21 @@ public class Room {
 
     public static List<Room> allRooms;
 
-    public static void roomsFromJsonToArray() throws IOException {
-        Gson gson = new Gson();
-        Type roomListType = new TypeToken<List<Room>>() {
-        }.getType();
-        Reader reader = new InputStreamReader(Room.class.getResourceAsStream("/rooms.json"));
-        allRooms = new Gson().fromJson(reader, roomListType);
-        reader.close();
+    public static void roomsFromJsonToArray() {
+        try {
+            Gson gson = new Gson();
+            Type roomListType = new TypeToken<List<Room>>() {
+            }.getType();
+            Reader reader = new InputStreamReader(Room.class.getResourceAsStream("/rooms.json"));
+            allRooms = new Gson().fromJson(reader, roomListType);
+            reader.close();
+        } catch (JsonIOException e) {
+            e.printStackTrace();
+        } catch (JsonSyntaxException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     // a method that returns current room info, aka toString

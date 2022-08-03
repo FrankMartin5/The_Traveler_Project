@@ -1,5 +1,10 @@
 package com.traveler.model;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.traveler.jsonparser.Json;
+
+
+import java.io.IOException;
 import java.util.List;
 
 public class Player {
@@ -15,6 +20,16 @@ public class Player {
         this.name = name;
         this.health = health;
         this.inventory = inventory;
+    }
+
+    public static void generatePlayerFromJson(Player player) {
+        try {
+            Json json = new Json();
+            JsonNode playerNode = json.parse(json.getResourceStream("/player.json"));
+            player = json.fromJson(playerNode, Player.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public String getName() {
