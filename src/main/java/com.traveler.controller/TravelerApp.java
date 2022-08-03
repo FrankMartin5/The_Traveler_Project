@@ -23,6 +23,7 @@ class TravelerApp {
     NPC npc = new NPC();
     Combat combat = new Combat();
     Text text = new Text();
+    Player player = new Player();
 
     // dir carries directions for parsing
     ArrayList<String> dir = new ArrayList<String>();
