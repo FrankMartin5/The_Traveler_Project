@@ -37,6 +37,10 @@ public class Riddle {
         return hint;
     }
 
+    public String getAnswer() {
+        return answer;
+    }
+
     public static List<Item> getRiddles() {
         return riddles;
     }
