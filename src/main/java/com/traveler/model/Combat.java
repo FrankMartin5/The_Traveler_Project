@@ -52,7 +52,7 @@ public class Combat { // combat class that handles all aspects of combat
     public static boolean itemInInventory(String itemName) {
         boolean res = false;
         for (Item item : inventory) {
-            if (item.name.equals(itemName)) {
+            if (item.getName().equals(itemName)) {
                 res = true;
             }
         }

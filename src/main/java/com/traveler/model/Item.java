@@ -12,8 +12,8 @@ import java.util.*;
 import static com.traveler.model.Room.currentRoom;
 
 public class Item {
-    String name;
-    String desc;
+    private String name;
+    private String desc;
 
     public Item(String name, String desc) {
         this.name = name;
@@ -25,6 +25,30 @@ public class Item {
 
     public Item() {
 
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    public static List<Item> getInventory() {
+        return inventory;
+    }
+
+    public static void setInventory(List<Item> inventory) {
+        Item.inventory = inventory;
     }
 
     // method that reads from json file and loads inventory with Item objects
@@ -155,5 +179,10 @@ public class Item {
             }
         }
         return requestedPickedUpItem;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

@@ -22,16 +22,6 @@ public class Player {
         this.inventory = inventory;
     }
 
-    public static void generatePlayerFromJson(Player player) {
-        try {
-            Json json = new Json();
-            JsonNode playerNode = json.parse(json.getResourceStream("/player.json"));
-            player = json.fromJson(playerNode, Player.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public String getName() {
         return name;
     }
@@ -58,7 +48,7 @@ public class Player {
 
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("Characters: ");
+        final StringBuffer sb = new StringBuffer("Player: ");
         sb.append("name=").append(name);
         sb.append(", health=").append(health);
         sb.append(", inventory=").append(inventory);
