@@ -68,7 +68,11 @@
     "npc": [
       {
         "name": "troll",
-        "talk": [],
+        "talk": [
+          "Accept your fate, traveler",
+          "You will not escape this place",
+          "Bang bang bang! See you in the next life"
+        ],
         "item": "gun",
         "win": "You lost to the troll. Better luck next time Traveler. GAME OVER!!!",
         "defeat": "Victory!!! The troll has been defeated. An anti shield appears in the room. This will assist in your battle with Racumen."
@@ -84,7 +88,7 @@
     "north": "nothing",
     "items": [
       {
-        "name": "Thunderbolt",
+        "name": "thunderbolt",
         "desc": "confuse"
       }
     ],
@@ -118,7 +122,7 @@
     "items": [],
     "npc": [
       {
-        "name": "Elon",
+        "name": "elon",
         "talk": [
           "I kinda love Etsy, but don't mind me, you need to kill a warlock",
           "If life is a video game, the graphics are great but the plot is confusing and the tutorial is way too long. This has nothing to do with your quest traveler, i just don't get guests often",

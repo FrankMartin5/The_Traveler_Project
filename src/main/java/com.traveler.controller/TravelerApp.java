@@ -1,5 +1,7 @@
 package com.traveler.controller;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.traveler.jsonparser.Json;
 import com.traveler.model.*;
 import com.traveler.view.Prompter;
 import com.traveler.view.SplashScreens;
@@ -23,12 +25,14 @@ class TravelerApp {
     NPC npc = new NPC();
     Combat combat = new Combat();
     Text text = new Text();
+    Player player = new Player();
 
     // dir carries directions for parsing
     ArrayList<String> dir = new ArrayList<String>();
 
     //    initialize calls methods that is needed before game starts
     public void initialize() throws IOException {
+        generatePlayerFromJson();
         dir.add("north");
         dir.add("south");
         dir.add("west");
@@ -49,10 +53,10 @@ class TravelerApp {
             // TODO: place else if statements inside switch case
             if (textParse(command).equals("help")) {
                 System.out.println(text.help);
-            } else if (textParse(command).equals("inventory")) {
-                System.out.println(item.lookInventory());
             } else if (textParse(command).equals("map")) {
                 cmdMap();
+            } else if (textParse(command).contains("status")) {
+                playerStat(player);
             } else if (!textParse(command).contains(" ")) {
                 System.out.println("You can't do that");
                 System.out.println(text.help);
@@ -94,29 +98,53 @@ class TravelerApp {
                         break;
                     case "fight":
                         String combatResult = combat.cmdFight(noun);
-                        if (combatResult.equals("win")) {
-                            room.removeNPC(noun);
-                            room.refreshCurrentRoom();
-                        } else if (combatResult.equals("loss")) {
-                            end();
-                        } else if(combatResult.equals("bosswin")){
-                            endWin();
+                        switch (combatResult) {
+                            case "win":
+                                room.removeNPC(noun);
+                                room.refreshCurrentRoom();
+                                break;
+                            case "loss":
+                                end();
+                                break;
+                            case "bosswin":
+                                endWin();
+                                break;
                         }
                         break;
                     case "get":
                         item.cmdPickUpItem(noun);
+                        // TODO: Item is being added inventory but returning null.
+                        player.getInventory().add(item);
                         room.refreshCurrentRoom();
                         break;
                     case "drop":
                         item.cmdDropItem(noun);
                         room.refreshCurrentRoom();
                         break;
+
                     default:
                         wrongCmd();
                         break;
                 }
             }
         }
+    }
+
+    public void generatePlayerFromJson() {
+        try {
+            Json json = new Json();
+            JsonNode playerNode = json.parse(json.getResourceStream("/player.json"));
+            player = json.fromJson(playerNode, Player.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void playerStat(Player player) {
+
+        System.out.println("Name: " + player.getName());
+        System.out.println("Health: " + player.getHealth());
+        System.out.println("Inventory: " + player.getInventory());
     }
 
     public void wrongCmd() {

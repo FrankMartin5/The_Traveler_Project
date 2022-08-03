@@ -1,6 +1,8 @@
 package com.traveler.model;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.*;
@@ -10,8 +12,8 @@ import java.util.*;
 import static com.traveler.model.Room.currentRoom;
 
 public class Item {
-    String name;
-    String desc;
+    private String name;
+    private String desc;
 
     public Item(String name, String desc) {
         this.name = name;
@@ -25,13 +27,45 @@ public class Item {
 
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    public static List<Item> getInventory() {
+        return inventory;
+    }
+
+    public static void setInventory(List<Item> inventory) {
+        Item.inventory = inventory;
+    }
+
     // method that reads from json file and loads inventory with Item objects
-    public static void itemsFromJsonToArray() throws IOException {
-        Gson gson = new Gson();
-        Type itemListType = new TypeToken<List<Item>>() {}.getType();
-        Reader reader = new InputStreamReader(Item.class.getResourceAsStream("/inventory.json"));
-        inventory = gson.fromJson(reader, itemListType);
-        reader.close();
+    public static void itemsFromJsonToArray() {
+        try {
+            Gson gson = new Gson();
+            Type itemListType = new TypeToken<List<Item>>() {}.getType();
+            Reader reader = new InputStreamReader(Item.class.getResourceAsStream("/inventory.json"));
+            inventory = gson.fromJson(reader, itemListType);
+            reader.close();
+        } catch (JsonIOException e) {
+            e.printStackTrace();
+        } catch (JsonSyntaxException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public String lookInventory(){
@@ -145,5 +179,10 @@ public class Item {
             }
         }
         return requestedPickedUpItem;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

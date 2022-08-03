@@ -1,6 +1,8 @@
 package com.traveler.model;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.FileReader;
@@ -25,12 +27,20 @@ public class NPC {
     public static List<NPC> npcList;
 
     // method that reads from json file and loads npc with NPC objects
-    public static void NPCArray() throws IOException {
-        Gson gson = new Gson();
-        Type itemListType = new TypeToken<List<NPC>>() {}.getType();
-        Reader reader = new InputStreamReader(NPC.class.getResourceAsStream("/npc.json"));
-        npcList = new Gson().fromJson(reader, itemListType);
-        reader.close();
+    public static void NPCArray() {
+        try {
+            Gson gson = new Gson();
+            Type itemListType = new TypeToken<List<NPC>>() {}.getType();
+            Reader reader = new InputStreamReader(NPC.class.getResourceAsStream("/npc.json"));
+            npcList = new Gson().fromJson(reader, itemListType);
+            reader.close();
+        } catch (JsonIOException e) {
+            e.printStackTrace();
+        } catch (JsonSyntaxException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     // when command is "talk <npc>" returns talk
