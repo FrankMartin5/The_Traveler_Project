@@ -1,5 +1,7 @@
 package com.traveler.controller;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.traveler.jsonparser.Json;
 import com.traveler.model.*;
 import com.traveler.view.Prompter;
 import com.traveler.view.SplashScreens;
@@ -30,6 +32,8 @@ class TravelerApp {
 
     //    initialize calls methods that is needed before game starts
     public void initialize() throws IOException {
+        generatePlayerFromJson();
+        System.out.println(player);
         dir.add("north");
         dir.add("south");
         dir.add("west");
@@ -53,7 +57,7 @@ class TravelerApp {
             } else if (textParse(command).equals("map")) {
                 cmdMap();
             } else if (textParse(command).contains("status")) {
-                playerStat();
+                playerStat(player);
             } else if (!textParse(command).contains(" ")) {
                 System.out.println("You can't do that");
                 System.out.println(text.help);
@@ -110,9 +114,8 @@ class TravelerApp {
                         break;
                     case "get":
                         item.cmdPickUpItem(noun);
-                        // TODO: add item to inventory to player inventory
-                        
-
+                        // TODO: Item is being added inventory but returning null.
+                        player.getInventory().add(item);
                         room.refreshCurrentRoom();
                         break;
                     case "drop":
@@ -128,7 +131,17 @@ class TravelerApp {
         }
     }
 
-    private void playerStat() {
+    public void generatePlayerFromJson() {
+        try {
+            Json json = new Json();
+            JsonNode playerNode = json.parse(json.getResourceStream("/player.json"));
+            player = json.fromJson(playerNode, Player.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void playerStat(Player player) {
 
         System.out.println("Name: " + player.getName());
         System.out.println("Health: " + player.getHealth());

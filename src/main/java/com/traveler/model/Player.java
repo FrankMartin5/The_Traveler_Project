@@ -1,5 +1,10 @@
 package com.traveler.model;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.traveler.jsonparser.Json;
+
+
+import java.io.IOException;
 import java.util.List;
 
 public class Player {
@@ -43,7 +48,7 @@ public class Player {
 
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("Characters: ");
+        final StringBuffer sb = new StringBuffer("Player: ");
         sb.append("name=").append(name);
         sb.append(", health=").append(health);
         sb.append(", inventory=").append(inventory);

@@ -1,6 +1,8 @@
 package com.traveler.model;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import jdk.swing.interop.SwingInterOpUtils;
 
@@ -29,14 +31,32 @@ public class Room {
 
     public static List<Room> allRooms;
 
-    public static void roomsFromJsonToArray() throws IOException {
-        Gson gson = new Gson();
-        Type roomListType = new TypeToken<List<Room>>() {
-        }.getType();
-        Reader reader = new InputStreamReader(Objects.requireNonNull(Room.class.getResourceAsStream("/rooms.json")));
-        allRooms = new Gson().fromJson(reader, roomListType);
-        reader.close();
+
+    public static void roomsFromJsonToArray() {
+        try {
+            Gson gson = new Gson();
+            Type roomListType = new TypeToken<List<Room>>() {
+            }.getType();
+            Reader reader = new InputStreamReader(Room.class.getResourceAsStream("/rooms.json"));
+            allRooms = new Gson().fromJson(reader, roomListType);
+            reader.close();
+        } catch (JsonIOException e) {
+            e.printStackTrace();
+        } catch (JsonSyntaxException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
+
+//    public static void roomsFromJsonToArray() throws IOException {
+//        Gson gson = new Gson();
+//        Type roomListType = new TypeToken<List<Room>>() {
+//        }.getType();
+//        Reader reader = new InputStreamReader(Objects.requireNonNull(Room.class.getResourceAsStream("/rooms.json")));
+//        allRooms = new Gson().fromJson(reader, roomListType);
+//        reader.close();
+//    }
 
     // a method that returns current room info, aka toString
     public static void cmdRoomInfo() {
@@ -168,8 +188,8 @@ public class Room {
             itemList.append("-----There are no items in this room-----");
         } else {
             for (int i = 0; i < currentRoom.items.size(); i++) {
-                itemList.append(i + 1).append(". ").append(currentRoom.items.get(i).name)
-                        .append(" --- ").append(currentRoom.items.get(i).desc).append("\n");
+                itemList.append(i + 1).append(". ").append(currentRoom.items.get(i).getName())
+                        .append(" --- ").append(currentRoom.items.get(i).getDesc()).append("\n");
             }
         }
         return itemList.toString();
