@@ -51,9 +51,9 @@ class TravelerApp {
 
     public void generateDrops() {
         enemyDrops.put("lint", "Pocket lint. Why do they even have this?");
-        enemyDrops.put("coins", "Small metallic coins that look to be some sort of currency for somewhere.");
-        enemyDrops.put("soul essence", "A ghost-like ball of energy that seems to evade your capture no matter how much you try to hold it");
-        enemyDrops.put("a receipt", "A crumpled piece of parchment for a night at the local Inn");
+        enemyDrops.put("coins", "Small metallic coins that looks to be some sort of currency.");
+        enemyDrops.put("essence", "A ghost-like ball of swirling energy that seems to evade your capture no matter how much you try to hold it");
+        enemyDrops.put("parchment", "A crumpled piece of parchment with unfamiliar text scrawled onto it");
 
     }
 
