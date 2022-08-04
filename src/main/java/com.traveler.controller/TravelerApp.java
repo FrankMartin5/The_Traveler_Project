@@ -8,13 +8,8 @@ import com.traveler.view.SplashScreens;
 import com.traveler.view.Text;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
-import static com.traveler.model.Item.inventory;
 import static com.traveler.model.Item.itemsFromJsonToArray;
 import static com.traveler.model.NPC.NPCArray;
 import static com.traveler.model.Room.*;
@@ -29,7 +24,10 @@ class TravelerApp {
     Combat combat = new Combat();
     Text text = new Text();
     Player player = new Player();
+
+
     HashMap<String, String> enemyDrops = new HashMap<String, String>();
+
 
     // dir carries directions for parsing
     ArrayList<String> dir = new ArrayList<String>();
@@ -122,6 +120,7 @@ class TravelerApp {
                         switch (combatResult) {
                             case "win":
                                 room.removeNPC(noun);
+                                awardXP(10);
                                 room.refreshCurrentRoom();
                                 break;
                             case "loss":
@@ -151,6 +150,30 @@ class TravelerApp {
         }
     }
 
+    public String levelUp(){
+        String message = "Your current level is: " + player.getLvl();
+        if(player.getLvl() == 1){
+            player.setLvl(2);
+        }else if (player.getLvl() == 2){
+            player.setLvl(3);
+        }else if (player.getLvl() == 3){
+            player.setLvl(4);
+        }
+        return message;
+    }
+
+    public void awardXP(int exp){
+        System.out.println("\nYou have defeated your enemy! You have been awarded " + exp +
+                " experience points! You have leveled up!");
+        player.setExp(player.getExp() + exp);
+        System.out.println("You now have a total of " + (player.getExp()) + " experience points gained.");
+        levelUp();
+
+    }
+
+
+
+
     public void generatePlayerFromJson() {
         try {
             Json json = new Json();
@@ -165,6 +188,8 @@ class TravelerApp {
 
         System.out.println("Name: " + player.getName());
         System.out.println("Health: " + player.getHealth());
+        System.out.println("Player Level: " + player.getLvl());
+        System.out.println("Player XP: " + player.getExp());
         System.out.println("Inventory: " + player.getInventory());
     }
 

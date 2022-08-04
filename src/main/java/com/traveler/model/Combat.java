@@ -1,12 +1,23 @@
 package com.traveler.model;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.stream.Stream;
 
 import static com.traveler.model.Item.inventory;
 import static com.traveler.model.Room.currentRoom;
+import com.traveler.model.Player;
 
 public class Combat { // combat class that handles all aspects of combat
     ArrayList<String> friendly = new ArrayList<String>();
+    Map<Integer, Integer> xpPerLevel = new LinkedHashMap<>();
+
+
+
     Item key = new Item("key","opens the door to the crypt");
     Item antiShield = new Item("anti-shield","it may remove a certain impregnable shield");
 
@@ -14,6 +25,7 @@ public class Combat { // combat class that handles all aspects of combat
         friendly.add("elon");
         friendly.add("gnome");
     }
+
 
     public String cmdFight(String enemy) { // method that passes an enemy noun to start combat
         String result = "no fight";
@@ -27,7 +39,7 @@ public class Combat { // combat class that handles all aspects of combat
                 //start of combat with said enemy
                 if (itemInInventory(enemyInRoom.item)) {
                     System.out.println(enemyInRoom.defeat);
-                    if (enemyInRoom.name.equals("racumen")) {
+                    if (enemyInRoom.name.equals("racumen")){
                         result = "bosswin";
                     } else if (enemyInRoom.name.equals("orc")){
                         currentRoom.items.add(key);
