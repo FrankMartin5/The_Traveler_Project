@@ -8,7 +8,10 @@ import com.traveler.view.SplashScreens;
 import com.traveler.view.Text;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
 import java.util.Scanner;
 
 import static com.traveler.model.Item.inventory;
@@ -26,6 +29,7 @@ class TravelerApp {
     Combat combat = new Combat();
     Text text = new Text();
     Player player = new Player();
+    HashMap<String, String> enemyDrops = new HashMap<String, String>();
 
     // dir carries directions for parsing
     ArrayList<String> dir = new ArrayList<String>();
@@ -43,6 +47,23 @@ class TravelerApp {
         combat.initialize();
         welcome();
         promptForNewGame(); // sets gameOver
+    }
+
+    public void generateDrops() {
+        enemyDrops.put("lint", "Pocket lint. Why do they even have this?");
+        enemyDrops.put("coins", "Small metallic coins that look to be some sort of currency for somewhere.");
+        enemyDrops.put("soul essence", "A ghost-like ball of energy that seems to evade your capture no matter how much you try to hold it");
+        enemyDrops.put("a receipt", "A crumpled piece of parchment for a night at the local Inn");
+
+    }
+
+    public void randDrop(){
+        generateDrops();
+
+        Object[] keys = enemyDrops.keySet().toArray(new String[0]);
+        Object key = keys[new Random().nextInt(keys.length)];
+        System.out.println("The vanquished foe drops " + key + "!\n"
+                + "Description: " + enemyDrops.get(key));
     }
 
     // start called from promptForNewGame(), main part of game
