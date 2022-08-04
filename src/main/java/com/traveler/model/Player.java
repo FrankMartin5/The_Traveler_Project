@@ -10,6 +10,9 @@ import java.util.List;
 public class Player {
 
     private String name;
+
+
+
     private int health;
     private List<Item> inventory;
 
@@ -37,6 +40,7 @@ public class Player {
     public void setHealth(int health) {
         this.health = health;
     }
+
 
     public List<Item> getInventory() {
         return inventory;

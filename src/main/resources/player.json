@@ -1,5 +1,6 @@
 {
   "name": "Idryssa",
   "health":100,
+  "experience": 0,
   "inventory": []
 }
