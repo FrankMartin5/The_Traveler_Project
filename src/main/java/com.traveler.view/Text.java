@@ -26,6 +26,8 @@ public class Text {
 
     public String newGamePromptError = "Please enter valid response, n or s";
 
+    public String askRiddle = "\nWhat is the answer? ";
+
     public String gameWin = "CONGRATS!!!!\n" +
             "You have defeated the Boss, you are a true gamer. ";
 }
