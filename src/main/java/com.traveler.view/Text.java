@@ -1,10 +1,12 @@
 package com.traveler.view;
 
 public class Text {
-    public String intro = "The year is 3134 . You are Idryssa, an army sergent and you have just discovered that your Ancestor Asbestos was a very powerful warlord who\n " +
-            "ruled all of Vrubosa when he was cursed by the evil warlock Racumen. This curse has first born male sons of your family die by the age of 35 and has followed \n" +
-            "your family for generations. It is the week of your 35th birthday and you and your hologram companion, Reanu Keeves must now travel back to the past to stop Racumen\n" +
-            "from placing a curse on your family.";
+    public String intro = "==================== THE STORY SO FAR ====================" +
+            "\nThe year is 3134. \nYou are Idryssa, an army Sergeant and you have just discovered " +
+            "that your Ancestor Asbestos was a very powerful warlord who ruled all of Vrubosa " + "when he was cursed by the evil warlock Racumen. This curse has first born " +
+            "male sons of your family die by the age of 35 and has followed your family for " +
+            "generations. \n\nIt is the week of your 35th birthday and you and your hologram companion," +
+            " Reanu Keeves must now travel back to the past to stop Racumen from placing a curse on your family.";
 
     public String help = "List of available commands: \nlook <item/direction>: get information\ngo <direction>: enter room in that direction" +
             "\nget <item>: adds item to inventory\nroom info: get information about the current room\n" +
