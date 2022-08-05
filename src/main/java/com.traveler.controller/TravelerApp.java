@@ -36,7 +36,7 @@ class TravelerApp {
     ArrayList<String> dir = new ArrayList<String>();
 
     //    initialize calls methods that is needed before game starts
-    public void initialize() throws IOException {
+    public void initialize() {
         generatePlayerFromJson();
         quizzesFromJsonToArray();
         dir.add("north");
@@ -48,7 +48,7 @@ class TravelerApp {
         NPCArray();
         combat.initialize();
         welcome();
-        promptForNewGame(); // sets gameOver
+        promptForNewGame();
     }
 
     public void generateDrops() {
