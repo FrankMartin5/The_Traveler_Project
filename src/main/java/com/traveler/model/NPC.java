@@ -25,8 +25,6 @@ public class NPC {
     Prompter prompter = new Prompter(new Scanner(System.in));
     Text text = new Text();
 
-    Quiz quiz = new Quiz();
-
     String name;
     List<String> talk;
     String item;
@@ -37,15 +35,7 @@ public class NPC {
     // Creates npc which carries NPC objects
     public static List<NPC> npcList;
 
-    public void initialize() {
-        try {
-            quizzesFromJsonToArray();
-        } catch (JsonIOException | JsonSyntaxException e) {
-            e.printStackTrace();
-        }
-    }
-
-        // method that reads from json file and loads npc with NPC objects
+    // method that reads from json file and loads npc with NPC objects
     public static void NPCArray() {
         try {
             Gson gson = new Gson();
@@ -118,5 +108,3 @@ public class NPC {
                 '}';
     }
 }
-
-

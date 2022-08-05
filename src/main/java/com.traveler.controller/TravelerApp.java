@@ -17,6 +17,7 @@ import java.util.Scanner;
 import static com.traveler.model.Item.inventory;
 import static com.traveler.model.Item.itemsFromJsonToArray;
 import static com.traveler.model.NPC.NPCArray;
+import static com.traveler.model.Quiz.quizzesFromJsonToArray;
 import static com.traveler.model.Room.*;
 import static com.traveler.view.Map.cmdMap;
 
@@ -37,6 +38,7 @@ class TravelerApp {
     //    initialize calls methods that is needed before game starts
     public void initialize() throws IOException {
         generatePlayerFromJson();
+        quizzesFromJsonToArray();
         dir.add("north");
         dir.add("south");
         dir.add("west");
