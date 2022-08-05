@@ -120,7 +120,7 @@ class TravelerApp {
                         switch (combatResult) {
                             case "win":
                                 room.removeNPC(noun);
-                                awardXP(10);
+                                awardXP();
                                 room.refreshCurrentRoom();
                                 break;
                             case "loss":
@@ -152,21 +152,33 @@ class TravelerApp {
 
     public String levelUp(){
         String message = "Your current level is: " + player.getLvl();
-        if(player.getLvl() == 1){
+        if(player.getLvl() == 1 && player.getExp() >= 10){
             player.setLvl(2);
-        }else if (player.getLvl() == 2){
+            System.out.println(message);
+        }else if (player.getLvl() == 2 && player.getExp() >= 20){
             player.setLvl(3);
-        }else if (player.getLvl() == 3){
+            System.out.println(message);
+        }else if (player.getLvl() == 3 && player.getExp() >= 30) {
             player.setLvl(4);
+            System.out.println(message);
         }
         return message;
     }
 
-    public void awardXP(int exp){
-        System.out.println("\nYou have defeated your enemy! You have been awarded " + exp +
-                " experience points! You have leveled up!");
+    public void awardXP(){
+        int min = 5;
+        int max = 10;
+
+        Random random = new Random();
+
+        int value = random.nextInt(max + min) + min;
+        int exp = value;
+
+
+        System.out.println("\nYou have been awarded " + exp +
+                " experience points!");
         player.setExp(player.getExp() + exp);
-        System.out.println("You now have a total of " + (player.getExp()) + " experience points gained.");
+        System.out.println("You now have a total of " + (player.getExp()) + " experience points gained so far.");
         levelUp();
 
     }
