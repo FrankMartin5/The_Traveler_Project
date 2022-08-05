@@ -126,7 +126,6 @@ class TravelerApp {
                                 room.refreshCurrentRoom();
                                 break;
                             case "loss":
-                                end();
                                 break;
                             case "bosswin":
                                 endWin();
