@@ -17,6 +17,8 @@ import static com.traveler.model.Room.*;
 import static com.traveler.view.Map.cmdMap;
 
 class TravelerApp {
+
+    // Fields
     private boolean gameOver = false;
     Prompter prompter = new Prompter(new Scanner(System.in));
     Room room = new Room();
@@ -25,10 +27,7 @@ class TravelerApp {
     Combat combat = new Combat();
     Text text = new Text();
     Player player = new Player();
-
-
     HashMap<String, String> enemyDrops = new HashMap<String, String>();
-
 
     // dir carries directions for parsing
     ArrayList<String> dir = new ArrayList<String>();
@@ -183,9 +182,6 @@ class TravelerApp {
         levelUp();
 
     }
-
-
-
 
     public void generatePlayerFromJson() {
         try {
