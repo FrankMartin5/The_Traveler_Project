@@ -1,6 +1,7 @@
 package com.traveler.controller;
 
 import com.traveler.view.SplashScreens;
+import com.traveler.view.Swing;
 
 import java.io.IOException;
 
