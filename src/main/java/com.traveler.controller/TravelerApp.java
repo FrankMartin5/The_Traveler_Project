@@ -12,6 +12,7 @@ import java.util.*;
 
 import static com.traveler.model.Item.itemsFromJsonToArray;
 import static com.traveler.model.NPC.NPCArray;
+import static com.traveler.model.Quiz.quizzesFromJsonToArray;
 import static com.traveler.model.Room.*;
 import static com.traveler.view.Map.cmdMap;
 
@@ -33,8 +34,9 @@ class TravelerApp {
     ArrayList<String> dir = new ArrayList<String>();
 
     //    initialize calls methods that is needed before game starts
-    public void initialize() throws IOException {
+    public void initialize() {
         generatePlayerFromJson();
+        quizzesFromJsonToArray();
         dir.add("north");
         dir.add("south");
         dir.add("west");
@@ -44,7 +46,7 @@ class TravelerApp {
         NPCArray();
         combat.initialize();
         welcome();
-        promptForNewGame(); // sets gameOver
+        promptForNewGame();
     }
 
     public void generateDrops() {

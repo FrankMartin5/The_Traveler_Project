@@ -42,7 +42,6 @@ public class Riddle {
         return answer;
     }
 
-    // Create a method that return the question of the riddle
     public String getQuestion() {
         return question;
     }

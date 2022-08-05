@@ -8,12 +8,8 @@ import java.io.IOException;
 // Main class that creates new TravelerApp and initializes
 class Main {
     public static void main(String[] args){
-        try {
-            TravelerApp app = new TravelerApp();
-            app.initialize();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        TravelerApp app = new TravelerApp();
+        app.initialize();
     }
 
 }
