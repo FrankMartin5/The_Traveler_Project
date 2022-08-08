@@ -9,7 +9,8 @@ import java.io.IOException;
 class Main {
     public static void main(String[] args){
         TravelerApp app = new TravelerApp();
-        app.initialize();
+//        app.initialize();
+        new Swing();
     }
 
 }

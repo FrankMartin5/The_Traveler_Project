@@ -1,7 +1,7 @@
 package com.traveler.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.traveler.jsonparser.Json;
+import com.traveler.util.Json;
 import com.traveler.model.*;
 import com.traveler.view.Prompter;
 import com.traveler.view.SplashScreens;
