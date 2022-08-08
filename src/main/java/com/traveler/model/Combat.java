@@ -2,6 +2,7 @@ package com.traveler.model;
 
 import com.traveler.view.Prompter;
 import com.traveler.view.Text;
+import com.traveler.model.Taunts;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -60,6 +61,7 @@ public class Combat { // combat class that handles all aspects of combat
                                 }
                             } else {
                                 System.out.println("You lose the round!");
+                                Taunts.npcTaunts();
                                 boss_round--;
                                 lose_1++;
                                 if (lose_1 == 2) {
@@ -74,6 +76,7 @@ public class Combat { // combat class that handles all aspects of combat
                         break;
 
                     case "orc":
+
 
                     case "troll":
                         int regular_round = 3;
@@ -98,6 +101,7 @@ public class Combat { // combat class that handles all aspects of combat
                                 }
                             } else {
                                 System.out.println("You lose the round!");
+                                Taunts.npcTaunts();
                                 regular_round--;
                                 lose_2++;
                                 if (lose_2 == 2) {
