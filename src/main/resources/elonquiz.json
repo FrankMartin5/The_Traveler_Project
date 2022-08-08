@@ -1,0 +1,16 @@
+[
+  {
+    "question": "What was the first electric car model manufactured by Tesla Motors?",
+    "option1": "Tesla Roadster",
+    "option2": "Tesla Model S",
+    "option3": "Tesla Model X",
+    "answer": "1"
+  },
+  {
+    "question": "Who is the founder and the current Chief Executive Officer of Tesla Motors?",
+    "option1": "Jeff Bezos",
+    "option2": "Elon Musk",
+    "option3": "Bill Gates",
+    "answer": "2"
+  }
+]

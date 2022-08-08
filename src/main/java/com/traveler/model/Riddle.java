@@ -9,49 +9,21 @@ import java.io.*;
 import java.lang.reflect.Type;
 import java.util.*;
 
-import static com.traveler.model.Room.currentRoom;
-
 public class Riddle {
+
     private String question;
     private String hint;
     private String answer;
 
-    public Riddle(String question, String hint, String answer) {
-        this.question = question;
-        this.hint = hint;
-        this.answer = answer;
-    }
+    public static List<Riddle> allRiddles;
 
-    // Creates riddle which carries riddle objects
-    public static List<Item> riddles;
-
-    public Riddle() {
-
-    }
-
-    public String getQuestion() {
-        return question;
-    }
-
-    public String getHint() {
-        return hint;
-    }
-
-    public String getAnswer() {
-        return answer;
-    }
-
-    public static List<Item> getRiddles() {
-        return riddles;
-    }
-
-    // method that reads from json file and loads inventory with Item objects
     public static void riddlesFromJsonToArray() {
         try {
             Gson gson = new Gson();
-            Type itemListType = new TypeToken<List<Item>>() {}.getType();
-            Reader reader = new InputStreamReader(Item.class.getResourceAsStream("/riddle.json"));
-            riddles = gson.fromJson(reader, itemListType);
+            Type riddleListType = new TypeToken<List<Riddle>>() {
+            }.getType();
+            Reader reader = new InputStreamReader(Riddle.class.getResourceAsStream("/riddle.json"));
+            allRiddles = new Gson().fromJson(reader, riddleListType);
             reader.close();
         } catch (JsonIOException e) {
             e.printStackTrace();
@@ -62,12 +34,25 @@ public class Riddle {
         }
     }
 
+    public String getHint() {
+        return hint;
+    }
+
+    public String getAnswer() {
+        return answer;
+    }
+
+    public String getQuestion() {
+        return question;
+    }
+
     @Override
     public String toString() {
-        return "Riddle{" +
-                "question='" + question + '\'' +
-                ", hint='" + hint + '\'' +
-                ", answer='" + answer + '\'' +
-                '}';
+        final StringBuffer sb = new StringBuffer("Riddle: ");
+        sb.append("question =").append(question);
+        sb.append(", hint =").append(hint);
+        sb.append(", answer =").append(answer);
+        sb.append('}');
+        return sb.toString();
     }
 }

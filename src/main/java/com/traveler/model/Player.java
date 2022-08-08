@@ -10,17 +10,32 @@ import java.util.List;
 public class Player {
 
     private String name;
+
     private int health;
+    private int exp = 0;
+
+
+
+    private int lvl = 1;
+
     private List<Item> inventory;
+
+
 
     public Player() {
     }
 
-    public Player(String name, int health, List<Item> inventory) {
+
+
+
+    public Player(String name, int health, int exp, int lvl, List<Item> inventory) {
         this.name = name;
         this.health = health;
+        this.exp = exp;
+        this.lvl = lvl;
         this.inventory = inventory;
     }
+
 
     public String getName() {
         return name;
@@ -36,6 +51,22 @@ public class Player {
 
     public void setHealth(int health) {
         this.health = health;
+    }
+
+    public int getExp() {
+        return exp;
+    }
+
+    public void setExp(int exp) {
+        this.exp = exp;
+    }
+
+    public int getLvl() {
+        return lvl;
+    }
+
+    public void setLvl(int lvl) {
+        this.lvl = lvl;
     }
 
     public List<Item> getInventory() {
