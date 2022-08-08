@@ -29,8 +29,6 @@ public class Combat { // combat class that handles all aspects of combat
     public String cmdFight(String enemy) { // method that passes an enemy noun to start combat
         String result = "no fight";
         Riddle riddle = allRiddles.get((int) (Math.random() * allRiddles.size()));
-
-        // first check to see if npc in room and if that npc's name matches enemy
         if (currentRoom.npc.size() > 0 && currentRoom.npc.get(0).name.equals(enemy)) {
             NPC enemyInRoom = currentRoom.npc.get(0);
             //check to verify enemy is not friendly
@@ -40,42 +38,76 @@ public class Combat { // combat class that handles all aspects of combat
                 //start of combat with said enemy
                 switch (enemyInRoom.name) {
                     case "racumen":
-                        System.out.println(riddle.getQuestion());
-                        System.out.println(riddle.getHint());
-                        String answer = prompter.prompt(text.askRiddle);
-                        if (answer.equals(riddle.getAnswer())) {
-                            System.out.println("You answered correctly, you win!");
-                            result = "bosswin";
-                        } else {
-                            System.out.println("You answered incorrectly, you lose!");
-                            result = "loss";
+                        int boss_round = 3;
+                        int win_1 = 0;
+                        int lose_1 = 0;
+
+                        while (boss_round > 0 ) {
+                            System.out.println("You have " + boss_round + " rounds to complete.");
+                            System.out.println("Riddle: " + riddle.getQuestion());
+                            System.out.println("Hint: " + riddle.getHint());
+                            String answer = prompter.prompt("Answer: ");
+
+                            if (answer.equals(riddle.getAnswer())) {
+                                System.out.println("You win the round!");
+                                win_1++;
+                                boss_round--;
+                                riddle = allRiddles.get((int) (Math.random() * allRiddles.size()));
+                                if (win_1 == 2) {
+                                    System.out.println("You win the combat!");
+                                    result = "bosswin";
+                                    break;
+                                }
+                            } else {
+                                System.out.println("You lose the round!");
+                                boss_round--;
+                                lose_1++;
+                                if (lose_1 == 2) {
+                                    System.out.println("You lost two times in a row, you lose the combat!");
+                                    result = "lose";
+                                    break;
+                                }
+                                riddle = allRiddles.get((int) (Math.random() * allRiddles.size()));
+                            }
+
                         }
                         break;
 
                     case "orc":
-                        System.out.println(riddle.getQuestion());
-                        System.out.println(riddle.getHint());
-                        answer = prompter.prompt(text.askRiddle);
-                        if (answer.equals(riddle.getAnswer())) {
-                            System.out.println("You answered correctly, you win!");
-                            result = "win";
-                        } else {
-                            System.out.println("You answered incorrectly, you lose!");
-                            result = "loss";
-                        }
-                        break;
 
                     case "troll":
-                        System.out.println(riddle.getQuestion());
-                        System.out.println(riddle.getHint());
-                        answer = prompter.prompt(text.askRiddle);
-                        if (answer.equals(riddle.getAnswer())) {
-                            System.out.println("You answered correctly, you win!");
-                            currentRoom.items.add(antiShield);
-                            result = "win";
-                        } else {
-                            System.out.println("You answered incorrectly, you lose!");
-                            result = "loss";
+                        int regular_round = 3;
+                        int win_2 = 0;
+                        int lose_2 = 0;
+
+                        while (regular_round > 0 ) {
+                            System.out.println("You have " + regular_round + " rounds to complete.");
+                            System.out.println("Riddle: " + riddle.getQuestion());
+                            System.out.println("Hint: " + riddle.getHint());
+                            String answer = prompter.prompt("Answer: ");
+
+                            if (answer.equals(riddle.getAnswer())) {
+                                System.out.println("You win the round!");
+                                win_2++;
+                                regular_round--;
+                                riddle = allRiddles.get((int) (Math.random() * allRiddles.size()));
+                                if (win_2 == 2) {
+                                    System.out.println("You win the combat!");
+                                    result = "win";
+                                    break;
+                                }
+                            } else {
+                                System.out.println("You lose the round!");
+                                regular_round--;
+                                lose_2++;
+                                if (lose_2 == 2) {
+                                    System.out.println("You lost two times in a row, you lose the combat!");
+                                    result = "lose";
+                                    break;
+                                }
+                                riddle = allRiddles.get((int) (Math.random() * allRiddles.size()));
+                            }
+
                         }
                         break;
 
@@ -103,4 +135,5 @@ public class Combat { // combat class that handles all aspects of combat
         }
         return res;
     }
+
 }
