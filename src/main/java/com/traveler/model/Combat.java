@@ -17,7 +17,7 @@ public class Combat { // combat class that handles all aspects of combat
 
     Text text = new Text();
 
-    ArrayList<String> friendly = new ArrayList<>();
+    ArrayList<String> friendly = new ArrayList<String>();
     Item key = new Item("key", "opens the door to the crypt");
     Item antiShield = new Item("anti-shield", "it may remove a certain impregnable shield");
 
