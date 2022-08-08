@@ -17,7 +17,7 @@ public class Combat { // combat class that handles all aspects of combat
 
     Text text = new Text();
 
-    ArrayList<String> friendly = new ArrayList<String>();
+    ArrayList<String> friendly = new ArrayList<>();
     Item key = new Item("key", "opens the door to the crypt");
     Item antiShield = new Item("anti-shield", "it may remove a certain impregnable shield");
 
@@ -61,7 +61,7 @@ public class Combat { // combat class that handles all aspects of combat
                                 }
                             } else {
                                 System.out.println("You lose the round!");
-                                Taunts.taunts();
+                                Taunts.npcTaunts();
                                 boss_round--;
                                 lose_1++;
                                 if (lose_1 == 2) {
@@ -101,7 +101,7 @@ public class Combat { // combat class that handles all aspects of combat
                                 }
                             } else {
                                 System.out.println("You lose the round!");
-                                Taunts.taunts();
+                                Taunts.npcTaunts();
                                 regular_round--;
                                 lose_2++;
                                 if (lose_2 == 2) {

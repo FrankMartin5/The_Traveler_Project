@@ -7,9 +7,7 @@ import java.util.concurrent.TimeUnit;
 import static com.traveler.model.Room.currentRoom;
 
 public class Taunts {
-
     private static Random r = new Random();
-
 
     public static void orcTaunts() {
         try {
@@ -74,13 +72,17 @@ public class Taunts {
         }
     }
 
-    public static void taunts(){
-        if (currentRoom.npc.get(0).name.equals("racumen")){
-            fbTaunts();
-        } else if (currentRoom.npc.get(0).name.equals("troll")){
-            trollTaunts();
-        } else if (currentRoom.npc.get(0).name.equals("orc")){
-            orcTaunts();
+    public static void npcTaunts(){
+        switch (currentRoom.npc.get(0).name) {
+            case "racumen":
+                fbTaunts();
+                break;
+            case "troll":
+                trollTaunts();
+                break;
+            case "orc":
+                orcTaunts();
+                break;
         }
     }
 
