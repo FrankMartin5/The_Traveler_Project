@@ -7,7 +7,7 @@ public class Player {
 
     private String name;
 
-    private int health;
+    private int health = 100;
     private int exp = 0;
 
 
