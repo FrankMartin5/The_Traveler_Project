@@ -1,23 +1,42 @@
 package com.traveler.view;
 
+import com.traveler.model.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
+import java.util.Scanner;
+
+import static com.traveler.model.Room.*;
 
 public class View {
+
+    // Fields
+    private boolean gameOver = false;
+    Prompter prompter = new Prompter(new Scanner(System.in));
+    Room room = new Room();
+    Item item = new Item();
+    NPC npc = new NPC();
+    Combat combat = new Combat();
+    Text text = new Text();
+    Player player = new Player();
+    HashMap<String, String> enemyDrops = new HashMap<String, String>();
+    String position;
 
     JFrame window;
     JPanel titlePanel, startBtnPanel, mainTextPanel, optionButtonPanel;
     Container con;
     JLabel titleLabel;
     JTextArea mainTextArea;
-    JButton startBtn, viewStoryBtn,option1, option2, option3, option4;
+    public static JButton startBtn, viewStoryBtn,option1, option2, option3, option4;
     Font titleFont = new Font("Impact", Font.BOLD, 50);
     Font textFont = new Font("Times New Roman", Font.PLAIN, 20);
 
     TitleScreenHandler tsHandler = new TitleScreenHandler();
-    TravelerView optionHandler = new TravelerView();
+    OptionHandler optionHandler = new OptionHandler();
+    TravelerView travelerView = new TravelerView();
 
     public View(){
         window = new JFrame();
@@ -120,5 +139,38 @@ public class View {
             gameScreen();
         }
     }
+
+    public class OptionHandler implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent event) {
+            String selectedOption = event.getActionCommand();
+
+            switch (position) {
+                case "great hall":
+                    option1.setText("Go North");
+                    option2.setText("Go South");
+                    option3.setText("Go East");
+                    option4.setText("Go West");
+                    switch (selectedOption) {
+                        case "c1":
+                            room.cmdGo("north");
+                            break;
+                        case "c2":
+                            room.cmdGo("south");
+                            break;
+                        case "c3":
+                            room.cmdGo("east");
+                            break;
+                        case "c4":
+                            room.cmdGo("west");
+                            break;
+                    }
+            }
+        }
+    }
+
+
+
+
 
 }

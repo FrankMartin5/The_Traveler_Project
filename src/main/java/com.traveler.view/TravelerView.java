@@ -3,12 +3,15 @@ package com.traveler.view;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.traveler.model.*;
 import com.traveler.util.Json;
+import com.traveler.util.ScreenWriter;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -20,9 +23,96 @@ import static com.traveler.model.Quiz.quizzesFromJsonToArray;
 import static com.traveler.model.Room.*;
 import static com.traveler.view.Map.cmdMap;
 
-public class TravelerView implements ActionListener {
+public class TravelerView implements KeyListener {
 
-    View view = new View();
+    ScreenWriter screenWriter = new ScreenWriter();
+//    JFrame window;
+    JPanel titlePanel, startBtnPanel, mainTextPanel, optionButtonPanel;
+    Container con;
+    JLabel result;
+    JTextArea mainTextArea = new JTextArea();
+    Button startBtn, viewStoryBtn,option1, option2, option3, option4;
+    Font titleFont = new Font("Impact", Font.BOLD, 50);
+    Font textFont = new Font("Times New Roman", Font.PLAIN, 14);
+    JTextField textField;
+    JButton submit;
+    String command;
+
+    public TravelerView() {
+        JFrame window = new JFrame();
+        JScrollPane scrollPane = new JScrollPane();
+        window.setSize(1000,800);
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.getContentPane().setBackground(Color.BLACK);
+        window.setLayout(new BorderLayout());
+        con = window.getContentPane();
+
+        mainTextPanel = new JPanel();
+        mainTextPanel.setBounds(100,100,850,650);
+        mainTextPanel.setBackground(Color.black);
+        con.add(mainTextPanel);
+
+        mainTextArea.setBounds(100,100,650,450);
+        mainTextArea.setWrapStyleWord(true);
+        mainTextArea.setBackground(Color.black);
+        mainTextArea.setForeground(Color.white);
+        mainTextArea.setFont(textFont);
+        mainTextArea.setLineWrap(true);
+        mainTextPanel.add(mainTextArea);
+        textField = new JTextField(20);
+        result = new JLabel();
+        mainTextPanel.add(result);
+        textField.addKeyListener(this);
+        mainTextPanel.add(textField, BorderLayout.SOUTH);
+
+
+        window.setVisible(true);
+
+        PrintStream out = new PrintStream(new OutputStream() {
+            @Override
+            public void write(int b) throws IOException {
+                mainTextArea.append(""+(char)(b & 0xFF));
+            }
+        });
+        System.setOut(out);
+    }
+
+//    public void actionPerformed(ActionEvent event) {
+//        if (event.getSource() == submit) {
+//            command = textField.getText();
+//            System.out.println(command);
+//        }
+//    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+//            command = textField.getText();
+//            System.out.println(command);
+//            command = prompter.prompt(text.prompt);
+        }
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+            command = textField.getText();
+            result.setText(command);
+
+//            System.out.println(command);
+//            command = prompter.prompt(text.prompt);
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+//            command = textField.getText();
+//            System.out.println(command);
+//            command = prompter.prompt(text.prompt);
+        }
+    }
 
     // Fields
     private boolean gameOver = false;
@@ -34,7 +124,8 @@ public class TravelerView implements ActionListener {
     Text text = new Text();
     Player player = new Player();
     HashMap<String, String> enemyDrops = new HashMap<String, String>();
-    String position;
+//    String start = prompter.prompt(text.newGamePrompt);
+//    String command = prompter.prompt(text.prompt);
 
     // dir carries directions for parsing
     ArrayList<String> dir = new ArrayList<String>();
@@ -52,7 +143,8 @@ public class TravelerView implements ActionListener {
         NPCArray();
         combat.initialize();
 //        welcome();
-        promptForNewGame();
+//        promptForNewGame();
+        start();
     }
 
     public void generateDrops() {
@@ -72,23 +164,16 @@ public class TravelerView implements ActionListener {
                 + "Description: " + enemyDrops.get(key));
     }
 
-    @Override
-    public void actionPerformed(ActionEvent event) {
-        String selectedOption = event.getActionCommand();
-
-        switch (position) {
-            case "great hall":
-                switch (selectedOption) {
-
-                }
-        }
-    }
 
     // start called from promptForNewGame(), main part of game
     public void start() {
+        System.out.println(text.intro);
+        room.setCurrentRoom(allRooms.get(0));
+        System.out.println(text.help);
         while (!gameOver) {
             // command is the main prompt that dictates flow of game
-            String command = prompter.prompt(text.prompt);
+//            String command = prompter.prompt(text.prompt);
+            command = prompter.prompt(text.prompt);
             // TODO: place else if statements inside switch case
             if (textParse(command).equals("help")) {
                 System.out.println(text.help);
@@ -238,43 +323,44 @@ public class TravelerView implements ActionListener {
         System.out.println(text.gameWin);
     }
 
-    private void welcome() {
+    public void welcome() {
         SplashScreens.art();
     }
 
     // prompts for new game or saved game
-    private void promptForNewGame() {
-        String start = prompter.prompt(text.newGamePrompt);
-        // initialization for starting new game
-        if (textParse(start).equals("n")) {
-            System.out.println(text.newGame);
-            System.out.println(text.intro);
-            room.setCurrentRoom(allRooms.get(0));
-            System.out.println(text.help);
-            start();
-        } else if (textParse(start).equals("s")) {
-            System.out.println(text.newGame);
-            start();
-        }
-        //error handling
-        else {
-            System.out.println(text.newGamePromptError);
-            promptForNewGame();
-        }
-    }
+//    public void promptForNewGame() {
+////        String start = prompter.prompt(text.newGamePrompt);
+//        command = prompter.prompt(text.newGamePrompt);
+//        // initialization for starting new game
+//        if (textParse(command).equals("n")) {
+//            System.out.println(text.newGame);
+//            System.out.println(text.intro);
+//            room.setCurrentRoom(allRooms.get(0));
+//            System.out.println(text.help);
+//            start();
+//        } else if (textParse(command).equals("s")) {
+//            System.out.println(text.newGame);
+//            start();
+//        }
+//        //error handling
+//        else {
+//            System.out.println(text.newGamePromptError);
+//            promptForNewGame();
+//        }
+//    }
 
     private String textParse(String input) {
         return input.trim().toLowerCase();
     }
 
     // verb parser to get just the verb
-    private String verbParse(String input) {
+    public String verbParse(String input) {
         String[] command = textParse(input).split(" ");
         return command[0];
     }
 
     // a noun parser to get just the noun
-    private String nounParse(String input) {
+    public String nounParse(String input) {
         String[] command = textParse(input).split(" ");
         return command[1];
     }
@@ -288,6 +374,7 @@ public class TravelerView implements ActionListener {
     public void setGameOver(boolean gameOver) {
         this.gameOver = gameOver;
     }
+
 }
 
 
