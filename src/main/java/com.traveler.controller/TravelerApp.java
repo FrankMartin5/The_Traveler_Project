@@ -16,17 +16,17 @@ import static com.traveler.model.Quiz.quizzesFromJsonToArray;
 import static com.traveler.model.Room.*;
 import static com.traveler.view.Map.cmdMap;
 
-class TravelerApp {
+public class TravelerApp {
 
     // Fields
     private boolean gameOver = false;
+    Player player = new Player();
     Prompter prompter = new Prompter(new Scanner(System.in));
     Room room = new Room();
     Item item = new Item();
     NPC npc = new NPC();
     Combat combat = new Combat();
     Text text = new Text();
-    Player player = new Player();
     HashMap<String, String> enemyDrops = new HashMap<String, String>();
 
     // dir carries directions for parsing
@@ -113,24 +113,29 @@ class TravelerApp {
                             item.cmdLook(noun);
                         }
                         break;
+
                     case "talk":
                         npc.cmdTalk(noun);
                         break;
+
                     case "fight":
                         String combatResult = combat.cmdFight(noun);
+
                         switch (combatResult) {
                             case "win":
                                 room.removeNPC(noun);
                                 awardXP();
                                 room.refreshCurrentRoom();
                                 break;
-                            case "loss":
+                            case "lose":
+                                reduceHealth();
                                 break;
                             case "bosswin":
                                 endWin();
                                 break;
                         }
                         break;
+
                     case "get":
                         item.cmdPickUpItem(noun);
                         // TODO: Item is being added inventory but returning null.
@@ -147,6 +152,15 @@ class TravelerApp {
                         break;
                 }
             }
+        }
+    }
+
+    private void reduceHealth() {
+        if (player.getHealth() <= 25) {
+            end();
+        } else {
+            player.setHealth(player.getHealth() - 25);
+            System.out.println("You have " + player.getHealth() + " health remaining");
         }
     }
 
