@@ -1,11 +1,8 @@
-package com.traveler.controller;
+package com.traveler.view;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.traveler.model.*;
 import com.traveler.util.Json;
-import com.traveler.view.Prompter;
-import com.traveler.view.SplashScreens;
-import com.traveler.view.Text;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,7 +20,7 @@ import static com.traveler.model.Quiz.quizzesFromJsonToArray;
 import static com.traveler.model.Room.*;
 import static com.traveler.view.Map.cmdMap;
 
-public class TravelerApp extends JFrame{
+public class TravelerView extends JFrame{
 
     JFrame window;
     JPanel mainTextPanel;
@@ -35,7 +32,7 @@ public class TravelerApp extends JFrame{
     JButton submit;
     private String input;
 
-    public TravelerApp() {
+    public TravelerView() {
         window = new JFrame();
         JScrollPane scrollPane = new JScrollPane();
         window.setSize(1000,800);
@@ -66,8 +63,8 @@ public class TravelerApp extends JFrame{
             input = textField.getText();
             result.setText(input);
             setOutput(input);
-            synchronized (TravelerApp.class) {
-                TravelerApp.class.notifyAll();
+            synchronized (TravelerView.class) {
+                TravelerView.class.notifyAll();
             }
         });
 
@@ -84,8 +81,8 @@ public class TravelerApp extends JFrame{
     }
 
     public void setOutput(String output) {
-        mainTextArea.append("\n"+output);
-        mainTextArea.setCaretPosition(mainTextArea.getDocument().getLength());
+     mainTextArea.append("\n"+output);
+     mainTextArea.setCaretPosition(mainTextArea.getDocument().getLength());
     }
 
     // Fields
@@ -140,9 +137,9 @@ public class TravelerApp extends JFrame{
         room.setCurrentRoom(allRooms.get(0));
         System.out.println(text.help);
         while (!gameOver) {
-            synchronized (TravelerApp.class) {
+            synchronized (TravelerView.class) {
                 try {
-                    TravelerApp.class.wait();
+                    TravelerView.class.wait();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -203,8 +200,7 @@ public class TravelerApp extends JFrame{
                                 awardXP();
                                 room.refreshCurrentRoom();
                                 break;
-                            case "losw":
-                                reduceHealth();
+                            case "loss":
                                 break;
                             case "bosswin":
                                 endWin();
@@ -293,15 +289,6 @@ public class TravelerApp extends JFrame{
         System.out.println(text.gameOver);
     }
 
-    public void reduceHealth() {
-        if (player.getHealth() <= 25) {
-            end();
-        } else {
-            player.setHealth(player.getHealth() - 25);
-            System.out.println("You have " + player.getHealth() + " health remaining");
-        }
-    }
-
     public void endWin() {
         setGameOver(true);
         SplashScreens.win();
@@ -346,3 +333,5 @@ public class TravelerApp extends JFrame{
         this.input = input;
     }
 }
+
+

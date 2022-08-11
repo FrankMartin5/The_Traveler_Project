@@ -1,4 +1,4 @@
-package com.traveler.jsonparser;
+package com.traveler.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.*;

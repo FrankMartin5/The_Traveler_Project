@@ -1,10 +1,6 @@
 package com.traveler.model;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.traveler.jsonparser.Json;
 
-
-import java.io.IOException;
 import java.util.List;
 
 public class Player {
