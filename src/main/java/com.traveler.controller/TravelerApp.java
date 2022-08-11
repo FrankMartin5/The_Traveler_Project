@@ -204,6 +204,7 @@ public class TravelerApp extends JFrame{
                                 room.refreshCurrentRoom();
                                 break;
                             case "loss":
+                                reduceHealth();
                                 break;
                             case "bosswin":
                                 endWin();
@@ -290,6 +291,15 @@ public class TravelerApp extends JFrame{
     public void end() {
         setGameOver(true);
         System.out.println(text.gameOver);
+    }
+
+    public void reduceHealth() {
+        if (player.getHealth() <= 25) {
+            end();
+        } else {
+            player.setHealth(player.getHealth() - 25);
+            System.out.println("You have " + player.getHealth() + " health remaining");
+        }
     }
 
     public void endWin() {
