@@ -6,7 +6,8 @@ import com.traveler.view.View;
 // Main class that creates new TravelerApp and initializes
 class Main {
     public static void main(String[] args){
-        new TravelerView().initialize();
+        new TravelerApp().initialize();
+//        new TravelerView().initialize();
     }
 
 }
