@@ -3,12 +3,9 @@ package com.traveler.view;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.traveler.model.*;
 import com.traveler.util.Json;
-import com.traveler.util.ScreenWriter;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;

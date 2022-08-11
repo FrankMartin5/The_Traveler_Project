@@ -3,15 +3,12 @@ package com.traveler.controller;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.traveler.model.*;
 import com.traveler.util.Json;
-import com.traveler.util.ScreenWriter;
 import com.traveler.view.Prompter;
 import com.traveler.view.SplashScreens;
 import com.traveler.view.Text;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
