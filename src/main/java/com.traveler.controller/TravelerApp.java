@@ -203,7 +203,7 @@ public class TravelerApp extends JFrame{
                                 awardXP();
                                 room.refreshCurrentRoom();
                                 break;
-                            case "loss":
+                            case "losw":
                                 reduceHealth();
                                 break;
                             case "bosswin":
