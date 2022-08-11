@@ -23,23 +23,20 @@ import static com.traveler.model.Quiz.quizzesFromJsonToArray;
 import static com.traveler.model.Room.*;
 import static com.traveler.view.Map.cmdMap;
 
-public class TravelerView implements KeyListener {
+public class TravelerView extends JFrame{
 
-    ScreenWriter screenWriter = new ScreenWriter();
-//    JFrame window;
-    JPanel titlePanel, startBtnPanel, mainTextPanel, optionButtonPanel;
+    JFrame window;
+    JPanel mainTextPanel;
     Container con;
     JLabel result;
-    JTextArea mainTextArea = new JTextArea();
-    Button startBtn, viewStoryBtn,option1, option2, option3, option4;
-    Font titleFont = new Font("Impact", Font.BOLD, 50);
+    JTextArea mainTextArea;
     Font textFont = new Font("Times New Roman", Font.PLAIN, 14);
     JTextField textField;
     JButton submit;
-    String command;
+    private String input;
 
     public TravelerView() {
-        JFrame window = new JFrame();
+        window = new JFrame();
         JScrollPane scrollPane = new JScrollPane();
         window.setSize(1000,800);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -51,7 +48,7 @@ public class TravelerView implements KeyListener {
         mainTextPanel.setBounds(100,100,850,650);
         mainTextPanel.setBackground(Color.black);
         con.add(mainTextPanel);
-
+        mainTextArea = new JTextArea();
         mainTextArea.setBounds(100,100,650,450);
         mainTextArea.setWrapStyleWord(true);
         mainTextArea.setBackground(Color.black);
@@ -61,12 +58,18 @@ public class TravelerView implements KeyListener {
         mainTextPanel.add(mainTextArea);
         textField = new JTextField(20);
         result = new JLabel();
-        mainTextPanel.add(result);
-        textField.addKeyListener(this);
-        mainTextPanel.add(textField, BorderLayout.SOUTH);
-
-
-        window.setVisible(true);
+        mainTextArea.add(result);
+        mainTextPanel.add(textField);
+        submit = new JButton("Enter");
+        mainTextPanel.add(submit);
+        submit.addActionListener(e -> {
+            input = textField.getText();
+            result.setText(input);
+            setOutput(input);
+            synchronized (TravelerView.class) {
+                TravelerView.class.notifyAll();
+            }
+        });
 
         PrintStream out = new PrintStream(new OutputStream() {
             @Override
@@ -75,43 +78,14 @@ public class TravelerView implements KeyListener {
             }
         });
         System.setOut(out);
+
+        window.setLocationRelativeTo(null);
+        window.setVisible(true);
     }
 
-//    public void actionPerformed(ActionEvent event) {
-//        if (event.getSource() == submit) {
-//            command = textField.getText();
-//            System.out.println(command);
-//        }
-//    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-//            command = textField.getText();
-//            System.out.println(command);
-//            command = prompter.prompt(text.prompt);
-        }
-
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-            command = textField.getText();
-            result.setText(command);
-
-//            System.out.println(command);
-//            command = prompter.prompt(text.prompt);
-        }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-//            command = textField.getText();
-//            System.out.println(command);
-//            command = prompter.prompt(text.prompt);
-        }
+    public void setOutput(String output) {
+     mainTextArea.append("\n"+output);
+     mainTextArea.setCaretPosition(mainTextArea.getDocument().getLength());
     }
 
     // Fields
@@ -124,8 +98,6 @@ public class TravelerView implements KeyListener {
     Text text = new Text();
     Player player = new Player();
     HashMap<String, String> enemyDrops = new HashMap<String, String>();
-//    String start = prompter.prompt(text.newGamePrompt);
-//    String command = prompter.prompt(text.prompt);
 
     // dir carries directions for parsing
     ArrayList<String> dir = new ArrayList<String>();
@@ -142,8 +114,6 @@ public class TravelerView implements KeyListener {
         roomsFromJsonToArray();
         NPCArray();
         combat.initialize();
-//        welcome();
-//        promptForNewGame();
         start();
     }
 
@@ -157,7 +127,6 @@ public class TravelerView implements KeyListener {
 
     public void randDrop(){
         generateDrops();
-
         Object[] keys = enemyDrops.keySet().toArray(new String[0]);
         Object key = keys[new Random().nextInt(keys.length)];
         System.out.println("The vanquished foe drops " + key + "!\n"
@@ -171,22 +140,28 @@ public class TravelerView implements KeyListener {
         room.setCurrentRoom(allRooms.get(0));
         System.out.println(text.help);
         while (!gameOver) {
-            // command is the main prompt that dictates flow of game
-//            String command = prompter.prompt(text.prompt);
-            command = prompter.prompt(text.prompt);
+            synchronized (TravelerView.class) {
+                try {
+                    TravelerView.class.wait();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            mainTextArea.setText("");
+            input = getInput();
             // TODO: place else if statements inside switch case
-            if (textParse(command).equals("help")) {
+            if (textParse(input).equals("help")) {
                 System.out.println(text.help);
-            } else if (textParse(command).equals("map")) {
+            } else if (textParse(input).equals("map")) {
                 cmdMap();
-            } else if (textParse(command).contains("status")) {
+            } else if (textParse(input).contains("status")) {
                 playerStat(player);
-            } else if (!textParse(command).contains(" ")) {
+            } else if (!textParse(input).contains(" ")) {
                 System.out.println("You can't do that");
                 System.out.println(text.help);
             } else {
-                String verb = verbParse(command);
-                String noun = nounParse(command);
+                String verb = verbParse(input);
+                String noun = nounParse(input);
                 // switch case to direct verb to the correct class
                 switch (verb) {
                     case "quit":
@@ -327,28 +302,6 @@ public class TravelerView implements KeyListener {
         SplashScreens.art();
     }
 
-    // prompts for new game or saved game
-//    public void promptForNewGame() {
-////        String start = prompter.prompt(text.newGamePrompt);
-//        command = prompter.prompt(text.newGamePrompt);
-//        // initialization for starting new game
-//        if (textParse(command).equals("n")) {
-//            System.out.println(text.newGame);
-//            System.out.println(text.intro);
-//            room.setCurrentRoom(allRooms.get(0));
-//            System.out.println(text.help);
-//            start();
-//        } else if (textParse(command).equals("s")) {
-//            System.out.println(text.newGame);
-//            start();
-//        }
-//        //error handling
-//        else {
-//            System.out.println(text.newGamePromptError);
-//            promptForNewGame();
-//        }
-//    }
-
     private String textParse(String input) {
         return input.trim().toLowerCase();
     }
@@ -375,6 +328,13 @@ public class TravelerView implements KeyListener {
         this.gameOver = gameOver;
     }
 
+    public String getInput() {
+        return input;
+    }
+
+    public void setInput(String input) {
+        this.input = input;
+    }
 }
 
 
