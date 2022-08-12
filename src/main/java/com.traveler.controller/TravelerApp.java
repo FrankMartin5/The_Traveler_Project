@@ -214,11 +214,6 @@ public class TravelerApp extends JFrame{
                     case "get":
                         item.cmdPickUpItem(noun);
                         // TODO: Item is being added inventory but returning null.
-                        player.getInventory().add(item);
-                        room.refreshCurrentRoom();
-                        break;
-                    case "drop":
-                        item.cmdDropItem(noun);
                         room.refreshCurrentRoom();
                         break;
 
@@ -279,7 +274,7 @@ public class TravelerApp extends JFrame{
         System.out.println("Health: " + player.getHealth());
         System.out.println("Player Level: " + player.getLvl());
         System.out.println("Player XP: " + player.getExp());
-        System.out.println("Inventory: " + player.getInventory());
+        System.out.println("Inventory: " + Player.getInventory());
     }
 
     public void wrongCmd() {
