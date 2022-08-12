@@ -10,6 +10,7 @@ import java.lang.reflect.Type;
 import java.util.*;
 
 import static com.traveler.model.Room.currentRoom;
+import static com.traveler.model.Room.getCurrentRoom;
 
 public class Item {
     private String name;
@@ -140,7 +141,7 @@ public class Item {
     }
 
     public void addItemToRoom(Item addItem){
-        currentRoom.items.add(addItem);
+        getCurrentRoom().getItems().add(addItem);
     }
     public String cmdUseItem(String noun) {
         String message = "";

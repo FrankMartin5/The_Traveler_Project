@@ -19,8 +19,12 @@ import java.util.Scanner;
 
 import static com.traveler.model.Item.itemsFromJsonToArray;
 import static com.traveler.model.NPC.NPCArray;
-import static com.traveler.model.Quiz.quizzesFromJsonToArray;
+import static com.traveler.model.NPC.npcList;
+import static com.traveler.model.Quiz.*;
+import static com.traveler.model.Quiz.gnomeQuiz;
+import static com.traveler.model.Riddle.allRiddles;
 import static com.traveler.model.Room.*;
+import static com.traveler.model.Combat.*;
 import static com.traveler.view.Map.cmdMap;
 
 public class TravelerApp extends JFrame{
@@ -312,6 +316,148 @@ public class TravelerApp extends JFrame{
         SplashScreens.art();
     }
 
+    public void cmdTalk(String noun) {
+        Quiz elon = elonQuiz.get((int) (Math.random() * elonQuiz.size()));
+        Quiz gnome = gnomeQuiz.get((int) (Math.random() * gnomeQuiz.size()));
+
+        Random rn = new Random();
+        int maxNum = 3;
+        int rand = rn.nextInt(maxNum);
+        for (NPC i : currentRoom.npc) {
+            if (i.getName().equals(noun) && noun.equals("elon")) {
+                System.out.println(i.getTalk().get(rand));
+                // get random question from elon quiz
+                String answer = prompter.prompt(text.askQuiz);
+                if (answer.equals("y")) {
+                    System.out.println(elon.getQuestion());
+                    System.out.println(elon.getOptions());
+                    String answertoQuiz = prompter.prompt(text.answerQuiz);
+                    if (answertoQuiz.equals(elon.getAnswer())) {
+                        System.out.println("Correct!");
+                    } else {
+                        System.out.println("Incorrect!");
+                    }
+
+                } else {
+                    System.out.println("You hesitated and left the conversation.");
+                }
+                return;
+            } else if (i.getName().equals(noun) && noun.equals("gnome")) {
+                System.out.println(i.getTalk().get(rand));
+                String answer = prompter.prompt(text.askQuiz);
+                if (answer.equals("y")) {
+                    System.out.println(gnome.getQuestion());
+                    System.out.println(gnome.getOptions());
+                    String answertoQuiz = prompter.prompt(text.answerQuiz);
+                    if (answertoQuiz.equals(gnome.getAnswer())) {
+                        System.out.println("Correct!");
+                    } else {
+                        System.out.println("Incorrect!");
+                    }
+                } else {
+                    System.out.println("You hesitated and left the conversation.");
+                }
+                return;
+            }
+        }
+        System.out.println(noun + " not found");
+    }
+
+
+    public String cmdFight(String enemy) { // method that passes an enemy noun to start combat
+        String result = "no fight";
+        Riddle riddle = allRiddles.get((int) (Math.random() * allRiddles.size()));
+        if (currentRoom.npc.size() > 0 && currentRoom.npc.get(0).name.equals(enemy)) {
+            NPC enemyInRoom = currentRoom.npc.get(0);
+            //check to verify enemy is not friendly
+            switch (enemyInRoom.getName()) {
+                case "racumen":
+                    int boss_round = 3;
+                    int win_1 = 0;
+                    int lose_1 = 0;
+
+                    while (boss_round > 0 ) {
+                        System.out.println("You have " + boss_round + " rounds to complete.");
+                        System.out.println("Riddle: " + riddle.getQuestion());
+                        System.out.println("Hint: " + riddle.getHint());
+                        String answer = prompter.prompt("Answer: ");
+
+                        if (answer.equals(riddle.getAnswer())) {
+                            System.out.println("You win the round!");
+                            win_1++;
+                            boss_round--;
+                            riddle = allRiddles.get((int) (Math.random() * allRiddles.size()));
+                            if (win_1 == 2) {
+                                System.out.println("You win the combat!");
+                                result = "bosswin";
+                                break;
+                            }
+                        } else {
+                            System.out.println("You lose the round!");
+                            Taunts.npcTaunts();
+                            boss_round--;
+                            lose_1++;
+                            if (lose_1 == 2) {
+                                System.out.println("You lost two times in a row, you lose the combat!");
+                                result = "lose";
+                                break;
+                            }
+                            riddle = allRiddles.get((int) (Math.random() * allRiddles.size()));
+                        }
+
+                    }
+                    break;
+
+                case "orc":
+
+
+                case "troll":
+                    int regular_round = 3;
+                    int win_2 = 0;
+                    int lose_2 = 0;
+
+                    while (regular_round > 0 ) {
+                        System.out.println("You have " + regular_round + " rounds to complete.");
+                        System.out.println("Riddle: " + riddle.getQuestion());
+                        System.out.println("Hint: " + riddle.getHint());
+                        String answer = prompter.prompt("Answer: ");
+
+                        if (answer.equals(riddle.getAnswer())) {
+                            System.out.println("You win the round!");
+                            win_2++;
+                            regular_round--;
+                            riddle = allRiddles.get((int) (Math.random() * allRiddles.size()));
+                            if (win_2 == 2) {
+                                System.out.println("You win the combat!");
+                                result = "win";
+                                break;
+                            }
+                        } else {
+                            System.out.println("You lose the round!");
+                            Taunts.npcTaunts();
+                            regular_round--;
+                            lose_2++;
+                            if (lose_2 == 2) {
+                                System.out.println("You lost two times in a row, you lose the combat!");
+                                result = "lose";
+                                break;
+                            }
+                            riddle = allRiddles.get((int) (Math.random() * allRiddles.size()));
+                        }
+
+                    }
+                    break;
+
+                default:
+                    result = "win";
+                    break;
+            }
+        } else { // either no one in the room or enemy in the room does not match given name
+            System.out.println(enemy + " is not in the room");
+        }
+        return result;
+    }
+
     private String textParse(String input) {
         return input.trim().toLowerCase();
     }
@@ -327,6 +473,7 @@ public class TravelerApp extends JFrame{
         String[] command = textParse(input).split(" ");
         return command[1];
     }
+
 
     //Getter and setter
 

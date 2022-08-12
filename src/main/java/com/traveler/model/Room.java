@@ -19,18 +19,31 @@ import static com.traveler.model.Combat.itemInInventory;
 
 public class Room {
 
-    String name;
-    String desc;
-    List<Item> items;
-    List<NPC> npc;
-    String north;
-    String south;
-    String east;
-    String west;
-    static Room currentRoom;
+    private String name;
+    private String desc;
+    private List<Item> items;
+    private List<NPC> npc;
+    private String north;
+    private String south;
+    private String east;
+    private String west;
+    public static Room currentRoom;
 
     public static List<Room> allRooms;
 
+    public Room() {
+    }
+
+    public Room(String name, String desc, List<Item> items, List<NPC> npc, String north, String south, String east, String west) {
+        this.name = name;
+        this.desc = desc;
+        this.items = items;
+        this.npc = npc;
+        this.north = north;
+        this.south = south;
+        this.east = east;
+        this.west = west;
+    }
 
     public static void roomsFromJsonToArray() {
         try {
@@ -84,16 +97,16 @@ public class Room {
     public void cmdLook(String noun) {
         switch (noun) {
             case "north":
-                System.out.println("Looking north, you see " + currentRoom.north);
+                System.out.println("Looking north, you see " + getCurrentRoom().getNorth());
                 break;
             case "south":
-                System.out.println("Looking south, you see " + currentRoom.south);
+                System.out.println("Looking south, you see " + getCurrentRoom().getSouth());
                 break;
             case "east":
-                System.out.println("Looking east, you see " + currentRoom.east);
+                System.out.println("Looking east, you see " + getCurrentRoom().getEast());
                 break;
             case "west":
-                System.out.println("Looking west, you see " + currentRoom.west);
+                System.out.println("Looking west, you see " + getCurrentRoom().getWest());
                 break;
         }
     }
@@ -101,7 +114,7 @@ public class Room {
     // TODO: rename room to destination room, attempt to combine methods, (direction var included, with four if statements)
     public void goNorth() {
         for (Room room : allRooms) {
-            if (room.name.equals(currentRoom.north)) {
+            if (room.getName().equals(getCurrentRoom().getNorth())) {
                 this.setCurrentRoom(room);
                 return;
             }
@@ -150,7 +163,7 @@ public class Room {
     // removes NPC from allRooms, should update current room
     public void removeNPC(String noun) {
         for (Room targetRoom : allRooms) {
-            if (targetRoom.npc.size() > 0 && targetRoom.npc.get(0).name.equals(noun)) {
+            if (targetRoom.npc.size() > 0 && targetRoom.npc.get(0).getName().equals(noun)) {
                 targetRoom.npc.remove(0);
             }
         }
@@ -191,23 +204,99 @@ public class Room {
     public String getNpcInCurrentRoom() {
         String npcInRoom = "";
         if (currentRoom.npc.size() > 0) {
-            npcInRoom = currentRoom.npc.get(0).name;
+            npcInRoom = currentRoom.npc.get(0).getName();
         } else {
             npcInRoom = "NONE";
         }
         return npcInRoom;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    public List<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(List<Item> items) {
+        this.items = items;
+    }
+
+    public List<NPC> getNpc() {
+        return npc;
+    }
+
+    public void setNpc(List<NPC> npc) {
+        this.npc = npc;
+    }
+
+    public String getNorth() {
+        return north;
+    }
+
+    public void setNorth(String north) {
+        this.north = north;
+    }
+
+    public String getSouth() {
+        return south;
+    }
+
+    public void setSouth(String south) {
+        this.south = south;
+    }
+
+    public String getEast() {
+        return east;
+    }
+
+    public void setEast(String east) {
+        this.east = east;
+    }
+
+    public String getWest() {
+        return west;
+    }
+
+    public void setWest(String west) {
+        this.west = west;
+    }
+
+    public static Room getCurrentRoom() {
+        return currentRoom;
+    }
+
+    public static List<Room> getAllRooms() {
+        return allRooms;
+    }
+
+    public static void setAllRooms(List<Room> allRooms) {
+        Room.allRooms = allRooms;
+    }
+
     @Override
     public String toString() { // desc should return items and npc in the room
         return "============================================\n" +
-                "You are in the " + name + "\n" +
-                desc + "\n" +
+                "You are in the " + getName() + "\n" +
+                getDesc() + "\n" +
                 "--------------------------------------------\n" +
-                "To the north is " + north + "\n" +
-                "To the south is " + south + "\n" +
-                "To the east is " + east + "\n" +
-                "To the west is " + west + "\n" +
+                "To the north is " + getNorth() + "\n" +
+                "To the south is " + getSouth() + "\n" +
+                "To the east is " + getEast() + "\n" +
+                "To the west is " + getWest() + "\n" +
                 "--------------------------------------------\n" +
                 "Items in the room: \n" + getItemsInCurrentRoom() + "\n" +
                 "NPC in the room: " + getNpcInCurrentRoom() + "\n";

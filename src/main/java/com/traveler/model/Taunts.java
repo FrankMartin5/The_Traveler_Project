@@ -5,6 +5,7 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import static com.traveler.model.Room.currentRoom;
+import static com.traveler.model.Room.getCurrentRoom;
 
 public class Taunts {
     private static Random r = new Random();
@@ -73,7 +74,7 @@ public class Taunts {
     }
 
     public static void npcTaunts(){
-        switch (currentRoom.npc.get(0).name) {
+        switch (getCurrentRoom().getNpc().get(0).getName()) {
             case "racumen":
                 fbTaunts();
                 break;
