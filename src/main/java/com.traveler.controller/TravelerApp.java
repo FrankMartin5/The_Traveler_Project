@@ -19,12 +19,10 @@ import java.util.Scanner;
 
 import static com.traveler.model.Item.itemsFromJsonToArray;
 import static com.traveler.model.NPC.NPCArray;
-import static com.traveler.model.NPC.npcList;
 import static com.traveler.model.Quiz.*;
 import static com.traveler.model.Quiz.gnomeQuiz;
 import static com.traveler.model.Riddle.allRiddles;
 import static com.traveler.model.Room.*;
-import static com.traveler.model.Combat.*;
 import static com.traveler.view.Map.cmdMap;
 
 public class TravelerApp extends JFrame{
@@ -71,11 +69,13 @@ public class TravelerApp extends JFrame{
             input = textField.getText();
             result.setText(input);
             setOutput(input);
+            // Wakes up all threads that are waiting on this object's monitor. A thread waits on an object's monitor by calling one of the wait methods.
             synchronized (TravelerApp.class) {
                 TravelerApp.class.notifyAll();
             }
         });
 
+        // Allows All System.out to be printed to GUI
         PrintStream out = new PrintStream(new OutputStream() {
             @Override
             public void write(int b) throws IOException {
@@ -88,6 +88,7 @@ public class TravelerApp extends JFrame{
         window.setVisible(true);
     }
 
+    // Sets output to be printed on the GUI
     public void setOutput(String output) {
         mainTextArea.append("\n"+output);
         mainTextArea.setCaretPosition(mainTextArea.getDocument().getLength());
@@ -145,6 +146,7 @@ public class TravelerApp extends JFrame{
         room.setCurrentRoom(allRooms.get(0));
         System.out.println(text.help);
         while (!gameOver) {
+            // Causes the current thread to wait until it is awakened, typically by being notified or interrupted.
             synchronized (TravelerApp.class) {
                 try {
                     TravelerApp.class.wait();
@@ -153,6 +155,7 @@ public class TravelerApp extends JFrame{
                 }
             }
             mainTextArea.setText("");
+            // getter for input
             input = getInput();
             // TODO: place else if statements inside switch case
             if (textParse(input).equals("help")) {
@@ -198,9 +201,11 @@ public class TravelerApp extends JFrame{
                         }
                         break;
                     case "talk":
-                        cmdTalk(noun);
+//                        cmdTalk(noun);
+                        npc.cmdTalk(noun);
                         break;
                     case "fight":
+//                        String combatResult = combat.cmdFight(noun);
                         String combatResult = cmdFight(noun);
                         switch (combatResult) {
                             case "win":
@@ -312,6 +317,7 @@ public class TravelerApp extends JFrame{
         SplashScreens.art();
     }
 
+    // Needs refactor. Possible fix is finding a way to implement input variable
     public void cmdTalk(String noun) {
         Quiz elon = elonQuiz.get((int) (Math.random() * elonQuiz.size()));
         Quiz gnome = gnomeQuiz.get((int) (Math.random() * gnomeQuiz.size()));
@@ -324,9 +330,9 @@ public class TravelerApp extends JFrame{
         for (NPC i : getCurrentRoom().getNpc()) {
             if (i.getName().equals(noun) && noun.equals("elon")) {
                 System.out.println(i.getTalk().get(rand));
-//                System.out.println(text.askQuiz);
                 // get random question from elon quiz
                 String answer = prompter.prompt(text.askQuiz);
+                //answer = getInput() skips to the last else statement
                 if (answer.equals("y")) {
                     System.out.println(elon.getQuestion());
                     System.out.println(elon.getOptions());
@@ -345,7 +351,8 @@ public class TravelerApp extends JFrame{
                 System.out.println(i.getTalk().get(rand));
 //                System.out.println(text.askQuiz);
                 String answer = prompter.prompt(text.askQuiz);
-                answer = getInput();
+                // answer = getInput() skips to the last else statement
+//                answer = getInput();
                 if (answer.equals("y")) {
                     System.out.println(gnome.getQuestion());
                     System.out.println(gnome.getOptions());
@@ -364,7 +371,7 @@ public class TravelerApp extends JFrame{
         System.out.println(noun + " not found");
     }
 
-
+    // Needs refactor. Possible fix is finding a way to implement input variable
     public String cmdFight(String enemy) { // method that passes an enemy noun to start combat
         String result = "no fight";
         Riddle riddle = allRiddles.get((int) (Math.random() * allRiddles.size()));
@@ -382,6 +389,8 @@ public class TravelerApp extends JFrame{
                         System.out.println("Riddle: " + riddle.getQuestion());
                         System.out.println("Hint: " + riddle.getHint());
                         String answer = prompter.prompt("Answer: ");
+                        // answer = getInput() skips to the last else statement
+//                        String answer = getInput();
 
                         if (answer.equals(riddle.getAnswer())) {
                             System.out.println("You win the round!");
@@ -409,6 +418,7 @@ public class TravelerApp extends JFrame{
                     }
                     break;
 
+                    // This either needs to be Deleted or implemented.
                 case "orc":
 
 
@@ -422,6 +432,7 @@ public class TravelerApp extends JFrame{
                         System.out.println("Riddle: " + riddle.getQuestion());
                         System.out.println("Hint: " + riddle.getHint());
                         String answer = prompter.prompt("Answer: ");
+//                        String answer = getInput();
 
                         if (answer.equals(riddle.getAnswer())) {
                             System.out.println("You win the round!");
