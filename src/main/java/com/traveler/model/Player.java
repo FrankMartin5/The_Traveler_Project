@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Player extends Item{
 
-    private static List<Item> inventory = List.of();
+    private static List<Item> inventory;
     private String name;
 
     private int health = 100;

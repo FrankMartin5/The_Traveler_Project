@@ -213,10 +213,6 @@ public class TravelerView extends JFrame{
                         player.getInventory().add(item);
                         room.refreshCurrentRoom();
                         break;
-                    case "drop":
-                        item.cmdDropItem(noun);
-                        room.refreshCurrentRoom();
-                        break;
 
                     default:
                         wrongCmd();
