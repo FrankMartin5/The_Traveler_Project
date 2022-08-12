@@ -3,8 +3,9 @@ package com.traveler.model;
 
 import java.util.List;
 
-public class Player {
+public class Player extends Item{
 
+    private static List<Item> inventory;
     private String name;
 
     private int health = 100;
@@ -14,7 +15,6 @@ public class Player {
 
     private int lvl = 1;
 
-    private List<Item> inventory;
 
 
 
@@ -65,7 +65,7 @@ public class Player {
         this.lvl = lvl;
     }
 
-    public List<Item> getInventory() {
+    public static List<Item> getInventory() {
         return inventory;
     }
 

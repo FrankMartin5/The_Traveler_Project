@@ -60,6 +60,7 @@ public class TravelerApp extends JFrame{
         mainTextArea.setFont(textFont);
         mainTextArea.setLineWrap(true);
         mainTextPanel.add(mainTextArea);
+        mainTextPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
         textField = new JTextField(20);
         result = new JLabel();
         mainTextArea.add(result);
@@ -197,10 +198,10 @@ public class TravelerApp extends JFrame{
                         }
                         break;
                     case "talk":
-                        npc.cmdTalk(noun);
+                        cmdTalk(noun);
                         break;
                     case "fight":
-                        String combatResult = combat.cmdFight(noun);
+                        String combatResult = cmdFight(noun);
                         switch (combatResult) {
                             case "win":
                                 room.removeNPC(noun);
@@ -218,11 +219,6 @@ public class TravelerApp extends JFrame{
                     case "get":
                         item.cmdPickUpItem(noun);
                         // TODO: Item is being added inventory but returning null.
-                        player.getInventory().add(item);
-                        room.refreshCurrentRoom();
-                        break;
-                    case "drop":
-                        item.cmdDropItem(noun);
                         room.refreshCurrentRoom();
                         break;
 
@@ -283,7 +279,7 @@ public class TravelerApp extends JFrame{
         System.out.println("Health: " + player.getHealth());
         System.out.println("Player Level: " + player.getLvl());
         System.out.println("Player XP: " + player.getExp());
-        System.out.println("Inventory: " + player.getInventory());
+        System.out.println("Inventory: " + Player.getInventory());
     }
 
     public void wrongCmd() {
@@ -323,9 +319,12 @@ public class TravelerApp extends JFrame{
         Random rn = new Random();
         int maxNum = 3;
         int rand = rn.nextInt(maxNum);
-        for (NPC i : currentRoom.npc) {
+//        String answer = getInput();
+
+        for (NPC i : getCurrentRoom().getNpc()) {
             if (i.getName().equals(noun) && noun.equals("elon")) {
                 System.out.println(i.getTalk().get(rand));
+//                System.out.println(text.askQuiz);
                 // get random question from elon quiz
                 String answer = prompter.prompt(text.askQuiz);
                 if (answer.equals("y")) {
@@ -344,7 +343,9 @@ public class TravelerApp extends JFrame{
                 return;
             } else if (i.getName().equals(noun) && noun.equals("gnome")) {
                 System.out.println(i.getTalk().get(rand));
+//                System.out.println(text.askQuiz);
                 String answer = prompter.prompt(text.askQuiz);
+                answer = getInput();
                 if (answer.equals("y")) {
                     System.out.println(gnome.getQuestion());
                     System.out.println(gnome.getOptions());
@@ -354,10 +355,10 @@ public class TravelerApp extends JFrame{
                     } else {
                         System.out.println("Incorrect!");
                     }
-                } else {
+                    } else {
                     System.out.println("You hesitated and left the conversation.");
-                }
-                return;
+                    }
+                    return;
             }
         }
         System.out.println(noun + " not found");
@@ -367,8 +368,8 @@ public class TravelerApp extends JFrame{
     public String cmdFight(String enemy) { // method that passes an enemy noun to start combat
         String result = "no fight";
         Riddle riddle = allRiddles.get((int) (Math.random() * allRiddles.size()));
-        if (currentRoom.npc.size() > 0 && currentRoom.npc.get(0).name.equals(enemy)) {
-            NPC enemyInRoom = currentRoom.npc.get(0);
+        if (getCurrentRoom().getNpc().size() > 0 && getCurrentRoom().getNpc().get(0).getName().equals(enemy)) {
+            NPC enemyInRoom = getCurrentRoom().getNpc().get(0);
             //check to verify enemy is not friendly
             switch (enemyInRoom.getName()) {
                 case "racumen":

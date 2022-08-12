@@ -32,8 +32,6 @@ public class Combat { // combat class that handles all aspects of combat
 
     public void initialize() {
         riddlesFromJsonToArray();
-        getFriendly().add("elon");
-        getFriendly().add("gnome");
     }
 
 //    public String cmdFight(String enemy) { // method that passes an enemy noun to start combat
