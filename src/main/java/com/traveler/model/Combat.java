@@ -9,35 +9,42 @@ import java.util.Scanner;
 
 import static com.traveler.model.Item.inventory;
 import static com.traveler.model.Riddle.allRiddles;
-import static com.traveler.model.Room.currentRoom;
 import static com.traveler.model.Riddle.riddlesFromJsonToArray;
+import static com.traveler.model.Room.getCurrentRoom;
 
 public class Combat { // combat class that handles all aspects of combat
     Prompter prompter = new Prompter(new Scanner(System.in));
 
     Text text = new Text();
 
-    ArrayList<String> friendly = new ArrayList<String>();
+    private ArrayList<String> friendly;
+
+
+    public Combat() {
+    }
+
+    public Combat(ArrayList<String> friendly) {
+        this.friendly = friendly;
+    }
+
     Item key = new Item("key", "opens the door to the crypt");
     Item antiShield = new Item("anti-shield", "it may remove a certain impregnable shield");
 
     public void initialize() {
         riddlesFromJsonToArray();
-        friendly.add("elon");
-        friendly.add("gnome");
     }
 
     public String cmdFight(String enemy) { // method that passes an enemy noun to start combat
         String result = "no fight";
         Riddle riddle = allRiddles.get((int) (Math.random() * allRiddles.size()));
-        if (currentRoom.npc.size() > 0 && currentRoom.npc.get(0).name.equals(enemy)) {
-            NPC enemyInRoom = currentRoom.npc.get(0);
+        if (getCurrentRoom().getNpc().size() > 0 && getCurrentRoom().getNpc().get(0).getName().equals(enemy)) {
+            NPC enemyInRoom = getCurrentRoom().getNpc().get(0);
             //check to verify enemy is not friendly
             if (friendly.contains(enemy)) {
                 System.out.println("You can not fight " + enemy + ", they are friendly.");
             } else {// at this point enemy is in currentRoom and not friendly
                 //start of combat with said enemy
-                switch (enemyInRoom.name) {
+                switch (enemyInRoom.getName()) {
                     case "racumen":
                         int boss_round = 3;
                         int win_1 = 0;
@@ -124,6 +131,14 @@ public class Combat { // combat class that handles all aspects of combat
             System.out.println(enemy + " is not in the room");
         }
         return result;
+    }
+
+    public ArrayList<String> getFriendly() {
+        return friendly;
+    }
+
+    public void setFriendly(ArrayList<String> friendly) {
+        this.friendly = friendly;
     }
 
     private String textParse(String input) {

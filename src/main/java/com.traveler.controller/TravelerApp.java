@@ -19,7 +19,9 @@ import java.util.Scanner;
 
 import static com.traveler.model.Item.itemsFromJsonToArray;
 import static com.traveler.model.NPC.NPCArray;
-import static com.traveler.model.Quiz.quizzesFromJsonToArray;
+import static com.traveler.model.Quiz.*;
+import static com.traveler.model.Quiz.gnomeQuiz;
+import static com.traveler.model.Riddle.allRiddles;
 import static com.traveler.model.Room.*;
 import static com.traveler.view.Map.cmdMap;
 
@@ -56,6 +58,7 @@ public class TravelerApp extends JFrame{
         mainTextArea.setFont(textFont);
         mainTextArea.setLineWrap(true);
         mainTextPanel.add(mainTextArea);
+        mainTextPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
         textField = new JTextField(20);
         result = new JLabel();
         mainTextArea.add(result);
@@ -66,11 +69,13 @@ public class TravelerApp extends JFrame{
             input = textField.getText();
             result.setText(input);
             setOutput(input);
+            // Wakes up all threads that are waiting on this object's monitor. A thread waits on an object's monitor by calling one of the wait methods.
             synchronized (TravelerApp.class) {
                 TravelerApp.class.notifyAll();
             }
         });
 
+        // Allows All System.out to be printed to GUI
         PrintStream out = new PrintStream(new OutputStream() {
             @Override
             public void write(int b) throws IOException {
@@ -83,6 +88,7 @@ public class TravelerApp extends JFrame{
         window.setVisible(true);
     }
 
+    // Sets output to be printed on the GUI
     public void setOutput(String output) {
         mainTextArea.append("\n"+output);
         mainTextArea.setCaretPosition(mainTextArea.getDocument().getLength());
@@ -140,6 +146,7 @@ public class TravelerApp extends JFrame{
         room.setCurrentRoom(allRooms.get(0));
         System.out.println(text.help);
         while (!gameOver) {
+            // Causes the current thread to wait until it is awakened, typically by being notified or interrupted.
             synchronized (TravelerApp.class) {
                 try {
                     TravelerApp.class.wait();
@@ -148,6 +155,7 @@ public class TravelerApp extends JFrame{
                 }
             }
             mainTextArea.setText("");
+            // getter for input
             input = getInput();
             // TODO: place else if statements inside switch case
             if (textParse(input).equals("help")) {
@@ -193,10 +201,12 @@ public class TravelerApp extends JFrame{
                         }
                         break;
                     case "talk":
+//                        cmdTalk(noun);
                         npc.cmdTalk(noun);
                         break;
                     case "fight":
-                        String combatResult = combat.cmdFight(noun);
+//                        String combatResult = combat.cmdFight(noun);
+                        String combatResult = cmdFight(noun);
                         switch (combatResult) {
                             case "win":
                                 room.removeNPC(noun);
@@ -307,6 +317,159 @@ public class TravelerApp extends JFrame{
         SplashScreens.art();
     }
 
+    // Needs refactor. Possible fix is finding a way to implement input variable
+    public void cmdTalk(String noun) {
+        Quiz elon = elonQuiz.get((int) (Math.random() * elonQuiz.size()));
+        Quiz gnome = gnomeQuiz.get((int) (Math.random() * gnomeQuiz.size()));
+
+        Random rn = new Random();
+        int maxNum = 3;
+        int rand = rn.nextInt(maxNum);
+//        String answer = getInput();
+
+        for (NPC i : getCurrentRoom().getNpc()) {
+            if (i.getName().equals(noun) && noun.equals("elon")) {
+                System.out.println(i.getTalk().get(rand));
+                // get random question from elon quiz
+                String answer = prompter.prompt(text.askQuiz);
+                //answer = getInput() skips to the last else statement
+                if (answer.equals("y")) {
+                    System.out.println(elon.getQuestion());
+                    System.out.println(elon.getOptions());
+                    String answertoQuiz = prompter.prompt(text.answerQuiz);
+                    if (answertoQuiz.equals(elon.getAnswer())) {
+                        System.out.println("Correct!");
+                    } else {
+                        System.out.println("Incorrect!");
+                    }
+
+                } else {
+                    System.out.println("You hesitated and left the conversation.");
+                }
+                return;
+            } else if (i.getName().equals(noun) && noun.equals("gnome")) {
+                System.out.println(i.getTalk().get(rand));
+//                System.out.println(text.askQuiz);
+                String answer = prompter.prompt(text.askQuiz);
+                // answer = getInput() skips to the last else statement
+//                answer = getInput();
+                if (answer.equals("y")) {
+                    System.out.println(gnome.getQuestion());
+                    System.out.println(gnome.getOptions());
+                    String answertoQuiz = prompter.prompt(text.answerQuiz);
+                    if (answertoQuiz.equals(gnome.getAnswer())) {
+                        System.out.println("Correct!");
+                    } else {
+                        System.out.println("Incorrect!");
+                    }
+                    } else {
+                    System.out.println("You hesitated and left the conversation.");
+                    }
+                    return;
+            }
+        }
+        System.out.println(noun + " not found");
+    }
+
+    // Needs refactor. Possible fix is finding a way to implement input variable
+    public String cmdFight(String enemy) { // method that passes an enemy noun to start combat
+        String result = "no fight";
+        Riddle riddle = allRiddles.get((int) (Math.random() * allRiddles.size()));
+        if (getCurrentRoom().getNpc().size() > 0 && getCurrentRoom().getNpc().get(0).getName().equals(enemy)) {
+            NPC enemyInRoom = getCurrentRoom().getNpc().get(0);
+            //check to verify enemy is not friendly
+            switch (enemyInRoom.getName()) {
+                case "racumen":
+                    int boss_round = 3;
+                    int win_1 = 0;
+                    int lose_1 = 0;
+
+                    while (boss_round > 0 ) {
+                        System.out.println("You have " + boss_round + " rounds to complete.");
+                        System.out.println("Riddle: " + riddle.getQuestion());
+                        System.out.println("Hint: " + riddle.getHint());
+                        String answer = prompter.prompt("Answer: ");
+                        // answer = getInput() skips to the last else statement
+//                        String answer = getInput();
+
+                        if (answer.equals(riddle.getAnswer())) {
+                            System.out.println("You win the round!");
+                            win_1++;
+                            boss_round--;
+                            riddle = allRiddles.get((int) (Math.random() * allRiddles.size()));
+                            if (win_1 == 2) {
+                                System.out.println("You win the combat!");
+                                result = "bosswin";
+                                break;
+                            }
+                        } else {
+                            System.out.println("You lose the round!");
+                            Taunts.npcTaunts();
+                            boss_round--;
+                            lose_1++;
+                            if (lose_1 == 2) {
+                                System.out.println("You lost two times in a row, you lose the combat!");
+                                result = "lose";
+                                break;
+                            }
+                            riddle = allRiddles.get((int) (Math.random() * allRiddles.size()));
+                        }
+
+                    }
+                    break;
+
+                    // This either needs to be Deleted or implemented.
+                case "orc":
+
+
+                case "troll":
+                    int regular_round = 3;
+                    int win_2 = 0;
+                    int lose_2 = 0;
+
+                    while (regular_round > 0 ) {
+                        System.out.println("You have " + regular_round + " rounds to complete.");
+                        System.out.println("Riddle: " + riddle.getQuestion());
+                        System.out.println("Hint: " + riddle.getHint());
+                        String answer = prompter.prompt("Answer: ");
+//                        String answer = getInput();
+
+                        if (answer.equals(riddle.getAnswer())) {
+                            System.out.println("You win the round!");
+                            win_2++;
+                            regular_round--;
+                            riddle = allRiddles.get((int) (Math.random() * allRiddles.size()));
+                            if (win_2 == 2) {
+                                System.out.println("You win the combat!");
+                                result = "win";
+                                break;
+                            }
+                        } else {
+                            System.out.println("You lose the round!");
+                            Taunts.npcTaunts();
+                            regular_round--;
+                            lose_2++;
+                            if (lose_2 == 2) {
+                                System.out.println("You lost two times in a row, you lose the combat!");
+                                result = "lose";
+                                break;
+                            }
+                            riddle = allRiddles.get((int) (Math.random() * allRiddles.size()));
+                        }
+
+                    }
+                    break;
+
+                default:
+                    result = "win";
+                    break;
+            }
+        } else { // either no one in the room or enemy in the room does not match given name
+            System.out.println(enemy + " is not in the room");
+        }
+        return result;
+    }
+
     private String textParse(String input) {
         return input.trim().toLowerCase();
     }
@@ -322,6 +485,7 @@ public class TravelerApp extends JFrame{
         String[] command = textParse(input).split(" ");
         return command[1];
     }
+
 
     //Getter and setter
 

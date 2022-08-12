@@ -19,17 +19,18 @@ import java.util.Scanner;
 import static com.traveler.model.Quiz.*;
 import static com.traveler.model.Riddle.riddlesFromJsonToArray;
 import static com.traveler.model.Room.currentRoom;
+import static com.traveler.model.Room.getCurrentRoom;
 
 
 public class NPC {
     Prompter prompter = new Prompter(new Scanner(System.in));
     Text text = new Text();
 
-    String name;
-    List<String> talk;
-    String item;
-    String win;
-    String defeat;
+    private String name;
+    private List<String> talk;
+    private String item;
+    private String win;
+    private String defeat;
 
 
     // Creates npc which carries NPC objects
@@ -60,9 +61,9 @@ public class NPC {
         Random rn = new Random();
         int maxNum = 3;
         int rand = rn.nextInt(maxNum);
-        for (NPC i : currentRoom.npc) {
-            if (i.name.equals(noun) && noun.equals("elon")) {
-                System.out.println(i.talk.get(rand));
+        for (NPC i : getCurrentRoom().getNpc()) {
+            if (i.getName().equals(noun) && noun.equals("elon")) {
+                System.out.println(i.getTalk().get(rand));
                 // get random question from elon quiz
                 String answer = prompter.prompt(text.askQuiz);
                 if (answer.equals("y")) {
@@ -79,8 +80,8 @@ public class NPC {
                     System.out.println("You hesitated and left the conversation.");
                 }
                 return;
-            } else if (i.name.equals(noun) && noun.equals("gnome")) {
-                System.out.println(i.talk.get(rand));
+            } else if (i.getName().equals(noun) && noun.equals("gnome")) {
+                System.out.println(i.getTalk().get(rand));
                 String answer = prompter.prompt(text.askQuiz);
                 if (answer.equals("y")) {
                     System.out.println(gnome.getQuestion());
@@ -98,6 +99,46 @@ public class NPC {
             }
         }
         System.out.println(noun + " not found");
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<String> getTalk() {
+        return talk;
+    }
+
+    public void setTalk(List<String> talk) {
+        this.talk = talk;
+    }
+
+    public String getItem() {
+        return item;
+    }
+
+    public void setItem(String item) {
+        this.item = item;
+    }
+
+    public String getWin() {
+        return win;
+    }
+
+    public void setWin(String win) {
+        this.win = win;
+    }
+
+    public String getDefeat() {
+        return defeat;
+    }
+
+    public void setDefeat(String defeat) {
+        this.defeat = defeat;
     }
 
     @Override
