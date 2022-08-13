@@ -47,7 +47,8 @@ public class Taunts {
 
 
             TimeUnit.MILLISECONDS.sleep(500);
-            System.out.println("The Orc shakes his head. " + randomElement);
+            System.out.println("The Orc shakes his head. \n" + randomElement);
+            orcDialogue.remove(String.valueOf(randomElement));
             TimeUnit.MILLISECONDS.sleep(750);
             
 
@@ -67,7 +68,8 @@ public class Taunts {
             String randomElement = trollDialogue.get(randomItem);
 
             TimeUnit.MILLISECONDS.sleep(500);
-            System.out.println("The Troll cackles at you. " + randomElement);
+            System.out.println("The Troll cackles at you. \n" + randomElement);
+
             TimeUnit.MILLISECONDS.sleep(750);
 
         } catch (InterruptedException e) {
@@ -85,7 +87,7 @@ public class Taunts {
 
 
             TimeUnit.MILLISECONDS.sleep(500);
-            System.out.println("Racumen sighs. " + randomElement);
+            System.out.println("Racumen sighs. \n" + randomElement);
             TimeUnit.MILLISECONDS.sleep(750);
 
         } catch (InterruptedException e) {
