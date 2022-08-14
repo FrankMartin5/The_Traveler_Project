@@ -105,6 +105,9 @@ public class TravelerApp extends JFrame{
     Player player = new Player();
     HashMap<String, String> enemyDrops = new HashMap<String, String>();
 
+    private static TravelerApp appInstance = null;
+
+
     // dir carries directions for parsing
     ArrayList<String> dir = new ArrayList<String>();
 
@@ -121,6 +124,13 @@ public class TravelerApp extends JFrame{
         NPCArray();
         combat.initialize();
         start();
+    }
+
+    public static TravelerApp getInstance() {
+        if (appInstance == null) {
+            appInstance = new TravelerApp();
+        }
+        return appInstance;
     }
 
     public void generateDrops() {

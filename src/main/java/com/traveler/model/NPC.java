@@ -4,8 +4,10 @@ import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
+import com.traveler.controller.TravelerApp;
 import com.traveler.view.Prompter;
 import com.traveler.view.Text;
+import com.traveler.view.TravelerView;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -25,6 +27,7 @@ import static com.traveler.model.Room.getCurrentRoom;
 public class NPC {
     Prompter prompter = new Prompter(new Scanner(System.in));
     Text text = new Text();
+    TravelerView gui = TravelerView.getInstance();
 
     private String name;
     private List<String> talk;
@@ -65,7 +68,15 @@ public class NPC {
             if (i.getName().equals(noun) && noun.equals("elon")) {
                 System.out.println(i.getTalk().get(rand));
                 // get random question from elon quiz
-                String answer = prompter.prompt(text.askQuiz);
+                synchronized (NPC.class) {
+                    try {
+                        NPC.class.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                gui.mainTextArea.setText("");
+                String answer = gui.getInput();
                 if (answer.equals("y")) {
                     System.out.println(elon.getQuestion());
                     System.out.println(elon.getOptions());
@@ -82,7 +93,16 @@ public class NPC {
                 return;
             } else if (i.getName().equals(noun) && noun.equals("gnome")) {
                 System.out.println(i.getTalk().get(rand));
-                String answer = prompter.prompt(text.askQuiz);
+                synchronized (TravelerApp.class) {
+                    try {
+                        TravelerApp.class.wait();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                gui.mainTextArea.setText("");
+                String answer = gui.getInput();
+//                String answer = prompter.prompt(text.askQuiz);
                 if (answer.equals("y")) {
                     System.out.println(gnome.getQuestion());
                     System.out.println(gnome.getOptions());
