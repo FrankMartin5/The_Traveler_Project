@@ -7,7 +7,6 @@ import com.google.gson.reflect.TypeToken;
 import com.traveler.controller.TravelerApp;
 import com.traveler.view.Prompter;
 import com.traveler.view.Text;
-import com.traveler.view.TravelerView;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -18,22 +17,18 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-import static com.traveler.model.Quiz.*;
-import static com.traveler.model.Riddle.riddlesFromJsonToArray;
-import static com.traveler.model.Room.currentRoom;
-import static com.traveler.model.Room.getCurrentRoom;
-
-
 public class NPC {
     Prompter prompter = new Prompter(new Scanner(System.in));
     Text text = new Text();
-    TravelerView gui = TravelerView.getInstance();
+//    TravelerView gui = TravelerView.getInstance();
+//    TravelerApp gui = new TravelerApp();
 
     private String name;
     private List<String> talk;
     private String item;
     private String win;
     private String defeat;
+    private String answer = "";
 
 
     // Creates npc which carries NPC objects
@@ -57,69 +52,70 @@ public class NPC {
     }
 
     // when command is "talk <npc>" returns talk
-    public void cmdTalk(String noun) {
-        Quiz elon = elonQuiz.get((int) (Math.random() * elonQuiz.size()));
-        Quiz gnome = gnomeQuiz.get((int) (Math.random() * gnomeQuiz.size()));
-
-        Random rn = new Random();
-        int maxNum = 3;
-        int rand = rn.nextInt(maxNum);
-        for (NPC i : getCurrentRoom().getNpc()) {
-            if (i.getName().equals(noun) && noun.equals("elon")) {
-                System.out.println(i.getTalk().get(rand));
-                // get random question from elon quiz
-                synchronized (NPC.class) {
-                    try {
-                        NPC.class.wait();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-                gui.mainTextArea.setText("");
-                String answer = gui.getInput();
-                if (answer.equals("y")) {
-                    System.out.println(elon.getQuestion());
-                    System.out.println(elon.getOptions());
-                    String answertoQuiz = prompter.prompt(text.answerQuiz);
-                    if (answertoQuiz.equals(elon.getAnswer())) {
-                        System.out.println("Correct!");
-                    } else {
-                        System.out.println("Incorrect!");
-                    }
-
-                } else {
-                    System.out.println("You hesitated and left the conversation.");
-                }
-                return;
-            } else if (i.getName().equals(noun) && noun.equals("gnome")) {
-                System.out.println(i.getTalk().get(rand));
-                synchronized (TravelerApp.class) {
-                    try {
-                        TravelerApp.class.wait();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                }
-                gui.mainTextArea.setText("");
-                String answer = gui.getInput();
-//                String answer = prompter.prompt(text.askQuiz);
-                if (answer.equals("y")) {
-                    System.out.println(gnome.getQuestion());
-                    System.out.println(gnome.getOptions());
-                    String answertoQuiz = prompter.prompt(text.answerQuiz);
-                    if (answertoQuiz.equals(gnome.getAnswer())) {
-                        System.out.println("Correct!");
-                    } else {
-                        System.out.println("Incorrect!");
-                    }
-                } else {
-                    System.out.println("You hesitated and left the conversation.");
-                }
-                return;
-            }
-        }
-        System.out.println(noun + " not found");
-    }
+//    public void cmdTalk(String noun) {
+//        Quiz elon = elonQuiz.get((int) (Math.random() * elonQuiz.size()));
+//        Quiz gnome = gnomeQuiz.get((int) (Math.random() * gnomeQuiz.size()));
+//        answer = gui.getInput();
+//
+//        Random rn = new Random();
+//        int maxNum = 3;
+//        int rand = rn.nextInt(maxNum);
+//        for (NPC i : getCurrentRoom().getNpc()) {
+//            if (i.getName().equals(noun) && noun.equals("elon")) {
+//                System.out.println(i.getTalk().get(rand));
+//                // get random question from elon quiz
+//                synchronized (NPC.class) {
+//                    try {
+//                        NPC.class.wait();
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+////                gui.mainTextArea.setText("");
+////                answer = gui.getInput();
+//                if (answer.equals("y")) {
+//                    System.out.println(elon.getQuestion());
+//                    System.out.println(elon.getOptions());
+//                    String answertoQuiz = prompter.prompt(text.answerQuiz);
+//                    if (answertoQuiz.equals(elon.getAnswer())) {
+//                        System.out.println("Correct!");
+//                    } else {
+//                        System.out.println("Incorrect!");
+//                    }
+//
+//                } else {
+//                    System.out.println("You hesitated and left the conversation.");
+//                }
+//                return;
+//            } else if (i.getName().equals(noun) && noun.equals("gnome")) {
+//                System.out.println(i.getTalk().get(rand));
+//                synchronized (NPC.class) {
+//                    try {
+//                        NPC.class.wait();
+//                    } catch (InterruptedException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+////                gui.mainTextArea.setText("");
+////                answer = gui.getInput();
+////                String answer = prompter.prompt(text.askQuiz);
+//                if (answer.equals("y")) {
+//                    System.out.println(gnome.getQuestion());
+//                    System.out.println(gnome.getOptions());
+//                    String answertoQuiz = prompter.prompt(text.answerQuiz);
+//                    if (answertoQuiz.equals(gnome.getAnswer())) {
+//                        System.out.println("Correct!");
+//                    } else {
+//                        System.out.println("Incorrect!");
+//                    }
+//                } else {
+//                    System.out.println("You hesitated and left the conversation.");
+//                }
+//                return;
+//            }
+//        }
+//        System.out.println(noun + " not found");
+//    }
 
     public String getName() {
         return name;

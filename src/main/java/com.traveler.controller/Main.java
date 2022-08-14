@@ -5,6 +5,8 @@ class Main {
     public static void main(String[] args){
         new TravelerApp().initialize();
 //        new TravelerView().initialize();
+//        TravelerApp app = TravelerApp.getInstance();
+//        app.initialize();
     }
 
 }
