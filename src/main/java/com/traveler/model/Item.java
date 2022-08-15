@@ -10,10 +10,13 @@ import java.lang.reflect.Type;
 import java.util.*;
 
 import static com.traveler.model.Room.currentRoom;
+import static com.traveler.model.Room.getCurrentRoom;
 
 public class Item {
+
     private String name;
     private String desc;
+
 
     public Item(String name, String desc) {
         this.name = name;
@@ -43,40 +46,20 @@ public class Item {
         this.desc = desc;
     }
 
-    public static List<Item> getInventory() {
-        return inventory;
-    }
-
-    public static void setInventory(List<Item> inventory) {
-        Item.inventory = inventory;
-    }
 
     // method that reads from json file and loads inventory with Item objects
     public static void itemsFromJsonToArray() {
         try {
             Gson gson = new Gson();
             Type itemListType = new TypeToken<List<Item>>() {}.getType();
-            Reader reader = new InputStreamReader(Item.class.getResourceAsStream("/inventory.json"));
+            Reader reader = new InputStreamReader(Objects.requireNonNull(Item.class.getResourceAsStream("/inventory.json")));
             inventory = gson.fromJson(reader, itemListType);
             reader.close();
-        } catch (JsonIOException e) {
-            e.printStackTrace();
-        } catch (JsonSyntaxException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (JsonIOException | JsonSyntaxException | IOException e) {
             e.printStackTrace();
         }
     }
 
-    public String lookInventory(){
-        String res ="";
-        if(inventory.size()>0){
-            for(Item item:inventory){
-                res += item.name + ",";
-            }
-        }
-        return res;
-    }
 
     // when command is "look <item>" returns desc
     public void cmdLook(String noun) {
@@ -89,26 +72,6 @@ public class Item {
         System.out.println(noun + " not found, you can only look at items in your inventory");
     }
 
-    //This should take items from the
-    public Optional<Item> cmdGetItem(String noun) {
-        Optional<Item> requestedItem = Optional.empty();
-        boolean itemNotAvailable = false;
-        if (noun != null && !noun.isEmpty()) {
-            if(inventory.size() == 0) return Optional.empty();
-            for (int i = 0; i < inventory.size(); i++) {
-                if(inventory.get(i).name.equals(noun)){
-                    requestedItem = Optional.ofNullable(inventory.remove(i));
-                    System.out.println("You now have " + requestedItem.get().name);
-                }else{
-                    itemNotAvailable = true;
-                }
-            }
-            if(itemNotAvailable){
-                System.out.println(requestedItem.get().name + " is not available.");
-            }
-        }
-        return requestedItem;
-    }
 
     //This should remove items from the Inventory and add to currentroom
     public void cmdDropItem(String droppedItem) {
@@ -140,7 +103,7 @@ public class Item {
     }
 
     public void addItemToRoom(Item addItem){
-        currentRoom.items.add(addItem);
+        getCurrentRoom().getItems().add(addItem);
     }
     public String cmdUseItem(String noun) {
         String message = "";
@@ -156,19 +119,18 @@ public class Item {
         return message;
     }
 
-//    This should get items IN the room and add to inventory
-    public Optional<Item> cmdPickUpItem(String noun) {
+    //    This should get items IN the room and add to inventory
+    public void cmdPickUpItem(String noun) {
         boolean itemNotPickedUp = false;
-        var currentRoomItems =  currentRoom.items;
+        var currentRoomItems =  getCurrentRoom().getItems();
         Optional<Item> requestedPickedUpItem = Optional.empty();
-        boolean foundItem = false;
+        Optional<Item> foundItem = Optional.empty();
         if (noun != null && !noun.isEmpty()) {
-            if(currentRoomItems.size() == 0) return Optional.empty();
             for (int i = 0; i < currentRoomItems.size(); i++) {
-                if (currentRoomItems.get(i).name.equals(noun)) {
+                if (currentRoomItems.get(i).getName().equals(noun)) {
                     requestedPickedUpItem = Optional.ofNullable((currentRoomItems.remove(i)));
-                    System.out.println("You picked up " + requestedPickedUpItem.get().name);
-                    requestedPickedUpItem.ifPresent(itemToAdd -> addItemToInventory(itemToAdd));
+                    System.out.println("You picked up " + requestedPickedUpItem.get().getName());
+                    requestedPickedUpItem.ifPresent(addItem -> Player.getInventory().add(addItem));
                     break;
                 }else{
                     itemNotPickedUp = true;
@@ -178,7 +140,6 @@ public class Item {
                 System.out.println(noun + " is not available.");
             }
         }
-        return requestedPickedUpItem;
     }
 
     @Override

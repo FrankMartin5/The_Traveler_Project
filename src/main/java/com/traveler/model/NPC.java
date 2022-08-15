@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
+import com.traveler.controller.TravelerApp;
 import com.traveler.view.Prompter;
 import com.traveler.view.Text;
 
@@ -16,20 +17,15 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-import static com.traveler.model.Quiz.*;
-import static com.traveler.model.Riddle.riddlesFromJsonToArray;
-import static com.traveler.model.Room.currentRoom;
-
-
 public class NPC {
-    Prompter prompter = new Prompter(new Scanner(System.in));
     Text text = new Text();
 
-    String name;
-    List<String> talk;
-    String item;
-    String win;
-    String defeat;
+    private String name;
+    private List<String> talk;
+    private String item;
+    private String win;
+    private String defeat;
+    private String answer = "";
 
 
     // Creates npc which carries NPC objects
@@ -52,52 +48,45 @@ public class NPC {
         }
     }
 
-    // when command is "talk <npc>" returns talk
-    public void cmdTalk(String noun) {
-        Quiz elon = elonQuiz.get((int) (Math.random() * elonQuiz.size()));
-        Quiz gnome = gnomeQuiz.get((int) (Math.random() * gnomeQuiz.size()));
 
-        Random rn = new Random();
-        int maxNum = 3;
-        int rand = rn.nextInt(maxNum);
-        for (NPC i : currentRoom.npc) {
-            if (i.name.equals(noun) && noun.equals("elon")) {
-                System.out.println(i.talk.get(rand));
-                // get random question from elon quiz
-                String answer = prompter.prompt(text.askQuiz);
-                if (answer.equals("y")) {
-                    System.out.println(elon.getQuestion());
-                    System.out.println(elon.getOptions());
-                    String answertoQuiz = prompter.prompt(text.answerQuiz);
-                    if (answertoQuiz.equals(elon.getAnswer())) {
-                        System.out.println("Correct!");
-                    } else {
-                        System.out.println("Incorrect!");
-                    }
+    public String getName() {
+        return name;
+    }
 
-                } else {
-                    System.out.println("You hesitated and left the conversation.");
-                }
-                return;
-            } else if (i.name.equals(noun) && noun.equals("gnome")) {
-                System.out.println(i.talk.get(rand));
-                String answer = prompter.prompt(text.askQuiz);
-                if (answer.equals("y")) {
-                    System.out.println(gnome.getQuestion());
-                    System.out.println(gnome.getOptions());
-                    String answertoQuiz = prompter.prompt(text.answerQuiz);
-                    if (answertoQuiz.equals(gnome.getAnswer())) {
-                        System.out.println("Correct!");
-                    } else {
-                        System.out.println("Incorrect!");
-                    }
-                } else {
-                    System.out.println("You hesitated and left the conversation.");
-                }
-                return;
-            }
-        }
-        System.out.println(noun + " not found");
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<String> getTalk() {
+        return talk;
+    }
+
+    public void setTalk(List<String> talk) {
+        this.talk = talk;
+    }
+
+    public String getItem() {
+        return item;
+    }
+
+    public void setItem(String item) {
+        this.item = item;
+    }
+
+    public String getWin() {
+        return win;
+    }
+
+    public void setWin(String win) {
+        this.win = win;
+    }
+
+    public String getDefeat() {
+        return defeat;
+    }
+
+    public void setDefeat(String defeat) {
+        this.defeat = defeat;
     }
 
     @Override

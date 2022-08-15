@@ -1,32 +1,18 @@
 package com.traveler.model;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.traveler.jsonparser.Json;
 
-
-import java.io.IOException;
 import java.util.List;
 
-public class Player {
+public class Player extends Item{
 
+    private static List<Item> inventory;
     private String name;
-
     private int health = 100;
     private int exp = 0;
-
-
-
     private int lvl = 1;
-
-    private List<Item> inventory;
-
-
 
     public Player() {
     }
-
-
-
 
     public Player(String name, int health, int exp, int lvl, List<Item> inventory) {
         this.name = name;
@@ -35,7 +21,6 @@ public class Player {
         this.lvl = lvl;
         this.inventory = inventory;
     }
-
 
     public String getName() {
         return name;
@@ -69,7 +54,7 @@ public class Player {
         this.lvl = lvl;
     }
 
-    public List<Item> getInventory() {
+    public static List<Item> getInventory() {
         return inventory;
     }
 
