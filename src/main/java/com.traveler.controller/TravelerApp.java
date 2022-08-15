@@ -27,37 +27,32 @@ import static com.traveler.view.Map.cmdMap;
 
 public class TravelerApp extends JFrame {
 
-    JFrame window;
-    JPanel mainTextPanel;
-    Container con;
-    JLabel result;
-    JTextArea mainTextArea;
-    Font textFont = new Font("Times New Roman", Font.PLAIN, 14);
-    JTextField textField;
-    JButton submit;
-    private String input;
-
     // Fields
+    private String input;
     private boolean gameOver = false;
-    Prompter prompter = new Prompter(new Scanner(System.in));
     Room room = new Room();
     Item item = new Item();
-    NPC npc = new NPC();
     Combat combat = new Combat();
     Text text = new Text();
     Player player = new Player();
     HashMap<String, String> enemyDrops = new HashMap<String, String>();
 
-    private static TravelerApp appInstance = null;
+    // Swing Fields
+    public JPanel mainTextPanel;
+    public Container con;
+    public JLabel result;
+    public JTextArea mainTextArea;
+    public Font textFont = new Font("Times New Roman", Font.PLAIN, 14);
+    public JTextField textField;
+    public JButton submit;
 
-//    TravelerView gui = TravelerView.getInstance();
 
     // dir carries directions for parsing
     ArrayList<String> dir = new ArrayList<String>();
 
+    // Class constructor impl Swing
     public TravelerApp() {
-        //        window = new JFrame();
-        setSize(1000,800);
+        setSize(700,800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         getContentPane().setBackground(Color.BLACK);
         setLayout(new BorderLayout());
@@ -86,7 +81,6 @@ public class TravelerApp extends JFrame {
             input = textField.getText();
             result.setText(input);
             setOutput(input);
-//            app.input = input;
             // Wakes up all threads that are waiting on this object's monitor. A thread waits on an object's monitor by calling one of the wait methods.
             synchronized (TravelerApp.class) {
                 TravelerApp.class.notifyAll();
@@ -127,13 +121,6 @@ public class TravelerApp extends JFrame {
         start();
     }
 
-    public static TravelerApp getInstance() {
-        if (appInstance == null) {
-            appInstance = new TravelerApp();
-        }
-        return appInstance;
-    }
-
     public void generateDrops() {
         enemyDrops.put("lint", "Pocket lint. Why do they even have this?");
         enemyDrops.put("coins", "Small metallic coins that looks to be some sort of currency.");
@@ -158,6 +145,7 @@ public class TravelerApp extends JFrame {
         System.out.println(text.help);
         while (!gameOver) {
             // Causes the current thread to wait until it is awakened, typically by being notified or interrupted.
+            System.out.println(text.prompt);
             synchronized (TravelerApp.class) {
                 try {
                     TravelerApp.class.wait();
@@ -212,10 +200,8 @@ public class TravelerApp extends JFrame {
                         break;
                     case "talk":
                         cmdTalk(noun);
-//                        npc.cmdTalk(noun);
                         break;
                     case "fight":
-//                        String combatResult = combat.cmdFight(noun);
                         String combatResult = cmdFight(noun);
                         switch (combatResult) {
                             case "win":
@@ -335,7 +321,6 @@ public class TravelerApp extends JFrame {
         Random rn = new Random();
         int maxNum = 3;
         int rand = rn.nextInt(maxNum);
-//        String answer = getInput();
 
         for (NPC i : getCurrentRoom().getNpc()) {
             if (i.getName().equals(noun) && noun.equals("elon")) {
@@ -352,7 +337,6 @@ public class TravelerApp extends JFrame {
                 if (input.equals("y")) {
                     System.out.println(elon.getQuestion());
                     System.out.println(elon.getOptions());
-//                    String answertoQuiz = prompter.prompt(text.answerQuiz);
                     System.out.println(text.answerQuiz);
                     synchronized (TravelerApp.class) {
                         try {
@@ -376,9 +360,6 @@ public class TravelerApp extends JFrame {
             } else if (i.getName().equals(noun) && noun.equals("gnome")) {
                 System.out.println(i.getTalk().get(rand));
                 System.out.println(text.askQuiz);
-//                String answer = prompter.prompt(text.askQuiz);
-                // answer = getInput() skips to the last else statement
-//                answer = getInput();
                 synchronized (TravelerApp.class) {
                     try {
                         TravelerApp.class.wait();
@@ -391,7 +372,6 @@ public class TravelerApp extends JFrame {
                 if (input.equals("y")) {
                     System.out.println(gnome.getQuestion());
                     System.out.println(gnome.getOptions());
-//                    String answertoQuiz = prompter.prompt(text.answerQuiz);
                     System.out.println(text.answerQuiz);
                     synchronized (TravelerApp.class) {
                         try {
@@ -433,8 +413,6 @@ public class TravelerApp extends JFrame {
                         System.out.println("You have " + boss_round + " rounds to complete.");
                         System.out.println("Riddle: " + riddle.getQuestion());
                         System.out.println("Hint: " + riddle.getHint());
-//                        String answer = prompter.prompt("Answer: ");
-                        // answer = getInput() skips to the last else statement
                         synchronized (TravelerApp.class) {
                             try {
                                 TravelerApp.class.wait();
@@ -471,10 +449,7 @@ public class TravelerApp extends JFrame {
                     }
                     break;
 
-                    // This either needs to be Deleted or implemented.
                 case "orc":
-
-
                 case "troll":
                     int regular_round = 3;
                     int win_2 = 0;
@@ -494,7 +469,6 @@ public class TravelerApp extends JFrame {
                         }
                         mainTextArea.setText("");
                         input = getInput();
-//                        String answer = getInput();
 
                         if (input.equals(riddle.getAnswer())) {
                             System.out.println("You win the round!");
@@ -548,9 +522,7 @@ public class TravelerApp extends JFrame {
         return command[1];
     }
 
-
-    //Getter and setter
-
+    //Getters and setters
     public boolean isGameOver() {
         return gameOver;
     }

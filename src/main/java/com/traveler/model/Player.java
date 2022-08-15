@@ -7,22 +7,12 @@ public class Player extends Item{
 
     private static List<Item> inventory;
     private String name;
-
     private int health = 100;
     private int exp = 0;
-
-
-
     private int lvl = 1;
-
-
-
 
     public Player() {
     }
-
-
-
 
     public Player(String name, int health, int exp, int lvl, List<Item> inventory) {
         this.name = name;
@@ -31,7 +21,6 @@ public class Player extends Item{
         this.lvl = lvl;
         this.inventory = inventory;
     }
-
 
     public String getName() {
         return name;
