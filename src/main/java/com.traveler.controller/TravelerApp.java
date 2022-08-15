@@ -223,11 +223,34 @@ public class TravelerApp extends JFrame {
                         room.refreshCurrentRoom();
                         break;
 
+                    case "heal":
+                        cmdHeal(noun);
+                        break;
+
                     default:
                         wrongCmd();
                         break;
                 }
             }
+        }
+    }
+
+    private void cmdHeal(String noun) {
+        noun = noun.substring(0, 1).toUpperCase() + noun.substring(1);
+
+        if (noun.equals(player.getName())) {
+            for (Item potion : Player.getInventory()) {
+                if (potion.getName().equals("health-potion")) {
+                    player.setHealth(player.getHealth() + 25);
+                    Player.getInventory().remove(potion);
+                    System.out.println("You drink the health potion and get healed for 25 health.");
+                    break;
+                } else {
+                    System.out.println("You don't have any health potions.");
+                }
+            }
+        } else {
+            System.out.println("You can't heal " + noun + ".");
         }
     }
 
@@ -324,7 +347,8 @@ public class TravelerApp extends JFrame {
 
         for (NPC i : getCurrentRoom().getNpc()) {
             if (i.getName().equals(noun) && noun.equals("elon")) {
-                System.out.println(i.getTalk().get(rand));
+                System.out.println(i.getTalk().get(rand) + "\n");
+                System.out.println("Do you want to play a quiz? (y/n)");
                 synchronized (TravelerApp.class) {
                     try {
                         TravelerApp.class.wait();
@@ -348,7 +372,10 @@ public class TravelerApp extends JFrame {
                     mainTextArea.setText("");
                     input = getInput();
                     if (input.equals(elon.getAnswer())) {
-                        System.out.println("Correct!");
+                        System.out.println("Correct! You are awarded with a health potion to your inventory.");
+                        //add "health-potion" as Item object to player inventory
+                        Player.getInventory().add(new Item("health-potion",
+                                "A health potion that restores 25 health"));
                     } else {
                         System.out.println("Incorrect!");
                     }
@@ -387,10 +414,10 @@ public class TravelerApp extends JFrame {
                     } else {
                         System.out.println("Incorrect!");
                     }
-                    } else {
+                } else {
                     System.out.println("You hesitated and left the conversation.");
-                    }
-                    return;
+                }
+                return;
             }
         }
         System.out.println(noun + " not found");
