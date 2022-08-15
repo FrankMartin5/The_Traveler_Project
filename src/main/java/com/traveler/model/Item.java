@@ -13,6 +13,7 @@ import static com.traveler.model.Room.currentRoom;
 import static com.traveler.model.Room.getCurrentRoom;
 
 public class Item {
+
     private String name;
     private String desc;
 
