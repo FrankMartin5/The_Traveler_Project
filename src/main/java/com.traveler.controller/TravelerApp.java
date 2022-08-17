@@ -15,7 +15,6 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
-import java.util.Scanner;
 
 import static com.traveler.model.Item.itemsFromJsonToArray;
 import static com.traveler.model.NPC.NPCArray;
@@ -194,8 +193,6 @@ public class TravelerApp extends JFrame {
                         //if noun is in dir arraylist, means it is a direction
                         if (dir.contains(noun)) {
                             room.cmdLook(noun);
-                        } else { // else it is an item noun
-                            item.cmdLook(noun);
                         }
                         break;
                     case "talk":
@@ -486,7 +483,6 @@ public class TravelerApp extends JFrame {
                         System.out.println("You have " + regular_round + " rounds to complete.");
                         System.out.println("Riddle: " + riddle.getQuestion());
                         System.out.println("Hint: " + riddle.getHint());
-//                        String answer = prompter.prompt("Answer: ");
                         synchronized (TravelerApp.class) {
                             try {
                                 TravelerApp.class.wait();
@@ -505,6 +501,8 @@ public class TravelerApp extends JFrame {
                             if (win_2 == 2) {
                                 System.out.println("You win the combat!");
                                 result = "win";
+                                Player.getInventory().add(new Item("key",
+                                        "Oh it might open a locked room"));
                                 break;
                             }
                         } else {
@@ -548,6 +546,7 @@ public class TravelerApp extends JFrame {
         String[] command = textParse(input).split(" ");
         return command[1];
     }
+
 
     //Getters and setters
     public boolean isGameOver() {

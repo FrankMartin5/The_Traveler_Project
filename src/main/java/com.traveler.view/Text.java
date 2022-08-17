@@ -8,7 +8,7 @@ public class Text {
             "generations. \nIt is the week of your 35th birthday and you and your hologram companion," +
             " Reanu Keeves must now travel back to the past to stop Racumen from placing a curse on your family.";
 
-    public String help = "List of available commands: \nlook <item/direction>: get information\ngo <direction>: enter room in that direction" +
+    public String help = "List of available commands: \nlook <direction>: get information\ngo <direction>: enter room in that direction" +
             "\nget <item>: adds item to inventory\nroom info: get information about the current room\n" +
             "talk <npc>: talk to the npc\nfight <npc>: starts combat if possible with npc\n" +
             "map: displays the game map\nquit game: exit the game without saving\nhelp: displays the available commands"
