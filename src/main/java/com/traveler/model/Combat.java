@@ -23,8 +23,6 @@ public class Combat {
 
     public void initialize() {
         riddlesFromJsonToArray();
-        getFriendly().add("elon");
-        getFriendly().add("gnome");
     }
 
     public ArrayList<String> getFriendly() {
