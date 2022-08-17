@@ -1,13 +1,7 @@
 package com.traveler.model;
 
-import com.traveler.controller.TravelerApp;
-import com.traveler.view.Prompter;
 import com.traveler.view.Text;
-
 import java.util.ArrayList;
-import java.util.Scanner;
-
-import static com.traveler.model.Item.inventory;
 import static com.traveler.model.Riddle.riddlesFromJsonToArray;
 
 public class Combat {
@@ -29,6 +23,8 @@ public class Combat {
 
     public void initialize() {
         riddlesFromJsonToArray();
+        getFriendly().add("elon");
+        getFriendly().add("gnome");
     }
 
     public ArrayList<String> getFriendly() {
@@ -41,16 +37,6 @@ public class Combat {
 
     private String textParse(String input) {
         return input.trim().toLowerCase();
-    }
-
-    public static boolean itemInInventory(String itemName) {
-        boolean res = false;
-        for (Item item : inventory) {
-            if (item.getName().equals(itemName)) {
-                res = true;
-            }
-        }
-        return res;
     }
 
 }
