@@ -3,6 +3,8 @@ package com.traveler.model;
 
 import java.util.List;
 
+import static com.traveler.model.Item.inventory;
+
 public class Player extends Item{
 
     private static List<Item> inventory;
@@ -20,6 +22,16 @@ public class Player extends Item{
         this.exp = exp;
         this.lvl = lvl;
         this.inventory = inventory;
+    }
+
+    public static boolean itemInInventory(String itemName) {
+        boolean res = false;
+        for (Item item : getInventory()) {
+            if (item.getName().equals(itemName)) {
+                res = true;
+            }
+        }
+        return res;
     }
 
     public String getName() {
@@ -61,6 +73,8 @@ public class Player extends Item{
     public void setInventory(List<Item> inventory) {
         this.inventory = inventory;
     }
+
+
 
     @Override
     public String toString() {

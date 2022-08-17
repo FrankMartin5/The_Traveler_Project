@@ -25,7 +25,7 @@
     "answer": "incorrectly"
   },
   {
-    "question": "What has many keys but can’t open a single door?",
+    "question": "What has many keys but cant open a single door?",
     "hint": "Do you play any instruments?",
     "answer": "piano"
   },
@@ -42,6 +42,6 @@
   {
     "question": "You bury me when I am alive and dig me up when I am dead. What am I?",
     "hint": "Most of them are green",
-    "answer": "plant"
+    "answer": "plants"
   }
 ]

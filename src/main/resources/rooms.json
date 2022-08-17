@@ -42,7 +42,7 @@
           "I hope you have said your prayers because you meet with your ancestors today",
           "Arrrrrgggghhhhhhhhhhhhhhhhh"
         ],
-        "item": "gun",
+        "item": "health-potion",
         "win": "You've been killed. The Orc now does a dance on your mutilated body. GAME OVER!!!",
         "defeat": "You have defeated the Orc and a key has morphed into the room. You need this to get into the crypt"
       }
@@ -73,7 +73,7 @@
           "You will not escape this place",
           "Bang bang bang! See you in the next life"
         ],
-        "item": "gun",
+        "item": "key",
         "win": "You lost to the troll. Better luck next time Traveler. GAME OVER!!!",
         "defeat": "Victory!!! The troll has been defeated. An anti shield appears in the room. This will assist in your battle with Racumen."
       }

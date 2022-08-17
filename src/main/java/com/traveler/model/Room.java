@@ -14,7 +14,7 @@ import java.lang.reflect.Type;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.traveler.model.Combat.itemInInventory;
+import static com.traveler.model.Player.itemInInventory;
 
 
 public class Room {
@@ -210,6 +210,7 @@ public class Room {
         }
         return npcInRoom;
     }
+
 
     public String getName() {
         return name;
