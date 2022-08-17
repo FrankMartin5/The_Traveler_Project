@@ -32,7 +32,7 @@ Features:
 “NPC in the room”
 “Items in the room”
 
-#Enemies:
+# Enemies:
 - Certain NPCs drop items on defeat
 - 2 successful correct answers to defeat an NPC
 - Player loses combat if providing an incorrect answer.
@@ -44,7 +44,7 @@ Lantern: Needed for all the rooms except Great Hall, if a player enters a room w
 
 Keys: Crypt Room Key
 
-#Potions
+# Potions
 - Health Potion: Using the Health Potion adds 25 points to your player health value.
 
 
