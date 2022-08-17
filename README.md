@@ -6,11 +6,11 @@ Team Name: Travelers
 Project Name: The Traveler 
 
 # Project concept:
-Story: Main character is transported to medieval/fantasy times, and is trying to find his evil ancestors (Boss BABY) that have ruined his life.
+Story: You are Idryssa, a powerful warrior on the hunt to stop the evil Warlock Racumen from completing his curse that will guarantee your death, as it has for all previous generations of your family. 
 
-Sensei: Reanu Keeves, “tutorial guide” an AI - future techStarting setting: castle
+Setting: Racumen's Lair, the stronghold of the Warlock serves as the main setting for the entirety of the story.
 
-General Flow: main character gets hinted to find 3 distinct potions to kill the boss baby
+General Flow: Main character (you) must venture throughout the castle to find Racumen and eventually defeat him. Along the way are various NPCs you are able to interact with, some friendly, some not. Make your way through their challenging combat(riddles) until you face the Warlock himself, Racumen.
 
 Features:
 - GUI - Player can now play the game without an IDE
@@ -33,10 +33,11 @@ Features:
 “Items in the room”
 
 - Enemies:
-Drops items on death
-2 successful hits to defeat
-Charges spell, player dies if still in combat for 4 turns
-Certain items can affect behavior
+Certain NPCs drop items on defeat
+2 successful correct answers to defeat an NPC
+Player loses combat if providing an incorrect answer.
+Player gains XP for each enemy that is defeated.
+
 
 # items
 Lantern: Needed for all the rooms except Great Hall, if a player enters a room without a lantern they can not see anything and won’t be able to interact.
@@ -44,15 +45,8 @@ Lantern: Needed for all the rooms except Great Hall, if a player enters a room w
 Keys: Crypt Room Key
 
 - potions
-Confusion potion: increases mob spell (6 turns) charge up time
-Thunderbolt potion: (needed to remove bosses shield for hit chance increase)
-escape potion: places you back in the great dining hall, combat or not
-anti-shield potion: (needed to remove bosses shield for hit chance increase)
+Health Potion: Using the Health Potion adds 25 points to your player health value.
 
-- Gun/bullets: damages boss and mobs, default hit chance:60% miss chance: 40%
-
-# starting inventory
-Gun, bullets (5)
 
 # Room Diagram
 [Diagram link](https://docs.google.com/drawings/d/1_ybfLzBiHIwmHWU_Nan2W2k6W9mNbvIVSj6Cn-EH_Fg/edit)
